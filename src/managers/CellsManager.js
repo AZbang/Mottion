@@ -1,31 +1,33 @@
 const Cell = require('../objects/Cell');
 
-class CellsManager {
+class CellsManager extends Phaser.Group {
   constructor(state) {
-    this.state = state;
-    this.cells = [];
+    super(state.game);
 
-    this.graph = this.state.add.graphics();
+    this.enableBody = true;
+
+    this.sizeCell = state.game.width/5;
+
+    this.state = state;
     this.createCells();
   }
   createCells() {
-    let length = this.cells.length;
-
-    for(let y = length; y < length+100; y++) {
-      this.cells.push([]);
+    for(let y = 0; y < 100; y++) {
       for(let x = 0; x < 5; x++) {
-        this.cells[y][x] = new Cell(this, x, y);
+        let cell = new Cell(this, Math.random() < .15 ? 2 : 1, x, y);
+        this.add(cell);
+      }
+    }
+    for(let y = 0; y < 100; y++) {
+      for(let x = 0; x < 5; x++) {
+        if(y+1 < 100) this.children[y*5+x].topPanel = this.children[(y+1)*5+x];
+        if(x-1 >= 0) this.children[y*5+x].leftPanel = this.children[y*5+x-1];
+        if(x+1 < 5) this.children[y*5+x].rightPanel = this.children[y*5+x+1];
       }
     }
   }
   update(dt) {
-    this.graph.clear();
 
-    for(let y = 0; y < this.cells.length; y++) {
-      for(let x = 0; x < this.cells[y].length; x++) {
-        this.cells[y][x].update(dt);
-      }
-    }
   }
 }
 
