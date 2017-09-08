@@ -32,7 +32,7 @@ class Playground {
     });
 		this.scoreText.fixedToCamera = true;
 
-		this.island = this.add.sprite(0, this.game.height, 'island');
+		this.island = this.add.sprite(0, this.game.height+10, 'island');
 		this.island.anchor.set(0, 1);
 		this.island.width = this.cellsManager.sizeCell*5;
 		this.island.height = this.cellsManager.sizeCell*5;
