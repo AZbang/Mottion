@@ -1,6 +1,8 @@
+const types = require('./types');
+
 class Cell extends Phaser.Sprite {
   constructor(manager, type, x, y) {
-    super(manager.game, 0, 0, type === 1 ? 'cell' : 'cell2');
+    super(manager.game, 0, 0, type.img);
 
     this.manager = manager;
     this.state = manager.state;
@@ -12,21 +14,20 @@ class Cell extends Phaser.Sprite {
     this.width = this.size-this.padding;
     this.height = this.size-this.padding;
 
-    this.isOpen = false;
-    this.type = type;
+    this.isOpen = type.isOpen;
+    this.isGood = type.isGood;
+    this.score = type.score;
 
-    this.cellOpen = this.state.add.sprite(this.x+this.size/2-this.padding/2, this.y+this.size/2-this.padding/2, 'cell-open');
-    this.cellOpen.width = 0;
-    this.cellOpen.height = 0;
-    this.cellOpen.alpha = 0;
-    this.cellOpen.anchor.set(.5);
+    if(type.isClick) {
+      this.cellOpen = this.state.add.sprite(this.x+this.size/2-this.padding/2, this.y+this.size/2-this.padding/2, type.imgClick);
+      this.cellOpen.width = 0;
+      this.cellOpen.height = 0;
+      this.cellOpen.alpha = 0;
+      this.cellOpen.anchor.set(.5);
 
-    if(this.type === 1) {
       this.inputEnabled = true;
-
       this.events.onInputUp.addOnce(() => {
         this.isOpen = true;
-        this.state.addScore();
 
         this.state.add.tween(this.cellOpen)
     			.to({alpha: 1, width: this.size-this.padding, height: this.size-this.padding}, 200)

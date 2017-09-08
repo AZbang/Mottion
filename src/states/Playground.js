@@ -1,6 +1,7 @@
 const ui = require('../mixins/ui');
 const CellsManager = require('../managers/CellsManager');
 const Player = require('../objects/Player');
+const Entity = require('../objects/Entity');
 
 class Playground {
 	create() {
@@ -39,9 +40,22 @@ class Playground {
 
 		this.player = new Player(this);
 
+		this.add.sprite(200, this.game.height-256, 'flag');
+		this.add.sprite(600, this.game.height-356, 'flag').scale.x *= -1;
+		this.add.sprite(400, this.game.height-400, 'flag').scale.x *= -1;
+		this.add.sprite(100, this.game.height-300, 'flag');
+
+		for(let y = 0; y < 5; y++) {
+			for(let x = 0; x < this.game.width/50; x++) {
+				let px = x*this.rnd.between(40, 60);
+				let py = this.game.height-y*this.rnd.between(20, 50);
+				new Entity(this, px, py, this.rnd.between(30, 50), false);
+			}
+		}
+
 	}
-	addScore() {
-		let num = ++this.score;
+	addScore(v) {
+		let num = this.score += v;
 
     let digits = String(+num).split(""),
         key = ["","C","CC","CCC","CD","D","DC","DCC","DCCC","CM",

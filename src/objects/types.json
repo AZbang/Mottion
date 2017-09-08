@@ -1,0 +1,27 @@
+[
+  {
+    "chance": 10,
+    "img": "cell3",
+    "isOpen": true,
+    "isClick": false,
+    "score": 10,
+    "isGood": true
+  },
+  {
+    "chance": 20,
+    "img": "cell2",
+    "isOpen": false,
+    "isClick": false,
+    "score": 0,
+    "isGood": false
+  },
+  {
+    "img": "cell",
+    "chance": 100,
+    "imgClick": "cell-open",
+    "isOpen": false,
+    "isClick": true,
+    "score": 1,
+    "isGood": true
+  }
+]
