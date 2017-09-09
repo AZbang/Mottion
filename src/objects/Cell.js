@@ -19,18 +19,21 @@ class Cell extends Phaser.Sprite {
     this.score = type.score;
 
     if(type.isClick) {
-      this.cellOpen = this.state.add.sprite(this.x+this.size/2-this.padding/2, this.y+this.size/2-this.padding/2, type.imgClick);
-      this.cellOpen.width = 0;
-      this.cellOpen.height = 0;
+      let x = this.size/2+this.padding/2;
+      let y = this.size/2+this.padding/2;
+      this.cellOpen = this.state.make.sprite(x, y, type.imgClick);
       this.cellOpen.alpha = 0;
       this.cellOpen.anchor.set(.5);
+      this.cellOpen.tint = 0xff4444;
+      this.addChild(this.cellOpen);
 
       this.inputEnabled = true;
       this.events.onInputUp.addOnce(() => {
         this.isOpen = true;
-
+        this.cellOpen.width = 0;
+        this.cellOpen.height = 0;
         this.state.add.tween(this.cellOpen)
-    			.to({alpha: 1, width: this.size-this.padding, height: this.size-this.padding}, 200)
+    			.to({alpha: 1, width: this.size+this.padding/2, height: this.size+this.padding/2}, 200)
     			.start();
       });
     }

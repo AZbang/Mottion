@@ -1,6 +1,6 @@
 [
   {
-    "chance": 10,
+    "chance": 5,
     "img": "cell3",
     "isOpen": true,
     "isClick": false,

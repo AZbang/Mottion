@@ -1,10 +1,8 @@
 class Entity extends Phaser.Sprite {
   constructor(state, x, y, r, isArcs, scale=1.5) {
     super(state.game, x, y, 'player');
-    state.add.existing(this);
-
+    
     this.state = state;
-
     this.width = r;
     this.height = r;
     this.anchor.set(.5);

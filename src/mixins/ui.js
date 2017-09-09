@@ -15,7 +15,13 @@ module.exports = {
       bg.moveTo(0, size*y);
       bg.lineTo(state.game.width, size*y);
     }
-
     return bg;
+  },
+  goTo(state, name, args) {
+    state.camera.fade(0xFFFFFF);
+    state.camera.onFadeComplete.add(() => {
+      state.state.start(name, true, false, args);
+      state.state.getCurrentState().camera.flash(0xFFFFFF, 1000);
+    });
   }
 }
