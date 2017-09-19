@@ -1,23 +1,34 @@
 {
-  "name": "game",
-  "version": "0.1.0",
-  "private": true,
-  "description": "",
-  "main": "./src/index.js",
-  "author": "azbang",
-  "scripts": {
-    "start": "gulp"
-  },
-  "devDependencies": {
-    "babel-preset-es2015": "^6.24.1",
-    "gulp": "~3.9.1",
-    "gulp-babel": "^6.1.2",
-    "gulp-browserify": "https://github.com/deepak1556/gulp-browserify/tarball/master",
-    "gulp-connect": "^5.0.0",
-    "gulp-if": "^2.0.2",
-    "gulp-notify": "^2.2.0",
-    "gulp-plumber": "^1.1.0",
-    "gulp-uglify": "^2.1.2",
-    "gulp-zip": "^4.0.0"
-  }
+    "name": "game",
+    "version": "0.1.0",
+    "private": true,
+    "description": "",
+    "main": "./src/index.js",
+    "author": "azbang",
+    "scripts": {
+        "start": "gulp"
+    },
+    "devDependencies": {
+        "babel-preset-es2015": "^6.24.1",
+        "gulp": "~3.9.1",
+        "gulp-babel": "^6.1.2",
+        "gulp-browserify": "https://github.com/deepak1556/gulp-browserify/tarball/master",
+        "gulp-connect": "^5.0.0",
+        "gulp-if": "^2.0.2",
+        "gulp-notify": "^2.2.0",
+        "gulp-plumber": "^1.1.0",
+        "gulp-uglify": "^2.1.2"
+    },
+    "dependencies": {
+        "cordova-android": "^6.2.3",
+        "cordova-plugin-whitelist": "^1.3.2"
+    },
+    "cordova": {
+        "plugins": {
+            "cordova-plugin-whitelist": {}
+        },
+        "platforms": [
+            "android"
+        ]
+    }
 }

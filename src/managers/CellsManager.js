@@ -4,28 +4,37 @@ types.sort((a, b) => a.chance - b.chance);
 
 
 class CellsManager extends Phaser.Group {
-  constructor(state) {
+  constructor(state, amtX, amtY) {
     super(state.game);
 
     this.enableBody = true;
 
-    this.sizeCell = state.game.width/5;
+    this.amtX = amtX || 5;
+
+    this.sizeCell = state.game.width/this.amtX;
     this.lastY = 0;
     this.last = [];
 
     this.state = state;
-    this.createCells(15);
+    this.createCells(amtY || 15);
   }
   createCells(amtGenY) {
     let arr = [];
 
     for(let y = this.lastY; y < this.lastY+amtGenY; y++) {
-      for(let x = 0; x < 5; x++) {
+      for(let x = 0; x < this.amtX; x++) {
         let rand = Math.random()*100;
         for(let i = 0; i < types.length; i++) {
            if(rand < types[i].chance) {
-             let cell = new Cell(this, types[i], x, y);
-             this.add(cell);
+             let cell = this.getFirstDead();
+             if(!cell) {
+                cell = new Cell(this, types[i], x, y);
+                this.add(cell);
+             } else {
+               cell.reUseCell(x, y, types[i]);
+               cell.revive();
+             }
+
              arr.push(cell);
              break;
            }
@@ -33,22 +42,22 @@ class CellsManager extends Phaser.Group {
       }
     }
     for(let y = 0; y < amtGenY; y++) {
-      for(let x = 0; x < 5; x++) {
-        if(y+1 < amtGenY) arr[y*5+x].topPanel = arr[(y+1)*5+x];
-        if(x-1 >= 0) arr[y*5+x].leftPanel = arr[y*5+x-1];
-        if(x+1 < 5)  arr[y*5+x].rightPanel = arr[y*5+x+1];
+      for(let x = 0; x < this.amtX; x++) {
+        if(y+1 < amtGenY) arr[y*this.amtX+x].topPanel = arr[(y+1)*this.amtX+x];
+        if(x-1 >= 0) arr[y*this.amtX+x].leftPanel = arr[y*this.amtX+x-1];
+        if(x+1 < this.amtX)  arr[y*this.amtX+x].rightPanel = arr[y*this.amtX+x+1];
       }
     }
     if(this.last.length) {
-      for(let x = 0; x < 5; x++) {
+      for(let x = 0; x < this.amtX; x++) {
         this.last[x].topPanel = arr[x];
       }
     }
-    this.last[0] = arr[arr.length-5];
-    this.last[1] = arr[arr.length-4];
-    this.last[2] = arr[arr.length-3];
-    this.last[3] = arr[arr.length-2];
-    this.last[4] = arr[arr.length-1];
+
+    this.last = [];
+    for(let i = arr.length-this.amtX; i < arr.length; i++) {
+      this.last.push(arr[i]);
+    }
     this.lastY += amtGenY;
   }
   update(dt) {
@@ -58,7 +67,7 @@ class CellsManager extends Phaser.Group {
         cell.leftPanel = null;
         cell.rightPanel = null;
         cell.topPanel = null;
-        cell.destroy();
+        cell.kill();
         !isHide && this.createCells(1);
         isHide = true;
       }

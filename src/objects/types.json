@@ -16,10 +16,21 @@
     "isGood": false
   },
   {
-    "img": "cell",
-    "chance": 100,
-    "imgClick": "cell-open",
+    "img": "cell4",
+    "chance": 30,
+    "imgClick": "cell4-fill",
     "isOpen": false,
+    "isClick": true,
+    "clickCount": 2,
+    "score": 5,
+    "isGood": true
+  },
+  {
+    "img": "cell1",
+    "chance": 100,
+    "imgClick": "cell1-fill",
+    "isOpen": false,
+    "clickCount": 1,
     "isClick": true,
     "score": 1,
     "isGood": true

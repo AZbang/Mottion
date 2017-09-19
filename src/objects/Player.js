@@ -20,7 +20,7 @@ class Player extends Entity {
 
     this.state.input.onDown.addOnce(() => {
       let tween = this.state.add.tween(this)
-        .to({y: this.state.game.height-(this.state.cellsManager.sizeCell*5+this.state.cellsManager.sizeCell/2)}, this.speed*2)
+        .to({y: this.state.game.height-(this.state.cellsManager.sizeCell*this.state.cellsManager.amtX+this.state.cellsManager.sizeCell/2)}, this.speed*4)
         .start();
       tween.onComplete.add(() => {
         this.move();
@@ -31,32 +31,34 @@ class Player extends Entity {
 
   move() {
     this.state.physics.arcade.overlap(this, this.state.cellsManager, (pl, cell) => {
-      if(cell.isOpen) this.state.addScore(cell.score);
+      if(!cell.topPanel) return;
+
+      if(cell.isOpen) this.state.UIManager.addScore(cell.score);
 
       if(cell.topPanel && cell.topPanel.isOpen && cell.topPanel.isGood) {
         this.state.add.tween(this)
-          .to({y: cell.topPanel.y+cell.width/2}, this.speed)
+          .to({y: cell.topPanel.y}, this.speed)
           .start();
         this.lastMove = 'top';
       }
       else if(this.lastMove !== 'left' && cell.rightPanel && cell.rightPanel.isOpen && cell.rightPanel.isGood) {
         this.state.add.tween(this)
-          .to({x: cell.rightPanel.x+cell.width/2}, this.speed)
+          .to({x: cell.rightPanel.x}, this.speed)
           .start();
         this.lastMove = 'right';
       }
       else if(this.lastMove !== 'right' && cell.leftPanel && cell.leftPanel.isOpen && cell.leftPanel.isGood) {
         this.state.add.tween(this)
-          .to({x: cell.leftPanel.x+cell.width/2}, this.speed)
+          .to({x: cell.leftPanel.x}, this.speed)
           .start();
         this.lastMove = 'left';
       }
       else {
         let tween = this.state.add.tween(this)
-          .to({y: cell.topPanel.y+cell.width/2, alpha: 0, width: 0, height: 0}, this.speed)
+          .to({y: cell.topPanel.y, alpha: 0, width: 0, height: 0}, this.speed)
           .start();
         tween.onComplete.add(() => {
-          ui.goTo(this.state, 'Menu',  this.state.score);
+          ui.goTo(this.state, 'Menu',  this.state.UIManager.score);
         });
       }
     });

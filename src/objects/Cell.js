@@ -7,40 +7,45 @@ class Cell extends Phaser.Sprite {
     this.manager = manager;
     this.state = manager.state;
 
-    this.size = this.state.game.width/5;
     this.padding = 10;
-    this.x = x*this.size+this.padding/2;
-    this.y = this.state.game.height-(6*this.size)-y*this.size+this.padding/2;
+    this.size = this.manager.sizeCell;
     this.width = this.size-this.padding;
     this.height = this.size-this.padding;
+    this.anchor.set(.5);
 
+    this.reUseCell(x, y, type);
+  }
+  reUseCell(x, y, type) {
+    this.loadTexture(type.img, 0);
+
+    this.x = x*this.size+this.padding/2+this.width/2;
+    this.y = 80*this.manager.amtX-y*this.size+this.height/2;
     this.isOpen = type.isOpen;
     this.isGood = type.isGood;
     this.score = type.score;
+    this.inputEnabled = false;
 
     if(type.isClick) {
-      let x = this.size/2+this.padding/2;
-      let y = this.size/2+this.padding/2;
-      this.cellOpen = this.state.make.sprite(x, y, type.imgClick);
-      this.cellOpen.alpha = 0;
-      this.cellOpen.anchor.set(.5);
-      this.cellOpen.tint = 0xff4444;
-      this.addChild(this.cellOpen);
-
       this.inputEnabled = true;
-      this.events.onInputUp.addOnce(() => {
-        this.isOpen = true;
-        this.cellOpen.width = 0;
-        this.cellOpen.height = 0;
-        this.state.add.tween(this.cellOpen)
-    			.to({alpha: 1, width: this.size+this.padding/2, height: this.size+this.padding/2}, 200)
-    			.start();
+      this.clickCount = type.clickCount;
+
+      this.events.onInputUp.add(() => {
+        this.clickCount--;
+        this.width = this.size-this.padding;
+        this.height = this.size-this.padding;
+
+        this.state.add.tween(this)
+          .to({width: this.width+30, height: this.height+30}, 100)
+          .to({width: this.width, height: this.height}, 100)
+          .start();
+
+        if(this.clickCount === 0) {
+          this.loadTexture(type.imgClick, 0);
+          this.isOpen = true;
+        }
       });
     }
   }
-  // }
-  // update(dt) {
-  // }
 }
 
 module.exports = Cell;
