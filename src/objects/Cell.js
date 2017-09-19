@@ -17,6 +17,7 @@ class Cell extends Phaser.Sprite {
   }
   reUseCell(x, y, type) {
     this.loadTexture(type.img, 0);
+    this.clickCount = type.clickCount;
 
     this.x = x*this.size+this.padding/2+this.width/2;
     this.y = 80*this.manager.amtX-y*this.size+this.height/2;
@@ -25,10 +26,9 @@ class Cell extends Phaser.Sprite {
     this.score = type.score;
     this.inputEnabled = false;
 
+
     if(type.isClick) {
       this.inputEnabled = true;
-      this.clickCount = type.clickCount;
-
       this.events.onInputUp.add(() => {
         this.clickCount--;
         this.width = this.size-this.padding;

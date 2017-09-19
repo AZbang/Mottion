@@ -8,7 +8,7 @@ class UIManager extends Phaser.Group {
     this.plane = this.state.make.sprite(0, 0, 'plane');
     this.add(this.plane);
 
-    this.scoreText = this.state.make.text(50, 25, "0 steps", {
+    this.scoreText = this.state.make.text(50, 25, "0ways.", {
       font: 'Roboto',
       fontSize: 60,
       fontWeight: 800,
@@ -37,7 +37,11 @@ class UIManager extends Phaser.Group {
   }
   addScore(v) {
     this.score += v;
-    this.scoreText.text = this.score + ' steps';
+    this.scoreText.text = this.score + 'ways.';
+  }
+  setScore(v) {
+    this.score = v;
+    this.scoreText.text = this.score + 'ways.';
   }
 }
 

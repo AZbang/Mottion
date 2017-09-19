@@ -31,9 +31,15 @@ class Preload {
 		this.load.image('colors-clouds', 'assets/menu/colorsclouds.png');
 		this.load.image('part-gray-cloud', 'assets/menu/partgraycloud.png');
 		this.load.image('part-colors-cloud', 'assets/menu/partcolorscloud.png');
+
+		// music
+		this.load.audio('music', 'assets/music/bensound-anewbeginning.mp3');
 	}
 
 	create() {
+		let music = this.add.audio('music');
+		music.loopFull(0.6);
+
 		this.state.start('Menu');
 	}
 }

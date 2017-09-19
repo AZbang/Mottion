@@ -4,6 +4,7 @@
     <description>
         Timekiller
     </description>
+    <icon src="res/icon.png" />
     <author email="azbango5@gmail.com">azbang</author>
     <content src="index.html" />
     <access origin="*" />

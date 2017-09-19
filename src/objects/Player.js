@@ -12,20 +12,14 @@ class Player extends Entity {
     this.state.camera.follow(this);
 		this.state.camera.deadzone = new Phaser.Rectangle(this.x-this.width/2, this.y-this.height/2, this.width, this.height);
 
-    this.speed = 400;
+    this.speed = 100;
+    this.currentTime = 0;
     this.lastMove;
-
-    this.timer = this.state.time.create(false);
-    this.timer.loop(this.speed, this.move, this);
 
     this.state.input.onDown.addOnce(() => {
       let tween = this.state.add.tween(this)
-        .to({y: this.state.game.height-(this.state.cellsManager.sizeCell*this.state.cellsManager.amtX+this.state.cellsManager.sizeCell/2)}, this.speed*4)
+        .to({y: this.state.game.height-(this.state.cellsManager.sizeCell*this.state.cellsManager.amtX+this.state.cellsManager.sizeCell/2)}, this.speed*10)
         .start();
-      tween.onComplete.add(() => {
-        this.move();
-        this.timer.start();
-      });
     }, this);
   }
 
@@ -37,25 +31,25 @@ class Player extends Entity {
 
       if(cell.topPanel && cell.topPanel.isOpen && cell.topPanel.isGood) {
         this.state.add.tween(this)
-          .to({y: cell.topPanel.y}, this.speed)
+          .to({y: cell.topPanel.y}, Math.floor(this.speed)*2)
           .start();
         this.lastMove = 'top';
       }
       else if(this.lastMove !== 'left' && cell.rightPanel && cell.rightPanel.isOpen && cell.rightPanel.isGood) {
         this.state.add.tween(this)
-          .to({x: cell.rightPanel.x}, this.speed)
+          .to({x: cell.rightPanel.x}, Math.floor(this.speed)*2)
           .start();
         this.lastMove = 'right';
       }
       else if(this.lastMove !== 'right' && cell.leftPanel && cell.leftPanel.isOpen && cell.leftPanel.isGood) {
         this.state.add.tween(this)
-          .to({x: cell.leftPanel.x}, this.speed)
+          .to({x: cell.leftPanel.x}, Math.floor(this.speed)*2)
           .start();
         this.lastMove = 'left';
       }
       else {
         let tween = this.state.add.tween(this)
-          .to({y: cell.topPanel.y, alpha: 0, width: 0, height: 0}, this.speed)
+          .to({y: cell.topPanel.y, alpha: 0, width: 0, height: 0}, Math.floor(this.speed)*2)
           .start();
         tween.onComplete.add(() => {
           ui.goTo(this.state, 'Menu',  this.state.UIManager.score);
@@ -65,6 +59,13 @@ class Player extends Entity {
   }
   update() {
     this.rotation += .01;
+    this.currentTime++;
+
+    if(this.currentTime > this.speed) {
+      this.move();
+      this.currentTime = 0;
+      if(this.speed > 200) this.speed -= .1;
+    }
   }
 }
 
