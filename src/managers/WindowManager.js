@@ -1,8 +1,9 @@
 class WindowManager extends Phaser.Group {
-  constructor(state) {
-    super(state);
+  constructor(level) {
+    super(level.state);
 
-    this.state = state;
+    this.level = level;
+    this.state = level.state;
 
     this.alpha = 0;
     this.fixedToCamera = true;
@@ -13,18 +14,7 @@ class WindowManager extends Phaser.Group {
     this.bg.inputEnabled = true;
     this.add(this.bg);
 
-    this.label = this.state.make.text(this.state.game.width/2, 440, "", {
-      font: 'Opificio',
-      fontSize: 100,
-      fontWeight: 100,
-      fontWeight: 600,
-      fill: "#555dff"
-    });
-    this.label.anchor.set(0.5);
-    this.add(this.label);
-
-
-    this.content = this.state.make.text(this.state.game.width/2, 540, "", {
+    this.content = this.state.make.text(this.state.game.width/2, this.state.game.height/2, "", {
       font: 'Opificio',
       fontSize: 50,
       fontWeight: 600,
@@ -33,16 +23,15 @@ class WindowManager extends Phaser.Group {
       wordWrap: true,
       wordWrapWidth: this.state.game.width-100
     });
-    this.content.anchor.set(0.5, 0);
+    this.content.anchor.set(0.5);
     this.add(this.content);
   }
-  addWindow(label, text, cb) {
+  addWindow(text, cb) {
     this.state.add.tween(this)
       .to({alpha: 1}, 500)
       .start();
     this.bg.inputEnabled = true;
 
-    this.label.text = label;
     this.content.text = text;
 		this.bg.events.onInputUp.addOnce(() => {
       this.state.add.tween(this)

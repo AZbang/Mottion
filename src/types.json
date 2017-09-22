@@ -1,13 +1,17 @@
 [
   {
-    "chance": 5,
-    "img": "cell3",
-    "isOpen": true,
-    "isClick": false,
-    "score": 10,
+    "id": 0,
+    "img": "cell1",
+    "chance": 100,
+    "imgClick": "cell1-fill",
+    "isOpen": false,
+    "clickCount": 1,
+    "isClick": true,
+    "score": 1,
     "isGood": true
   },
   {
+    "id": 1,
     "chance": 20,
     "img": "cell2",
     "isOpen": false,
@@ -16,6 +20,16 @@
     "isGood": false
   },
   {
+    "id": 2,
+    "chance": 5,
+    "img": "cell3",
+    "isOpen": true,
+    "isClick": false,
+    "score": 10,
+    "isGood": true
+  },
+  {
+    "id": 3,
     "img": "cell4",
     "chance": 30,
     "imgClick": "cell4-fill",
@@ -23,16 +37,6 @@
     "isClick": true,
     "clickCount": 2,
     "score": 5,
-    "isGood": true
-  },
-  {
-    "img": "cell1",
-    "chance": 100,
-    "imgClick": "cell1-fill",
-    "isOpen": false,
-    "clickCount": 1,
-    "isClick": true,
-    "score": 1,
     "isGood": true
   }
 ]

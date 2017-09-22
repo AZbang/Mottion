@@ -2,9 +2,12 @@ const Entity = require('./Entity');
 const ui = require('../mixins/ui');
 
 class Player extends Entity {
-  constructor(state) {
-    super(state, state.game.width/2, state.game.height-400, 70, true);
-    state.add.existing(this);
+  constructor(level) {
+    super(level.state, level.state.game.width/2, level.state.game.height-400, 70, true);
+    level.state.add.existing(this);
+
+    this.level = level;
+    this.state = level.state;
 
     this.state.physics.arcade.enable(this);
     this.body.setSize(this.width/2-1, this.height/2-1, 1, 1);
@@ -18,13 +21,13 @@ class Player extends Entity {
 
     this.state.input.onDown.addOnce(() => {
       let tween = this.state.add.tween(this)
-        .to({y: this.state.game.height-(this.state.cellsManager.sizeCell*this.state.cellsManager.amtX+this.state.cellsManager.sizeCell/2)}, this.speed*10)
+        .to({y: this.level.island.y+this.level.sizeCell}, this.speed*10)
         .start();
     }, this);
   }
 
   move() {
-    this.state.physics.arcade.overlap(this, this.state.cellsManager, (pl, cell) => {
+    this.state.physics.arcade.overlap(this, this.level.cells, (pl, cell) => {
       if(!cell.topPanel) return;
 
       if(cell.isOpen) this.state.UIManager.addScore(cell.score);

@@ -40,7 +40,7 @@ class CloudsManager extends Phaser.Group {
   update(dt) {
     this.forEach((cloud) => {
       cloud.y += cloud.duration;
-      if(cloud.y > this.state.player.y+this.state.game.height-400)
+      if(cloud.y > this.state.levelManager.player.y+this.state.game.height-400)
         cloud.kill();
     });
   }

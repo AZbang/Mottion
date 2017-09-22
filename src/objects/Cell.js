@@ -1,14 +1,13 @@
-const types = require('./types');
-
 class Cell extends Phaser.Sprite {
   constructor(manager, type, x, y) {
     super(manager.game, 0, 0, type.img);
 
     this.manager = manager;
+    this.level = manager.level;
     this.state = manager.state;
 
     this.padding = 10;
-    this.size = this.manager.sizeCell;
+    this.size = this.manager.level.sizeCell;
     this.width = this.size-this.padding;
     this.height = this.size-this.padding;
     this.anchor.set(.5);
@@ -20,7 +19,7 @@ class Cell extends Phaser.Sprite {
     this.clickCount = type.clickCount;
 
     this.x = x*this.size+this.padding/2+this.width/2;
-    this.y = 80*this.manager.amtX-y*this.size+this.height/2;
+    this.y = this.level.lastY-y*this.size+this.height/2;
     this.isOpen = type.isOpen;
     this.isGood = type.isGood;
     this.score = type.score;

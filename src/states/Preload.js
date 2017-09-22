@@ -27,10 +27,10 @@ class Preload {
 		this.load.image('plane', 'assets/ui/plane.png');
 
 		// menu
-		this.load.image('gray-clouds', 'assets/menu/grayclouds.png');
-		this.load.image('colors-clouds', 'assets/menu/colorsclouds.png');
-		this.load.image('part-gray-cloud', 'assets/menu/partgraycloud.png');
-		this.load.image('part-colors-cloud', 'assets/menu/partcolorscloud.png');
+		// this.load.image('gray-clouds', 'assets/menu/grayclouds.png');
+		// this.load.image('colors-clouds', 'assets/menu/colorsclouds.png');
+		// this.load.image('part-gray-cloud', 'assets/menu/partgraycloud.png');
+		// this.load.image('part-colors-cloud', 'assets/menu/partcolorscloud.png');
 
 		// music
 		this.load.audio('music', 'assets/music/bensound-anewbeginning.mp3');

@@ -1,10 +1,9 @@
-const CellsManager = require('../managers/CellsManager');
 const CloudsManager = require('../managers/CloudsManager');
-const IslandManager = require('../managers/IslandManager');
-const WindowManager = require('../managers/WindowManager');
 const UIManager = require('../managers/UIManager');
+const LevelManager = require('../managers/LevelManager');
 
-const Player = require('../objects/Player');
+const levels = require('../levels.json');
+const types = require('../types.json');
 
 class Playground {
 	create() {
@@ -17,22 +16,13 @@ class Playground {
 		this.bg.height = this.game.height;
 		this.bg.fixedToCamera = true;
 
-		this.cellsManager = new CellsManager(this, 5);
-		this.islandManager = new IslandManager(this);
-		this.player = new Player(this);
 		this.cloudsManager = new CloudsManager(this);
-
+		this.levelManager = new LevelManager(this, levels, types);
 		this.UIManager = new UIManager(this);
-
-		this.windowManager = new WindowManager(this);
-		this.windowManager.addWindow('Mottion', 'Sens in the way... Lorem ipsum blablalallalblbl');
-
 	}
 	update() {
 		this.cloudsManager.update();
-    this.cellsManager.update();
-		this.islandManager.update();
-		this.player.update();
+    this.levelManager.update();
 	}
 }
 
