@@ -35,7 +35,7 @@ gulp.task('js', () => {
 // server
 gulp.task('server', () => {
 	return connect.server({
-		port: 8080,
+		port: 1338,
 		livereload: true,
 		root: './www'
 	});

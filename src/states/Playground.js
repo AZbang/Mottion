@@ -17,8 +17,14 @@ class Playground {
 		this.bg.fixedToCamera = true;
 
 		this.cloudsManager = new CloudsManager(this);
-		this.levelManager = new LevelManager(this, levels, types);
 		this.UIManager = new UIManager(this);
+		this.levelManager = new LevelManager(this, levels, types);
+
+		this.grayscale = this.add.image(0, this.game.height-500, 'grayscale');
+		this.grayscale.fixedToCamera = true;
+		this.grayscale.alpha = .9;
+		this.grayscale.width = this.game.width;
+		this.grayscale.height = 700;
 	}
 	update() {
 		this.cloudsManager.update();

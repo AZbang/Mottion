@@ -19,7 +19,7 @@ class Cell extends Phaser.Sprite {
     this.clickCount = type.clickCount;
 
     this.x = x*this.size+this.padding/2+this.width/2;
-    this.y = this.level.lastY-y*this.size+this.height/2;
+    this.y = this.level.lastY+this.height/2;
     this.isOpen = type.isOpen;
     this.isGood = type.isGood;
     this.score = type.score;

@@ -14,7 +14,7 @@ class WindowManager extends Phaser.Group {
     this.bg.inputEnabled = true;
     this.add(this.bg);
 
-    this.content = this.state.make.text(this.state.game.width/2, this.state.game.height/2, "", {
+    this.content = this.state.make.text(this.state.game.width/2, this.state.game.height/4, "", {
       font: 'Opificio',
       fontSize: 50,
       fontWeight: 600,
@@ -32,11 +32,15 @@ class WindowManager extends Phaser.Group {
       .start();
     this.bg.inputEnabled = true;
 
+    this.state.UIManager.visible = false;
+
     this.content.text = text;
 		this.bg.events.onInputUp.addOnce(() => {
       this.state.add.tween(this)
         .to({alpha: 0}, 500)
         .start();
+        this.state.UIManager.visible = true;
+
       this.bg.inputEnabled = false;
       cb && cb();
     });

@@ -1,6 +1,6 @@
 platforms
 plugins
 node_modules
-
+dev_assets
 build.json
 azbang.jks

@@ -1,14 +1,15 @@
 [
   {
-    "totalCells": 20,
-    "amtCells": 3,
+    "totalCells": 5,
+    "amtCells": 2,
     "dir": "top",
     "idCells": [0, 1],
-    "tint": 0xFFFFFF,
-    "text": "Тлен идет за тобой по пятам. \n Отступись и он тебя поглатит... \n Но не стоит отчаиваться, ведь музыка всегда с тобой."
+    "tint": 0xff0000,
+    "text": "Thlen follows you. \n Digress and he will swallow you ... \n But do not despair, because music is always with you.",
+    "text_ru": "Тлен идет за тобой по пятам. \n Отступись и он тебя поглатит... \n Но не стоит отчаиваться, ведь музыка всегда с тобой."
   },
   {
-    "totalCells": 500,
+    "totalCells": 5,
     "amtCells": 3,
     "dir": "top",
     "idCells": [0, 1, 2],
@@ -16,7 +17,7 @@
     "text": "Тлен не щадит никого. Летучие змеи падут на землю и погрузятся в рутину бытия..."
   },
   {
-    "totalCells": 200,
+    "totalCells": 5,
     "amtCells": 4,
     "dir": "top",
     "idCells": [0, 1, 2, 3],

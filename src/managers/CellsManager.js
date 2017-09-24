@@ -7,10 +7,12 @@ class CellsManager extends Phaser.Group {
     this.level = level;
     this.state = level.state;
     this.enableBody = true;
+
+
   }
   startGen(lvl) {
-    this.last = [];
     this.lastY = 0;
+    this.last = [];
     this.createCells(this.level.startCountCells);
   }
   createCells(amtGenY) {
@@ -19,6 +21,8 @@ class CellsManager extends Phaser.Group {
 
     // генерируем ячейки
     for(let y = this.lastY; y < this.lastY+amtGenY; y++) {
+      this.level.lastY -= this.level.sizeCell;
+
       for(let x = 0; x < this.level.amtX; x++) {
         // рандомно (с приоритетом) выбираем ячейку
         let rand = Math.random()*100;
@@ -75,8 +79,10 @@ class CellsManager extends Phaser.Group {
         cell.kill();
 
         // Создаем новый слой, если количество ячеек на уровне не кончилось
-        !isHide && this.level.totalCells && this.createCells(1);
-        isHide = true;
+        if(this.level.totalCells > 0) {
+          !isHide && this.createCells(1);
+          isHide = true;
+        }
       }
     });
   }

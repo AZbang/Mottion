@@ -26,17 +26,13 @@ class LevelManager {
     this.totalCells = lvl.totalCells || 500;
     this.tint = lvl.tint;
     this.sizeCell = this.state.game.width/this.amtX;
-    this.startCountCells = Math.floor(this.state.game.height/this.sizeCell);
+    this.startCountCells = Math.floor(this.state.game.height/this.sizeCell)+2;
 
     // костыль, который сортирует данные о типах по шансу (по убыванию) и отсекает типы, которых нет на уровне.
     this.dataCells = this.typesCells.slice().sort((a, b) => a.chance - b.chance);
 
-
     this.createIsland(lvl);
-    this.createCells(lvl);
-    this.window.addWindow(lvl.text);
-
-    console.log(this)
+    this.window.addWindow(lvl.text, () => this.createCells(lvl));
   }
   createIsland(lvl) {
     if(lvl.dir === 'top')
@@ -48,7 +44,7 @@ class LevelManager {
     this.cells.startGen();
   }
   update() {
-    if(this.totalCells === 0) {
+    if(this.totalCells <= 0) {
       if(this.current+1 < this.levels.length) this.current++;
       this.createLevel(this.levels[this.current]);
     }

@@ -2,6 +2,7 @@ class Preload {
 	init() {
 	}
 	preload() {
+		this.load.image('grayscale', 'assets/grayscale.png');
 		this.load.image('bg', 'assets/bg.png');
 		this.load.image('player', 'assets/player.png');
 
@@ -15,7 +16,7 @@ class Preload {
 		this.load.image('cell4-fill', 'assets/cells/cell4-fill.png');
 
 		// island
-		this.load.image('island', 'assets/island/island.png');
+		this.load.image('island', 'assets/island/island2.png');
 		this.load.image('flag', 'assets/island/flag.png');
 		this.load.image('cloud', 'assets/island/cloud.png');
 
