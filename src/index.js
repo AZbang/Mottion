@@ -1,17 +1,6 @@
-const Boot = require('./states/Boot.js');
-const Preload = require('./states/Preload.js');
-const Menu = require('./states/Menu.js');
-const Playground = require('./states/Playground.js');
-const Settings = require('./states/Settings.js');
+const Game = require('./game');
 
-var ready = () => {
-	var game = new Phaser.Game(720, 1280, Phaser.AUTO, 'Mottion');
+let game = new Game();
+console.log(game.scenesManager.toggleScene('playground'));
 
-	game.state.add('Boot', Boot, true);
-  game.state.add('Preload', Preload);
-  game.state.add('Menu', Menu);
-	game.state.add('Settings', Settings);
-	game.state.add('Playground', Playground);
-}
-
-ready();
+window.game = game;
