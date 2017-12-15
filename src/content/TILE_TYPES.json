@@ -1,38 +1,66 @@
 {
   "A": {
-    "image": "cell1.png"
+    "image": "cell1.png",
+    "active": false,
+    "activationImage": "cell1-fill.png",
+    "activation": 5,
+    "score": 1
   },
   "B": {
-    "image": "cell2.png"
+    "image": "cell2.png",
+    "active": false,
+    "activation": 0
   },
   "C": {
-    "image": "cell4.png"
+    "image": "cell4.png",
+    "active": false,
+    "activationImage": "cell4-fill.png",
+    "activation": 10,
+    "score": 3
   },
   "ITL": {
-    "image": "assets/island/islandTL.png"
+    "activationImage": "islandTL.png",
+    "active": true,
+    "activation": 0
   },
   "IT": {
-    "image": "assets/island/islandT.png"
+    "activationImage": "islandT.png",
+    "active": true,
+    "activation": 0
   },
   "ITR": {
-    "image": "assets/island/islandTR.png"
+    "activationImage": "islandTR.png",
+    "active": true,
+    "activation": 0
   },
   "IR": {
-    "image": "assets/island/islandR.png"
+    "activationImage": "islandR.png",
+    "active": true,
+    "activation": 0
   },
   "IBR": {
-    "image": "assets/island/islandBR.png"
+    "activationImage": "islandBR.png",
+    "active": true,
+    "activation": 0
   },
   "IB": {
-    "image": "assets/island/islandB.png"
+    "activationImage": "islandB.png",
+    "active": true,
+    "activation": 0
   },
   "IBL": {
-    "image": "assets/island/islandBL.png"
+    "activationImage": "islandBL.png",
+    "active": true,
+    "activation": 0
   },
   "IL": {
-    "image": "assets/island/islandL.png"
+    "activationImage": "islandL.png",
+    "active": true,
+    "activation": 0
   },
   "IC": {
-    "image": "assets/island/islandC.png"
+    "activationImage": "islandC.png",
+    "active": true,
+    "activation": 0
   }
 }

@@ -1,32 +1,29 @@
 module.exports.A = [
   {
-    map: ['A|B', 'A', 'A|B', 'A', 'A|B', 'A'],
-    trim: 3,
-    append: 'C',
+    map: ['A|B', 'A|B|C', 'A'],
     shuffle: true
   },
   {
-    map: ['A', 'A', 'B', 'B', 'B', 'B'],
-    trim: 4,
+    map: ['A|B', 'A', 'A'],
     shuffle: true
   }
 ];
 
 module.exports.island = [
   {
-    map: ['A', 'B', 'A', 'B', 'A', 'A'],
+    map: ['A', 'B', 'A'],
     shuffle: true
   },
   {
-    map: ['A', 'A', 'A', 'A', 'A', 'A'],
+    map: ['A', 'A', 'A'],
   },
   {
-    map: ['ITL', 'IT', 'ITR', 'ITL', 'IT', 'ITR'],
+    map: ['ITL', 'IT', 'ITR'],
   },
   {
-    map: ['IL', 'IC', 'IR', 'IL', 'IC', 'IR'],
+    map: ['IL', 'IC', 'IR'],
   },
   {
-    map: ['IBL', 'IB', 'IBR', 'IBL', 'IB', 'IBR'],
+    map: ['IBL', 'IB', 'IBR'],
   }
 ];
