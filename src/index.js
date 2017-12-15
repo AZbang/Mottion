@@ -1,4 +1,5 @@
 require('pixi-sound');
+require('pixi-tween');
 const Game = require('./game');
 
 PIXI.loader

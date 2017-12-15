@@ -6,18 +6,17 @@ class Playground extends PIXI.Container {
     super();
 
     this.game = game;
-    this.tileMap = new TileMap(this, 100, 6);
-    this.tileMap.x = this.game.w/2-100*6/2;
+    this.tileMap = new TileMap(this, {maxX: 6, tileSize: 100});
+    this.tileMap.x = this.game.w/2-this.tileMap.MAP_WIDTH/2;
 
     this.addChild(this.tileMap);
-
-    setInterval(() => {
-      if(Math.random() < .8) this.tileMap.addFragment(fragments.A);
+    this.tileMap.on('mapEnd', () => {
+      if(Math.random() < .8) this.tileMap.addMap(fragments.A);
       else {
-        this.tileMap.addFragment(fragments.island);
-        this.tileMap.addFragment(fragments.A);
+        this.tileMap.addMap(fragments.island);
+        this.tileMap.addMap(fragments.A);
       }
-    }, 500);
+    })
   }
   update(dt) {
     this.tileMap.update(dt);

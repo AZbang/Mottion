@@ -3,32 +3,55 @@ const MapFragment = require('./MapFragment');
 const Block = require('./Block');
 
 class TileMap extends PIXI.Container {
-  constructor(scene, tilesize=100, maxX=5) {
+  constructor(scene, params={}) {
     super();
 
-    this.TILE_SIZE = tilesize;
-    this.MAX_X = maxX;
+    this.scene = scene;
+    this.game = scene.game;
+
+    this.MAX_X = params.maxX || 6;
+    this.TILE_SIZE = params.tileSize || 100;
+    this.MAP_WIDTH = this.MAX_X*this.TILE_SIZE;
     this.lastIndex = 0;
+
+    this.events = {};
   }
-  addFragment(map) {
-    for(let y = 0; y < map.length; y++) {
-      let frag = new MapFragment(map[y]);
-
-      for(let x = 0; x < frag.length; x++) {
-        if(frag[x] === '_') continue;
-
-        let posX = Math.round((this.MAX_X-frag.length)/2)*this.TILE_SIZE+x*this.TILE_SIZE;
-        let posY = y*this.TILE_SIZE-this.lastIndex*this.TILE_SIZE-map.length*this.TILE_SIZE;
-
-        this.addChild(new Block(this, posX, posY, TILE_TYPES[frag[x]]));
-      }
+  on(e, cb) {
+    this.events[e] = cb;
+  }
+  triggerEvent(e, arg) {
+    this.events[e] && this.events[e](arg);
+  }
+  addMap(map) {
+    for(let i = map.length-1; i >= 0; i--) {
+      this.addFragment(map[i]);
     }
-    this.lastIndex += map.length;
+  }
+  addFragment(dataFrag) {
+    let frag = new MapFragment(dataFrag);
+    for(let i = 0; i < frag.length; i++) {
+      this.addBlock(frag[i], Math.round((this.MAX_X-frag.length)/2)+i, this.lastIndex);
+    }
+    this.lastIndex++;
+  }
+  addBlock(id, x, y) {
+    if(id === '_') return;
+
+    let posX = x*this.TILE_SIZE;
+    let posY = -y*this.TILE_SIZE;
+    this.addChild(new Block(this, posX, posY, TILE_TYPES[id]));
+  }
+  _computedEndMap() {
+    if(this.children.length < this.MAX_X*(this.game.h/this.TILE_SIZE)) {
+      this.triggerEvent('mapEnd');
+    }
   }
   update(dt) {
     for(let i = 0; i < this.children.length; i++) {
       this.children[i].update(dt);
     }
+
+    this._computedEndMap();
   }
 }
 
