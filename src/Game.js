@@ -5,6 +5,9 @@ class Game extends PIXI.Application {
     super(window.innerWidth, window.innerHeight, {backgroundColor: 0xfcfcfc})
     document.body.appendChild(this.view);
 
+    this.w = window.innerWidth;
+    this.h = window.innerHeight;
+
     this.scenesManager = new ScenesManager(this);
     this.stage.addChild(this.scenesManager);
 

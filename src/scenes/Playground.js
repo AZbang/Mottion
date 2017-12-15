@@ -1,21 +1,23 @@
 const TileMap = require('../tilemap/TileMap.js');
+const fragments = require('../fragments.js');
 
 class Playground extends PIXI.Container {
-  constructor() {
+  constructor(game) {
     super();
 
-    this.tileMap = new TileMap(this);
+    this.game = game;
+    this.tileMap = new TileMap(this, 100, 6);
+    this.tileMap.x = this.game.w/2-100*6/2;
+
     this.addChild(this.tileMap);
-    
-    this.tileMap.addFragment([
-      'AAAA',
-      'AAAA',
-      'AAAA',
-      'AAAA'
-    ]);
+
+    setInterval(() => {
+      this.tileMap.addFragment(fragments.A);
+    }, 500);
   }
   update(dt) {
     this.tileMap.update(dt);
+    this.tileMap.y += 5 * dt;
   }
 }
 

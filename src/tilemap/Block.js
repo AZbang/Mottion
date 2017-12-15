@@ -1,17 +1,19 @@
 class Block extends PIXI.Sprite {
-  constructor(tilemap, x, y, params) {
+  constructor(tileMap, x, y, params) {
     super(PIXI.Texture.fromImage(params.image));
 
+    this.tileMap = tileMap;
+
     this.anchor.set(.5);
-    this.width = tilemap.TILE_SIZE;
-    this.height = tilemap.TILE_SIZE;
-    this.x = x*tilemap.TILE_SIZE+tilemap.TILE_SIZE/2;
-    this.y = y*tilemap.TILE_SIZE+tilemap.TILE_SIZE/2;
-
-    console.log(this);
+    this.width = tileMap.TILE_SIZE;
+    this.height = tileMap.TILE_SIZE;
+    this.x = x+tileMap.TILE_SIZE/2;
+    this.y = y+tileMap.TILE_SIZE/2;
   }
-  update() {
-
+  update(dt) {
+    if(this.worldTransform.ty-this.tileMap.TILE_SIZE/2 > window.innerHeight) {
+      this.tileMap.removeChild(this);
+    }
   }
 }
 

@@ -3,6 +3,8 @@ const scenes = require('../scenes');
 class ScenesManager extends PIXI.Container {
   constructor(game) {
     super();
+    this.game = game;
+
     this.addScenes(scenes);
   }
   addScenes(scenes) {
@@ -11,7 +13,7 @@ class ScenesManager extends PIXI.Container {
     }
   }
   addScene(SceneClass, id) {
-    let scene = new SceneClass(this);
+    let scene = new SceneClass(this.game, this);
     scene._id = id;
     return this.addChild(scene);
   }
