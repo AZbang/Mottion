@@ -1,5 +1,5 @@
 const TileMap = require('../tilemap/TileMap.js');
-const fragments = require('../fragments.js');
+const fragments = require('../content/fragments.js');
 
 class Playground extends PIXI.Container {
   constructor(game) {
@@ -12,7 +12,11 @@ class Playground extends PIXI.Container {
     this.addChild(this.tileMap);
 
     setInterval(() => {
-      this.tileMap.addFragment(fragments.A);
+      if(Math.random() < .8) this.tileMap.addFragment(fragments.A);
+      else {
+        this.tileMap.addFragment(fragments.island);
+        this.tileMap.addFragment(fragments.A);
+      }
     }, 500);
   }
   update(dt) {

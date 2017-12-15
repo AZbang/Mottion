@@ -1,0 +1,40 @@
+{
+	"frames": {
+		"cell1-fill.png": {
+			"frame": {"x":151, "y":302, "w":150, "h":150},
+			"spriteSourceSize": {"x":0,"y":0,"w":150,"h":150},
+			"sourceSize": {"w":150,"h":150}
+		},
+		"cell1.png": {
+			"frame": {"x":151, "y":0, "w":150, "h":150},
+			"spriteSourceSize": {"x":0,"y":0,"w":150,"h":150},
+			"sourceSize": {"w":150,"h":150}
+		},
+		"cell2.png": {
+			"frame": {"x":0, "y":151, "w":150, "h":150},
+			"spriteSourceSize": {"x":0,"y":0,"w":150,"h":150},
+			"sourceSize": {"w":150,"h":150}
+		},
+		"cell3.png": {
+			"frame": {"x":0, "y":0, "w":150, "h":150},
+			"spriteSourceSize": {"x":0,"y":0,"w":150,"h":150},
+			"sourceSize": {"w":150,"h":150}
+		},
+		"cell4-fill.png": {
+			"frame": {"x":151, "y":151, "w":150, "h":150},
+			"spriteSourceSize": {"x":0,"y":0,"w":150,"h":150},
+			"sourceSize": {"w":150,"h":150}
+		},
+		"cell4.png": {
+			"frame": {"x":0, "y":302, "w":150, "h":150},
+			"spriteSourceSize": {"x":0,"y":0,"w":150,"h":150},
+			"sourceSize": {"w":150,"h":150}
+		}
+
+	},
+	"meta": {
+		"image": "blocks.png",
+		"size": {"w": 302, "h": 453},
+		"scale": "1"
+	}
+}

@@ -1,4 +1,4 @@
-const TILE_TYPES = require('./TYLE_TYPES');
+const TILE_TYPES = require('../content/TILE_TYPES');
 const MapFragment = require('./MapFragment');
 const Block = require('./Block');
 
@@ -15,8 +15,10 @@ class TileMap extends PIXI.Container {
       let frag = new MapFragment(map[y]);
 
       for(let x = 0; x < frag.length; x++) {
+        if(frag[x] === '_') continue;
+
         let posX = Math.round((this.MAX_X-frag.length)/2)*this.TILE_SIZE+x*this.TILE_SIZE;
-        let posY = y*this.TILE_SIZE-this.lastIndex*this.TILE_SIZE;
+        let posY = y*this.TILE_SIZE-this.lastIndex*this.TILE_SIZE-map.length*this.TILE_SIZE;
 
         this.addChild(new Block(this, posX, posY, TILE_TYPES[frag[x]]));
       }

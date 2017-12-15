@@ -1,5 +1,5 @@
 class Block extends PIXI.Sprite {
-  constructor(tileMap, x, y, params) {
+  constructor(tileMap, x, y, params={}) {
     super(PIXI.Texture.fromImage(params.image));
 
     this.tileMap = tileMap;

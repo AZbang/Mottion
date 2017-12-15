@@ -1,0 +1,38 @@
+{
+  "A": {
+    "image": "cell1.png"
+  },
+  "B": {
+    "image": "cell2.png"
+  },
+  "C": {
+    "image": "cell4.png"
+  },
+  "ITL": {
+    "image": "assets/island/islandTL.png"
+  },
+  "IT": {
+    "image": "assets/island/islandT.png"
+  },
+  "ITR": {
+    "image": "assets/island/islandTR.png"
+  },
+  "IR": {
+    "image": "assets/island/islandR.png"
+  },
+  "IBR": {
+    "image": "assets/island/islandBR.png"
+  },
+  "IB": {
+    "image": "assets/island/islandB.png"
+  },
+  "IBL": {
+    "image": "assets/island/islandBL.png"
+  },
+  "IL": {
+    "image": "assets/island/islandL.png"
+  },
+  "IC": {
+    "image": "assets/island/islandC.png"
+  }
+}
