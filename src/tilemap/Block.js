@@ -1,8 +1,10 @@
-class Block extends PIXI.Sprite {
+class Block extends PIXI.projection.Sprite2d {
   constructor(tileMap, x, y, params={}) {
     super(PIXI.Texture.fromFrame(params.image || params.activationImage));
 
     this.tileMap = tileMap;
+    this.game = this.tileMap.game;
+
 
     this.score = params.score;
     this.activation = params.activation;

@@ -18,12 +18,12 @@ module.exports.island = [
     map: ['A', 'A', 'A'],
   },
   {
-    map: ['ITL', 'IT', 'ITR'],
+    map: ['ITL', 'IT', 'IT', 'IT', 'ITR'],
   },
   {
-    map: ['IL', 'IC', 'IR'],
+    map: ['IL', 'IC', 'IC', 'IC', 'IR'],
   },
   {
-    map: ['IBL', 'IB', 'IBR'],
+    map: ['IBL', 'IB', 'IB', 'IB', 'IBR'],
   }
 ];

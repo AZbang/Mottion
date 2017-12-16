@@ -15,7 +15,7 @@
     "image": "cell4.png",
     "active": false,
     "activationImage": "cell4-fill.png",
-    "activation": 50,
+    "activation": 25,
     "score": 3
   },
   "ITL": {

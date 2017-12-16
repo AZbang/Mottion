@@ -2,7 +2,7 @@ const TILE_TYPES = require('../content/TILE_TYPES');
 const MapFragment = require('./MapFragment');
 const Block = require('./Block');
 
-class TileMap extends PIXI.Container {
+class TileMap extends PIXI.projection.Container2d {
   constructor(scene, params={}) {
     super();
 
