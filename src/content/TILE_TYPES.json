@@ -8,8 +8,7 @@
   },
   "B": {
     "image": "cell2.png",
-    "active": false,
-    "activation": 0
+    "active": false
   },
   "C": {
     "image": "cell4.png",
@@ -21,46 +20,48 @@
   "ITL": {
     "activationImage": "islandTL.png",
     "active": true,
-    "activation": 0
+    "playerDir": "top"
   },
   "IT": {
     "activationImage": "islandT.png",
     "active": true,
-    "activation": 0
+    "playerDir": "top"
   },
   "ITR": {
     "activationImage": "islandTR.png",
     "active": true,
-    "activation": 0
+    "playerDir": "top"
   },
   "IR": {
     "activationImage": "islandR.png",
     "active": true,
-    "activation": 0
+    "playerDir": "top"
   },
   "IBR": {
     "activationImage": "islandBR.png",
     "active": true,
-    "activation": 0
+    "playerDir": "top"
   },
   "IB": {
     "activationImage": "islandB.png",
     "active": true,
-    "activation": 0
+    "playerDir": "top"
   },
   "IBL": {
     "activationImage": "islandBL.png",
     "active": true,
-    "activation": 0
+    "playerDir": "top"
   },
   "IL": {
     "activationImage": "islandL.png",
     "active": true,
+    "playerDir": "top",
     "activation": 0
   },
   "IC": {
     "activationImage": "islandC.png",
     "active": true,
+    "playerDir": "top",
     "activation": 0
   }
 }

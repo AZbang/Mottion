@@ -5,6 +5,7 @@ const Game = require('./game');
 
 PIXI.loader
   .add('blocks', 'assets/blocks.json')
+  .add('player', 'assets/player.png')
   .add('music', 'assets/music.mp3')
   .load((loader, resources) => {
     // PIXI.sound.play('music');

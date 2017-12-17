@@ -12,6 +12,8 @@ class TileMap extends PIXI.projection.Container2d {
     this.MAX_X = params.maxX || 6;
     this.TILE_SIZE = params.tileSize || 100;
     this.MAP_WIDTH = this.MAX_X*this.TILE_SIZE;
+
+    this.speed = 500;
     this.lastIndex = 0;
 
     this.events = {};
@@ -41,16 +43,34 @@ class TileMap extends PIXI.projection.Container2d {
     let posY = -y*this.TILE_SIZE;
     this.addChild(new Block(this, posX, posY, TILE_TYPES[id]));
   }
+  getBlockFromPos(x, y) {
+    for(let i = 0; i < this.children.length; i++) {
+      if(this.children[i].containsPoint(new PIXI.Point(x, y))) return this.children[i];
+    }
+  }
   _computedEndMap() {
     if(this.children.length < this.MAX_X*(this.game.h/this.TILE_SIZE)) {
       this.triggerEvent('mapEnd');
     }
   }
+  scrollDown(blocks) {
+    let move = PIXI.tweenManager.createTween(this);
+    move.from({y: this.y}).to({y: this.y+blocks*this.TILE_SIZE});
+    move.time = this.speed;
+    move.on('end', () => this.triggerEvent('scrollEnd'));
+    move.start();
+  }
+  scrollTop(blocks) {
+    let move = PIXI.tweenManager.createTween(this);
+    move.from({y: this.y}).to({y: this.y-blocks*this.TILE_SIZE});
+    move.time = this.speed;
+    move.onend = () => this.triggerEvent('scrollEnd');
+    move.start();
+  }
   update(dt) {
     for(let i = 0; i < this.children.length; i++) {
       this.children[i].update(dt);
     }
-
     this._computedEndMap();
   }
 }
