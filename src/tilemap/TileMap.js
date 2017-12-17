@@ -56,14 +56,14 @@ class TileMap extends PIXI.projection.Container2d {
   scrollDown(blocks) {
     let move = PIXI.tweenManager.createTween(this);
     move.from({y: this.y}).to({y: this.y+blocks*this.TILE_SIZE});
-    move.time = this.speed;
+    move.time = this.speed*blocks;
     move.on('end', () => this.triggerEvent('scrollEnd'));
     move.start();
   }
   scrollTop(blocks) {
     let move = PIXI.tweenManager.createTween(this);
     move.from({y: this.y}).to({y: this.y-blocks*this.TILE_SIZE});
-    move.time = this.speed;
+    move.time = this.speed*blocks;
     move.onend = () => this.triggerEvent('scrollEnd');
     move.start();
   }

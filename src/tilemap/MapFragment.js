@@ -4,7 +4,6 @@ class MapFragment {
     this.inputMap = data.map;
     this.fragment = [];
 
-
     // OPERATORS
     for(let i = 0; i < data.map.length; i++) {
       if(~~data.map[i].indexOf('|')) this.caseOperator(data.map[i], i);
