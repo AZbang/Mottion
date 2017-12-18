@@ -8,14 +8,13 @@ class Game extends PIXI.Application {
     this.w = window.innerWidth;
     this.h = window.innerHeight;
 
-    this.scenesManager = new ScenesManager(this);
-    this.stage.addChild(this.scenesManager);
+    this.scenes = new ScenesManager(this);
+    this.stage.addChild(this.scenes);
 
     this._initTicker();
   }
   _initTicker() {
     this.ticker.add((dt) => {
-      this.scenesManager.update(dt);
       PIXI.tweenManager.update();
     });
   }

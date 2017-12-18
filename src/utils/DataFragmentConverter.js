@@ -1,4 +1,9 @@
-class MapFragment {
+/*
+This util class for converted data from fragments.json
+object to simple map array, for example: ['A', 'A', 'A', 'A']
+*/
+
+class DataFragmentConverter {
   constructor(data) {
     this.data = data;
     this.inputMap = data.map;
@@ -14,9 +19,8 @@ class MapFragment {
     data.trim && this.randomTrim(data.trim);
     data.append && this.randomAppend(data.append);
     data.shuffle && this.shuffle();
-
-    return this.fragment;
   }
+
   // OPERATORS
   // Case operator: 'A|B|C|D' => C and etc...
   caseOperator(str, i) {
@@ -43,4 +47,4 @@ class MapFragment {
   }
 }
 
-module.exports = MapFragment;
+module.exports = DataFragmentConverter;

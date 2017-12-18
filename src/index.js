@@ -10,7 +10,7 @@ PIXI.loader
   .load((loader, resources) => {
     // PIXI.sound.play('music');
     let game = new Game();
-    game.scenesManager.setScene('playground');
-    
+    game.scenes.setScene('playground');
+
     window.game = game;
   });

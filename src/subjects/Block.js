@@ -56,11 +56,6 @@ class Block extends PIXI.projection.Sprite2d {
       this.rotation = 0;
     }
   }
-  update(dt) {
-    if(this.worldTransform.ty-this.tileMap.TILE_SIZE/2 > window.innerHeight) {
-      this.tileMap.removeChild(this);
-    }
-  }
 }
 
 module.exports = Block;

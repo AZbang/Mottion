@@ -1,13 +1,10 @@
-const scenes = require('../scenes');
-
 class ScenesManager extends PIXI.Container {
   constructor(game) {
     super();
     this.game = game;
 
-    this.scenes = {};
+    this.scenes = require('../scenes');
     this.activeScene = null;
-    this.addScenes(scenes);
   }
   addScenes(scenes) {
     for(let id in scenes) {
@@ -20,7 +17,7 @@ class ScenesManager extends PIXI.Container {
   getScene(id) {
     return this.scenes[id];
   }
-  resetScene() {
+  restartScene() {
     this.setScene(this.activeScene._idScene);
   }
   setScene(id) {
@@ -30,9 +27,6 @@ class ScenesManager extends PIXI.Container {
     this.activeScene = this.addChild(new Scene(this.game, this));
     this.activeScene._idScene = id;
     return this.activeScene;
-  }
-  update(dt) {
-    this.activeScene && this.activeScene.update(dt);
   }
 }
 
