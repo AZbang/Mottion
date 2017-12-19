@@ -11,24 +11,27 @@ class Playground extends PIXI.projection.Container2d {
 
     // Projection scene
     this.proj.setAxisY({x: -this.game.w/2+50, y: 4000}, -1);
+
     // Constant for position object in projection
+    this.interactive = true;
     this.PADDING_BOTTOM = 280;
 
     // Init objects
     this.screen = new ScreenManager(this);
-    this.addChild(this.screen);
-
-    this.map = new MapManager(this, {maxX: 5, tileSize: 100});
-    this.addChild(this.map);
-
-    this.levels = new LevelManager(this);
-    this.addChild(this.levels);
-
     this.history = new HistoryManager(this);
-    this.addChild(this.history);
+    this.map = new MapManager(this);
 
-    this.player = new Player(this);
-    this.addChild(this.player);
+    this.levels = new LevelManager(this, this.map);
+    this.player = new Player(this, this.map);
+
+
+    // Controls
+    this.player.on('deaded', () => this.restart());
+    this.on('pointerdown', () => this.player.immunity());
+    this.on('pointermove', (e) => {
+      let block = this.map.getBlockFromPos(e.data.global);
+      block && block.hit();
+    });
   }
   restart() {
     this.game.scenes.restartScene('playground');
@@ -36,9 +39,6 @@ class Playground extends PIXI.projection.Container2d {
     // this.screen.splash(0xFFFFFF, 1000).then(() => {
     //   this.game.scenes.restartScene('playground');
     // });
-  }
-  update() {
-    this.map.update();
   }
 }
 

@@ -1,91 +1,117 @@
-const DataFragmentConverter = require('../utils/DataFragmentConverter');
+/*
+  Менеджер уровней, работает напрямую с MapManager
+  используя данные levels.json и  fragments.json
 
-class LevelManager extends PIXI.projection.Container2d {
-  constructor(scene) {
+  События:
+    addedFragmentsData => new fragmentsData
+    addedLevels => new levels
+    addedLevel => new lvl
+
+    switchedLevel => cur lvl
+    wentNextLevel => cur lvl
+    wentBackLevel => cur lvl
+    switchedFragment => cur frag
+    wentNextFragment => cur frag
+    wentBackFragment => cur frag
+
+    startedLevel => new lvl
+    endedLevel => prev lvl
+*/
+
+
+class LevelManager extends PIXI.utils.EventEmitter {
+  constructor(scene, map) {
     super();
 
     this.scene = scene;
-    this.map = scene.map;
+    this.map = map;
 
     this.levels = [];
     this.fragmentsData = {};
     this.addFragmentsData(require('../content/fragments'));
     this.addLevels(require('../content/levels'))
 
-    this.currentLevel = 0;
-    this.currentFragment = 0;
+    this.curLevelIndex = 0;
+    this.curFragmentIndex = 0;
 
-    this.setLevel(0);
-    this.map.on('mapEnd', () => this.nextFragment());
+    this.switchLevel(0);
+    this.map.on('endedMap', () => {
+      this.nextFragment();
+    });
+    this.nextFragment();
+  }
+  // getters
+  getCurrentLevel() {
+    return this.levels[this.curLevelIndex];
+  }
+  getCurrentFragment() {
+    return this.getCurrentLevel().maps[this.curFragmentIndex];
   }
 
   // add fragments to db fragments
   addFragmentsData(data={}) {
     Object.assign(this.fragmentsData, data);
+    this.emit('addedFragmentsData', data);
   }
 
   // add levels to db levels
   addLevels(levels=[]) {
-    this.levels = this.levels.concat(levels);
-
-    // generate map for every level from fragments
-    levels.forEach((lvl) => {
-      // lvl saved in this.levels
-      lvl.maps = [];
-      for(let key in lvl.fragments) {
-        for(let i = 0; i < lvl.fragments[key]; i++) {
-          this.fragmentsData[key] && lvl.maps.push(this.fragmentsData[key]);
-        }
+    for(let i = 0; i < levels.length; i++) {
+      this.addLevel(levels[i]);
+    }
+    this.emit('addedLevels', levels);
+  }
+  addLevel(lvl={}) {
+    this.levels.push(lvl);
+    // generated maps to lvl object
+    lvl.maps = [];
+    for(let key in lvl.fragments) {
+      for(let i = 0; i < lvl.fragments[key]; i++) {
+        this.fragmentsData[key] && lvl.maps.push(this.fragmentsData[key]);
       }
-    });
-  }
-
-  // getters
-  getCurrentLevel() {
-    return this.levels[this.currentLevel];
-  }
-  getCurrentFragment() {
-    return this.getCurrentLevel().maps[this.currentFragment];
-  }
-
-  //
-  loseLevel() {
-    // There more logic with history...
-    this.scene.restart();
-  }
-  endLevel() {
-    // There more logic with history...
-    this.nextLevel();
+    }
+    this.emit('addedLevel', lvl);
   }
 
   // Methods for levels control
-  setLevel(lvl) {
+  switchLevel(lvl) {
     if(lvl > this.levels.length || lvl < 0) return;
-    this.currentLevel = lvl;
-    this.setFragment(0);
+    this.emit('endedLevel', this.getCurrentLevel());
+
+    this.curLevelIndex = lvl;
+    this.switchFragment(0);
+
+    this.emit('startedLevel', this.getCurrentLevel());
+    this.emit('switchedLevel', this.getCurrentLevel());
   }
   nextLevel() {
-    this.setLevel(this.currentLevel+1);
+    this.switchLevel(this.curLevelIndex+1);
+    this.emit('wentNextLevel', this.getCurrentLevel());
   }
   backLevel() {
-    this.setLevel(this.currentLevel-1);
+    this.switchLevel(this.curLevelIndex-1);
+    this.emit('wentBackLevel', this.getCurrentLevel());
   }
-
 
   // Methods for fragments control
-  setFragment(frag) {
+  switchFragment(frag) {
     if(frag < 0) return;
-    this.currentFragment = frag;
+    this.curFragmentIndex = frag;
 
-    // if not more fragments, then level complete...
-    if(!this.getCurrentFragment()) this.endLevel();
-    this.map.addMap(this.getCurrentFragment());
+    if(this.getCurrentFragment()) this.map.addMap(this.getCurrentFragment());
+    else {
+      this.emit('endedLevel', this.getCurrentLevel());
+      this.nextLevel();
+    }
+    this.emit('switchedFragment', this.getCurrentFragment());
   }
   nextFragment() {
-    this.setFragment(this.currentFragment+1);
+    this.switchFragment(this.curFragmentIndex+1);
+    this.emit('wentNextFragment', this.getCurrentFragment());
   }
   backFragment() {
-    this.setFragment(this.currentFragment-1);
+    this.switchFragment(this.curFragmentIndex-1);
+    this.emit('wentBackFragment', this.getCurrentFragment());
   }
 }
 
