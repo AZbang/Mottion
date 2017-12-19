@@ -14,16 +14,18 @@ class LevelManager extends PIXI.projection.Container2d {
 
     this.currentLevel = 0;
     this.currentFragment = 0;
-    this.setLevel(0);
 
+    this.setLevel(0);
     this.map.on('mapEnd', () => this.nextFragment());
   }
+
+  // add fragments to db fragments
   addFragmentsData(data={}) {
-    // add fragments to db fragments
     Object.assign(this.fragmentsData, data);
   }
+
+  // add levels to db levels
   addLevels(levels=[]) {
-    // add levels to db levels
     this.levels = this.levels.concat(levels);
 
     // generate map for every level from fragments
@@ -37,6 +39,7 @@ class LevelManager extends PIXI.projection.Container2d {
       }
     });
   }
+
   // getters
   getCurrentLevel() {
     return this.levels[this.currentLevel];
@@ -62,20 +65,20 @@ class LevelManager extends PIXI.projection.Container2d {
     this.setFragment(0);
   }
   nextLevel() {
-    setLevel(this.currentLevel+1);
+    this.setLevel(this.currentLevel+1);
   }
   backLevel() {
-    setLevel(this.currentLevel-1);
+    this.setLevel(this.currentLevel-1);
   }
 
 
   // Methods for fragments control
   setFragment(frag) {
     if(frag < 0) return;
-    // if not more fragments, then level complete...
-    if(frag >= this.getCurrentLevel().maps.length) this.endLevel();
-
     this.currentFragment = frag;
+
+    // if not more fragments, then level complete...
+    if(!this.getCurrentFragment()) this.endLevel();
     this.map.addMap(this.getCurrentFragment());
   }
   nextFragment() {

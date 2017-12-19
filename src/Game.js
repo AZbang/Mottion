@@ -15,6 +15,7 @@ class Game extends PIXI.Application {
   }
   _initTicker() {
     this.ticker.add((dt) => {
+      this.scenes.update(dt);
       PIXI.tweenManager.update();
     });
   }

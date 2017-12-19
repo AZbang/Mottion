@@ -1,9 +1,9 @@
 class Block extends PIXI.projection.Sprite2d {
-  constructor(tileMap, x, y, params={}) {
+  constructor(map, x, y, params={}) {
     super(PIXI.Texture.fromFrame(params.image || params.activationImage));
 
-    this.tileMap = tileMap;
-    this.game = this.tileMap.game;
+    this.map = map;
+    this.game = this.map.game;
 
     this.score = params.score;
     this.activation = params.activation || null;
@@ -13,10 +13,10 @@ class Block extends PIXI.projection.Sprite2d {
     this.playerDir = params.playerDir || null;
 
     this.anchor.set(.5);
-    this.width = tileMap.TILE_SIZE+1;
-    this.height = tileMap.TILE_SIZE+1;
-    this.x = x+tileMap.TILE_SIZE/2+.5;
-    this.y = y+tileMap.TILE_SIZE/2+.5;
+    this.width = map.blockSize+1;
+    this.height = map.blockSize+1;
+    this.x = x+map.blockSize/2+.5;
+    this.y = y+map.blockSize/2+.5;
 
     this.jolting = PIXI.tweenManager.createTween(this);
     this.jolting.from({rotation: -.1}).to({rotation: .1});
@@ -24,18 +24,19 @@ class Block extends PIXI.projection.Sprite2d {
     this.jolting.repeat = this.activation;
     this.jolting.pingPong = true;
 
-    this.activating = PIXI.tweenManager.createTween(this);
-    this.activating.from({width: this.width*3/4, height: this.height*3/4}).to({width: this.width, height: this.height});
-    this.activating.time = 500;
-    this.activating.easing = PIXI.tween.Easing.outBounce();
     this.interactive = true;
-
     this.on('pointermove', this.hit, this);
   }
   activate() {
+    let activating = PIXI.tweenManager.createTween(this)
+      .from({width: this.width*3/4, height: this.height*3/4})
+      .to({width: this.width, height: this.height});
+
+    activating.time = 500;
+    activating.easing = PIXI.tween.Easing.outBounce();
+    activating.start();
+
     this.isActive = true;
-    this.activating.reset();
-    this.activating.start();
     this.jolting.stop();
     this.rotation = 0;
     if(this.activationTexture) this.texture = this.activationTexture;

@@ -37,6 +37,9 @@ class Playground extends PIXI.projection.Container2d {
     //   this.game.scenes.restartScene('playground');
     // });
   }
+  update() {
+    this.map.update();
+  }
 }
 
 module.exports = Playground;

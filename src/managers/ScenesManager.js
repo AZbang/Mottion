@@ -28,6 +28,10 @@ class ScenesManager extends PIXI.Container {
     this.activeScene._idScene = id;
     return this.activeScene;
   }
+
+  update(dt) {
+    this.activeScene && this.activeScene.update && this.activeScene.update(dt);
+  }
 }
 
 module.exports = ScenesManager;

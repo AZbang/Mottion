@@ -82,10 +82,7 @@ class MapManager extends PIXI.projection.Container2d {
     let move = PIXI.tweenManager.createTween(this);
     move.from({y: this.y}).to({y: this.y+blocks*this.blockSize});
     move.time = this.speed*blocks;
-    move.on('end', () => {
-      this.triggerEvent('scrollEnd');
-      this.update();
-    });
+    move.on('end', () => this.triggerEvent('scrollEnd'));
     move.start();
   }
   scrollTop(blocks) {
@@ -93,25 +90,21 @@ class MapManager extends PIXI.projection.Container2d {
     let move = PIXI.tweenManager.createTween(this);
     move.from({y: this.y}).to({y: this.y-blocks*this.blockSize});
     move.time = this.speed*blocks;
-    move.on('end', () => {
-      this.triggerEvent('scrollEnd');
-      this.update();
-    });
+    move.on('end', () => this.triggerEvent('scrollEnd'));
     move.start();
   }
 
-  // Update after scroll map
   update() {
-    // Clear memory
-    for(let i = 0; i < this.children.length; i++) {
-      if(this.children[i].worldTransform.ty-this.TILE_SIZE/2 > this.game.h) {
-        this.removeChild(this.children[i]);
-      }
-    }
-
     // Computing map end (amt blocks < max amt blocks)
     if(this.children.length < this.maxAxisX*(this.game.h/this.blockSize)) {
       this.triggerEvent('mapEnd');
+    }
+
+    // clear out range map blocks
+    for(let i = 0; i < this.children.length; i++) {
+      if(this.children[i].worldTransform.ty-this.blockSize/2 > this.game.h) {
+        this.removeChild(this.children[i]);
+      }
     }
   }
 }
