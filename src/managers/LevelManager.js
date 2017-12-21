@@ -33,19 +33,13 @@ class LevelManager extends PIXI.utils.EventEmitter {
 
     this.curLevelIndex = 0;
     this.curFragmentIndex = 0;
-
-    this.switchLevel(0);
-    this.map.on('endedMap', () => {
-      this.nextFragment();
-    });
-    this.nextFragment();
   }
   // getters
   getCurrentLevel() {
     return this.levels[this.curLevelIndex];
   }
   getCurrentFragment() {
-    return this.getCurrentLevel().maps[this.curFragmentIndex];
+    return this.getCurrentLevel() && this.getCurrentLevel().maps[this.curFragmentIndex];
   }
 
   // add fragments to db fragments
@@ -75,7 +69,7 @@ class LevelManager extends PIXI.utils.EventEmitter {
 
   // Methods for levels control
   switchLevel(lvl) {
-    if(lvl > this.levels.length || lvl < 0) return;
+    if(lvl >= this.levels.length || lvl < 0) return;
     this.emit('endedLevel', this.getCurrentLevel());
 
     this.curLevelIndex = lvl;

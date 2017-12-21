@@ -29,6 +29,8 @@ class MapManager extends PIXI.projection.Container2d {
     this.setBlocksData(require('../content/blocks'));
     this.resize();
 
+    this.isStop = false;
+
     this.speed = 500;
     this.lastIndex = 0;
   }
@@ -64,7 +66,6 @@ class MapManager extends PIXI.projection.Container2d {
   }
   addFragment(fragData) {
     let frag = new DataFragmentConverter(fragData).fragment;
-
     // add block to center X axis, for example: round((8-4)/2) => +2 padding to block X pos
     for(let i = 0; i < frag.length; i++) {
       this.addBlock(frag[i], Math.round((this.maxAxisX-frag.length)/2)+i, this.lastIndex);
@@ -72,7 +73,7 @@ class MapManager extends PIXI.projection.Container2d {
 
     this.lastIndex++;
     this.emit('addedFragment', fragData);
-    
+
     this.computingMapEnd();
   }
   addBlock(id, x, y) {
@@ -93,6 +94,8 @@ class MapManager extends PIXI.projection.Container2d {
 
   // Moving Map
   scrollDown(blocks) {
+    if(this.isStop) return;
+
     // Scroll map down on X blocks
     let move = PIXI.tweenManager.createTween(this);
     move.from({y: this.y}).to({y: this.y+blocks*this.blockSize});
@@ -105,6 +108,8 @@ class MapManager extends PIXI.projection.Container2d {
     move.start();
   }
   scrollTop(blocks) {
+    if(this.isStop) return;
+
     // Scroll map top on X blocks
     let move = PIXI.tweenManager.createTween(this);
     move.from({y: this.y}).to({y: this.y-blocks*this.blockSize});

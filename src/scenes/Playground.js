@@ -17,9 +17,9 @@ class Playground extends PIXI.projection.Container2d {
     this.PADDING_BOTTOM = 280;
 
     // Init objects
+    this.map = new MapManager(this);
     this.screen = new ScreenManager(this);
     this.history = new HistoryManager(this);
-    this.map = new MapManager(this);
 
     this.levels = new LevelManager(this, this.map);
     this.player = new Player(this, this.map);
@@ -32,6 +32,25 @@ class Playground extends PIXI.projection.Container2d {
       let block = this.map.getBlockFromPos(e.data.global);
       block && block.hit();
     });
+
+
+    this.history.on('showen', () => {
+      this.map.isStop = true;
+    });
+    this.history.on('hidden', () => {
+      this.map.isStop = false;
+      this.player.moving();
+    });
+
+    this.levels.on('endedLevel', (lvl) => {
+      this.history.showText(lvl.history.ru, 3000);
+    });
+
+    this.map.on('endedMap', () => this.levels.nextFragment());
+    this.map.on('scrolledDown', () => this.player.moving());
+
+    this.levels.switchLevel(0);
+    this.map.scrollDown(0);
   }
   restart() {
     this.game.scenes.restartScene('playground');

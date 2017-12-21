@@ -33,14 +33,8 @@ class Player extends PIXI.projection.Sprite2d {
     this.IMMUNITY_BLOCKS = 2;
     this.immunityCount = 1;
     this.isImmunity = false;
-
-    this.map.on('scrolledDown', () => this.moving());
-    this.map.scrollDown(1);
-
-    this.index = 0;
   }
   moving() {
-
     if(this.isDead || this.isImmunity) return;
 
     let cur = this.map.getBlockFromPos({x: this.x, y: this.y+this.map.blockSize});

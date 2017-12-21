@@ -1,22 +1,14 @@
 {
   "let": [
     {
-      "map": ["A|B", "A|B|C", "A"],
+      "map": ["A", "A|B", "A|A|A|B", "A|A|B", "A"],
       "shuffle": true
     },
     {
-      "map": ["A|B", "A", "A"],
-      "shuffle": true
+      "map": ["A", "A", "A", "A", "A"]
     }
   ],
   "island": [
-    {
-      "map": ["A", "B", "A"],
-      "shuffle": true
-    },
-    {
-      "map": ["A", "A", "A"]
-    },
     {
       "map": ["ITL", "IT", "ITR"]
     },
