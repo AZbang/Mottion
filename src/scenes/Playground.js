@@ -16,6 +16,7 @@ class Playground extends PIXI.projection.Container2d {
     this.interactive = true;
     this.PADDING_BOTTOM = 280;
 
+
     // Init objects
     this.map = new MapManager(this);
     this.screen = new ScreenManager(this);

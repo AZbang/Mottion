@@ -1,4 +1,4 @@
-class HistoryManager extends PIXI.Container {
+class HistoryManager extends PIXI.projection.Container2d {
   constructor(scene) {
     super();
 
@@ -6,16 +6,10 @@ class HistoryManager extends PIXI.Container {
     this.scene = scene;
     scene.addChild(this);
 
+    this.proj.affine = PIXI.projection.AFFINE.AXIS_X;
     this.alpha = 0;
 
-    this.bg = new PIXI.Sprite(PIXI.Texture.fromImage('mask'));
-    this.bg.width = this.game.w;
-    this.bg.height = this.game.h*3/4;
-    this.bg.x = 0;
-    this.bg.y = 0;
-    this.addChild(this.bg);
-
-    this.text = new PIXI.Text('', {
+    this.text = new PIXI.Text('Text', {
       font: 'normal 40px Amatic SC',
       wordWrap: true,
       wordWrapWidth: this.game.w/2,
