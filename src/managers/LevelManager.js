@@ -57,11 +57,14 @@ class LevelManager extends PIXI.utils.EventEmitter {
   }
   addLevel(lvl={}) {
     this.levels.push(lvl);
+
     // generated maps to lvl object
     lvl.maps = [];
-    for(let key in lvl.fragments) {
-      for(let i = 0; i < lvl.fragments[key]; i++) {
-        this.fragmentsData[key] && lvl.maps.push(this.fragmentsData[key]);
+    for(let i = 0; i < lvl.fragments.length; i++) {
+      for(let key in lvl.fragments[i]) {
+        for(let c = 0; c < lvl.fragments[i][key]; c++) {
+          lvl.maps.push(this.fragmentsData[key]);
+        }
       }
     }
     this.emit('addedLevel', lvl);
@@ -70,21 +73,20 @@ class LevelManager extends PIXI.utils.EventEmitter {
   // Methods for levels control
   switchLevel(lvl) {
     if(lvl >= this.levels.length || lvl < 0) return;
-    this.emit('endedLevel', this.getCurrentLevel());
 
     this.curLevelIndex = lvl;
     this.switchFragment(0);
 
-    this.emit('startedLevel', this.getCurrentLevel());
-    this.emit('switchedLevel', this.getCurrentLevel());
+    this.emit('startedLevel');
+    this.emit('switchedLevel');
   }
   nextLevel() {
     this.switchLevel(this.curLevelIndex+1);
-    this.emit('wentNextLevel', this.getCurrentLevel());
+    this.emit('wentNextLevel');
   }
   backLevel() {
     this.switchLevel(this.curLevelIndex-1);
-    this.emit('wentBackLevel', this.getCurrentLevel());
+    this.emit('wentBackLevel');
   }
 
   // Methods for fragments control
@@ -93,19 +95,16 @@ class LevelManager extends PIXI.utils.EventEmitter {
     this.curFragmentIndex = frag;
 
     if(this.getCurrentFragment()) this.map.addMap(this.getCurrentFragment());
-    else {
-      this.emit('endedLevel', this.getCurrentLevel());
-      this.nextLevel();
-    }
-    this.emit('switchedFragment', this.getCurrentFragment());
+    else this.emit('endedLevel');
+    this.emit('switchedFragment');
   }
   nextFragment() {
     this.switchFragment(this.curFragmentIndex+1);
-    this.emit('wentNextFragment', this.getCurrentFragment());
+    this.emit('wentNextFragment');
   }
   backFragment() {
     this.switchFragment(this.curFragmentIndex-1);
-    this.emit('wentBackFragment', this.getCurrentFragment());
+    this.emit('wentBackFragment');
   }
 }
 

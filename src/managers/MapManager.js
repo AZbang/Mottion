@@ -63,6 +63,8 @@ class MapManager extends PIXI.projection.Container2d {
       this.addFragment(map[i]);
     }
     this.emit('addedMap', map);
+    this.clearOutRangeBlocks();
+    this.computingMapEnd();
   }
   addFragment(fragData) {
     let frag = new DataFragmentConverter(fragData).fragment;
@@ -73,8 +75,6 @@ class MapManager extends PIXI.projection.Container2d {
 
     this.lastIndex++;
     this.emit('addedFragment', fragData);
-
-    this.computingMapEnd();
   }
   addBlock(id, x, y) {
     if(id === '_') return;
@@ -101,9 +101,9 @@ class MapManager extends PIXI.projection.Container2d {
     move.from({y: this.y}).to({y: this.y+blocks*this.blockSize});
     move.time = this.speed*blocks;
     move.on('end', () => {
-      this.computingMapEnd();
-      this.clearOutRangeBlocks();
       this.emit('scrolledDown', blocks);
+      this.clearOutRangeBlocks();
+      this.computingMapEnd();
     });
     move.start();
   }
@@ -115,9 +115,9 @@ class MapManager extends PIXI.projection.Container2d {
     move.from({y: this.y}).to({y: this.y-blocks*this.blockSize});
     move.time = this.speed*blocks;
     move.on('end', () => {
-      this.computingMapEnd();
-      this.clearOutRangeBlocks();
       this.emit('scrolledTop', blocks);
+      this.clearOutRangeBlocks();
+      this.computingMapEnd();
     });
     move.start();
   }

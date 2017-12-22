@@ -6,6 +6,8 @@ class HistoryManager extends PIXI.Container {
     this.scene = scene;
     scene.addChild(this);
 
+    this.alpha = 0;
+
     this.bg = new PIXI.Sprite(PIXI.Texture.fromImage('mask'));
     this.bg.width = this.game.w;
     this.bg.height = this.game.h*3/4;
@@ -13,7 +15,7 @@ class HistoryManager extends PIXI.Container {
     this.bg.y = 0;
     this.addChild(this.bg);
 
-    this.text = new PIXI.Text('text', {
+    this.text = new PIXI.Text('', {
       font: 'normal 40px Amatic SC',
       wordWrap: true,
       wordWrapWidth: this.game.w/2,

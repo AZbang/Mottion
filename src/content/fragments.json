@@ -1,14 +1,33 @@
 {
   "let": [
     {
-      "map": ["A", "A|B", "A|A|A|B", "A|A|B", "A"],
+      "map": ["A", "A|C|B", "A|A|A|A|C|B", "A"],
+      "shuffle": true,
+      "trim": 3
+    },
+    {
+      "map": ["A|A|C", "A|B", "A", "B", "A"],
+      "shuffle": true,
+    }
+  ],
+  "end": [
+    {
+      "map": ["A", "A", "A", "A", "A"],
+    }
+  ],
+  "labirint": [
+    {
+      "map": ["A", "B", "B", "B", "B"],
       "shuffle": true
     },
     {
-      "map": ["A", "A", "A", "A", "A"]
+      "map": ["A", "A", "A", "A", "A"],
     }
   ],
   "island": [
+    {
+      "map": ["A|C|B", "A", "A|C|B"]
+    },
     {
       "map": ["ITL", "IT", "ITR"]
     },

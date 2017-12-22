@@ -19,6 +19,7 @@ class Block extends PIXI.projection.Sprite2d {
     this.activationTexture = params.activationImage ? PIXI.Texture.fromFrame(params.activationImage) : null;
     this.isActive = params.active;
     this.playerDir = params.playerDir || null;
+    this.action = params.action || null;
 
     this.anchor.set(.5);
     this.width = map.blockSize+1;

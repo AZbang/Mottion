@@ -31,7 +31,7 @@ class Player extends PIXI.projection.Sprite2d {
     this.isDead = false;
 
     this.IMMUNITY_BLOCKS = 2;
-    this.immunityCount = 1;
+    this.immunityCount = 5;
     this.isImmunity = false;
   }
   moving() {
@@ -39,6 +39,8 @@ class Player extends PIXI.projection.Sprite2d {
 
     let cur = this.map.getBlockFromPos({x: this.x, y: this.y+this.map.blockSize});
     if(cur && cur.isActive) {
+      this.emit('collision', cur);
+
       if(cur.playerDir === 'top') return this.top();
       if(cur.playerDir === 'left') return this.left();
       if(cur.playerDir === 'right') return this.right();

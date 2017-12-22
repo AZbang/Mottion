@@ -26,31 +26,31 @@ class Playground extends PIXI.projection.Container2d {
 
 
     // Controls
-    this.player.on('deaded', () => this.restart());
     this.on('pointerdown', () => this.player.immunity());
     this.on('pointermove', (e) => {
       let block = this.map.getBlockFromPos(e.data.global);
       block && block.hit();
     });
 
+    this.player.on('deaded', () => this.restart());
+    this.player.on('collision', (block) => {
+      if(block.action === 'history') this.history.showText(this.levels.getCurrentLevel().history.ru, 3000);
+    });
 
     this.history.on('showen', () => {
       this.map.isStop = true;
     });
     this.history.on('hidden', () => {
       this.map.isStop = false;
-      this.player.moving();
-    });
-
-    this.levels.on('endedLevel', (lvl) => {
-      this.history.showText(lvl.history.ru, 3000);
+      this.map.scrollDown(1);
+      this.levels.nextLevel();
     });
 
     this.map.on('endedMap', () => this.levels.nextFragment());
     this.map.on('scrolledDown', () => this.player.moving());
 
     this.levels.switchLevel(0);
-    this.map.scrollDown(0);
+    this.map.scrollDown(1);
   }
   restart() {
     this.game.scenes.restartScene('playground');

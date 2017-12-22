@@ -3,7 +3,7 @@
     "image": "cell1.png",
     "active": false,
     "activationImage": "cell1-fill.png",
-    "activation": 5,
+    "activation": 8,
     "score": 1
   },
   "B": {
@@ -14,8 +14,15 @@
     "image": "cell4.png",
     "active": false,
     "activationImage": "cell4-fill.png",
-    "activation": 25,
+    "activation": 22,
     "score": 3
+  },
+  "IC": {
+    "activationImage": "islandC.png",
+    "active": true,
+    "playerDir": "top",
+    "action": "history",
+    "activation": 0
   },
   "ITL": {
     "activationImage": "islandTL.png",
@@ -35,6 +42,7 @@
   "IR": {
     "activationImage": "islandR.png",
     "active": true,
+    "action": "history",
     "playerDir": "top"
   },
   "IBR": {
@@ -56,12 +64,7 @@
     "activationImage": "islandL.png",
     "active": true,
     "playerDir": "top",
-    "activation": 0
-  },
-  "IC": {
-    "activationImage": "islandC.png",
-    "active": true,
-    "playerDir": "top",
+    "action": "history",
     "activation": 0
   }
 }
