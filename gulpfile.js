@@ -1,41 +1,36 @@
 const gulp = require('gulp');
-const browserify = require('gulp-browserify');
+const browserify = require('browserify');
 const connect = require('gulp-connect');
-const plumber = require('gulp-plumber');
-const notify = require("gulp-notify");
-const babel = require('gulp-babel');
-const uglify = require('gulp-uglify');
+const notifier = require('node-notifier');
+const babelify = require('babelify');
+const source = require('vinyl-source-stream')
+const browserifyShader = require('browserify-shader');
 const gulpIf = require('gulp-if');
 
 var isDev = process.env.DEV !== 'production';
-var errorMessage = () => {
-	return plumber({errorHandler: notify.onError((err) => {
-		return {
-			title: err.name,
-			message: err.message
-		}
-	})})
-}
 
 gulp.task('js', () => {
-	return gulp.src('./src/index.js', {read: false})
-		.pipe(errorMessage())
-		.pipe(browserify({
-			debug: isDev
-		}))
-		.pipe(gulpIf(!isDev, babel({
-			presets: ['es2015']
-		})))
-		.pipe(gulpIf(!isDev, uglify()))
-		.pipe(gulp.dest('./www'))
-		.pipe(connect.reload());
+	return browserify({entries: './src/index.js', debug: isDev})
+    .transform(browserifyShader)
+		.transform(babelify, { presets: ['es2015'] })
+    .bundle()
+			.on('error', (err) => {
+				console.log(err.stack);
+				notifier.notify({
+		      'title': 'JS Error',
+		      'message': err.message
+		    });
+			})
+      .pipe(source('app.js'))
+      .pipe(gulp.dest('./www'))
+      .pipe(connect.reload());
 });
 
 
 // server
 gulp.task('server', () => {
 	return connect.server({
-		port: 1338,
+		port: 1339,
 		livereload: true,
 		root: './www'
 	});

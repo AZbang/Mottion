@@ -1,5 +1,6 @@
 const ScenesManager = require('./managers/ScenesManager');
 const filters = require('pixi-filters');
+const CloudsFilter = require('./shaders/clouds');
 
 class Game extends PIXI.Application {
   constructor() {
