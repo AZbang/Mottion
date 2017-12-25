@@ -24,6 +24,8 @@ class MapManager extends PIXI.projection.Container2d {
     this.scene = scene;
     this.game = scene.game;
 
+    this.PADDING_BOTTOM = 280;
+
     this.maxAxisX = params.maxX || 5;
     this.blockSize = params.tileSize || 100;
     this.setBlocksData(require('../content/blocks'));
@@ -36,7 +38,7 @@ class MapManager extends PIXI.projection.Container2d {
   }
   resize() {
     this.x = this.game.w/2-this.maxAxisX*this.blockSize/2;
-    this.y = this.game.h-this.scene.PADDING_BOTTOM;
+    this.y = this.game.h-this.PADDING_BOTTOM;
     this.emit('resized');
   }
 
@@ -91,7 +93,7 @@ class MapManager extends PIXI.projection.Container2d {
       if(this.children[i].containsPoint(pos)) return this.children[i];
     }
   }
-
+  
   // Moving Map
   scrollDown(blocks) {
     if(this.isStop) return;

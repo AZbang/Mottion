@@ -1,27 +1,32 @@
 /*
   Класс Player, взаимодействует с MapManager
   События
+    collision => collision block
+    moved
+    deaded
 
+    actionImmunity
+    actionTop
+    actionLeft
+    actionRight
 */
 
-class Player extends PIXI.projection.Sprite2d {
+class Player extends PIXI.Sprite {
   constructor(scene, map) {
     super(PIXI.Texture.fromImage('player'));
-    scene.addChild(this);
 
     this.game = scene.game;
     this.scene = scene;
     this.map = map;
 
-    this.proj.affine = PIXI.projection.AFFINE.AXIS_X;
     this.anchor.set(.5, 1);
-    this.scale.set(.5);
-    this.x = this.game.w/2;
-    this.y = this.game.h-this.map.blockSize/2-this.scene.PADDING_BOTTOM;
+    this.scale.set(.7);
+    this.x = this.game.w/2+5;
+    this.y = this.game.h-this.map.blockSize*2.3;
 
-    this.walking = PIXI.tweenManager.createTween(this.scale);
-    this.walking.from({x: .5, y: .5}).to({x: .6, y: .6});
-    this.walking.time = 500;
+    this.walking = PIXI.tweenManager.createTween(this);
+    this.walking.from({y: this.y}).to({y: this.y-5});
+    this.walking.time = 800;
     this.walking.loop = true;
     this.walking.pingPong = true;
     this.walking.start();
@@ -37,7 +42,7 @@ class Player extends PIXI.projection.Sprite2d {
   moving() {
     if(this.isDead || this.isImmunity) return;
 
-    let cur = this.map.getBlockFromPos({x: this.x, y: this.y+this.map.blockSize});
+    let cur = this.map.getBlockFromPos({x: this.x, y: this.y});
     if(cur && cur.isActive) {
       this.emit('collision', cur);
 
@@ -46,15 +51,15 @@ class Player extends PIXI.projection.Sprite2d {
       if(cur.playerDir === 'right') return this.right();
 
       //check top
-      let top = this.map.getBlockFromPos({x: this.x, y: this.y});
+      let top = this.map.getBlockFromPos({x: this.x, y: this.y-this.map.blockSize});
       if(top && top.isActive && this.lastMove !== 'bottom') return this.top();
 
       // check left
-      let left = this.map.getBlockFromPos({x: this.x-this.map.blockSize, y: this.y+this.map.blockSize});
+      let left = this.map.getBlockFromPos({x: this.x-this.map.blockSize, y: this.y});
       if(left && left.isActive && this.lastMove !== 'right') return this.left();
 
       // check rigth
-      let right = this.map.getBlockFromPos({x: this.x+this.map.blockSize, y: this.y+this.map.blockSize});
+      let right = this.map.getBlockFromPos({x: this.x+this.map.blockSize, y: this.y});
       if(right && right.isActive && this.lastMove !== 'left') return this.right();
 
       // or die
@@ -68,7 +73,7 @@ class Player extends PIXI.projection.Sprite2d {
     this.isDead = true;
 
     let dead = PIXI.tweenManager.createTween(this.scale);
-    dead.from({x: .5, y: .5}).to({x: 0, y: 0});
+    dead.from(this.scale).to({x: 0, y: 0});
     dead.time = 200;
     dead.start();
     dead.on('end', () => this.emit('deaded'));
@@ -98,7 +103,7 @@ class Player extends PIXI.projection.Sprite2d {
   left() {
     this.lastMove = 'left';
     let move = PIXI.tweenManager.createTween(this);
-    move.from({x: this.x}).to({x: this.x-this.map.blockSize});
+    move.from({x: this.x}).to({x: this.x-this.map.blockSize-20});
     move.time = this.speed/2;
     move.start();
 
@@ -108,7 +113,7 @@ class Player extends PIXI.projection.Sprite2d {
   right() {
     this.lastMove = 'right';
     let move = PIXI.tweenManager.createTween(this);
-    move.from({x: this.x}).to({x: this.x+this.map.blockSize});
+    move.from({x: this.x}).to({x: this.x+this.map.blockSize+20});
     move.time = this.speed/2;
     move.start();
 

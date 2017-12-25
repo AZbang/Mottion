@@ -3,30 +3,36 @@ const LevelManager = require('../managers/LevelManager');
 const HistoryManager = require('../managers/HistoryManager');
 const ScreenManager = require('../managers/ScreenManager');
 const Player = require('../subjects/Player');
+const Thlen = require('../subjects/Thlen');
 
 class Playground extends PIXI.projection.Container2d {
   constructor(game) {
     super();
     this.game = game;
 
-    // Projection scene
-    this.proj.setAxisY({x: -this.game.w/2+50, y: 4000}, -1);
-
     // Constant for position object in projection
     this.interactive = true;
-    this.PADDING_BOTTOM = 280;
-
 
     // Init objects
+    this.projection = new PIXI.projection.Container2d();
+    this.projection.proj.setAxisY({x: -this.game.w/2+50, y: 4000}, -1);
+    this.addChild(this.projection);
+
     this.map = new MapManager(this);
-    this.screen = new ScreenManager(this);
-    this.history = new HistoryManager(this);
+    this.projection.addChild(this.map);
 
     this.levels = new LevelManager(this, this.map);
-    this.player = new Player(this, this.map);
 
+    this.screen = new ScreenManager(this);
+    this.history = new HistoryManager(this);
+    this.player = new Player(this, this.map);
+    this.thlen = new Thlen(this);
+    this.addChild(this.screen, this.history, this.player, this.thlen);
 
     // Controls
+    this._bindEvents();
+  }
+  _bindEvents() {
     this.on('pointerdown', () => this.player.immunity());
     this.on('pointermove', (e) => {
       let block = this.map.getBlockFromPos(e.data.global);
@@ -59,6 +65,9 @@ class Playground extends PIXI.projection.Container2d {
     // this.screen.splash(0xFFFFFF, 1000).then(() => {
     //   this.game.scenes.restartScene('playground');
     // });
+  }
+  update() {
+    this.thlen.update();
   }
 }
 

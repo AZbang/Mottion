@@ -11,7 +11,9 @@ WebFont.load({
     PIXI.loader
       .add('blocks', 'assets/blocks.json')
       .add('player', 'assets/player.png')
-      .add('bg', 'assets/bg1.png')
+      .add('bg', 'assets/bg.png')
+      .add('displacement', 'assets/displacement.png')
+      .add('thlen', 'assets/thlen.png')
       .add('lightmap', 'assets/lightmap.png')
       .add('mask', 'assets/mask.png')
       .add('music', 'assets/music.mp3')

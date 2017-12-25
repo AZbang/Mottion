@@ -24,7 +24,7 @@ class Game extends PIXI.Application {
     this.container.filterArea = new PIXI.Rectangle(0, 0, this.w, this.h);
     this.container.filters = [new filters.OldFilmFilter({
       sepia: 0,
-      vignetting: .01,
+      vignetting: 0,
       noise: .1,
       vignettingBlur: 1
     })];
@@ -36,7 +36,7 @@ class Game extends PIXI.Application {
       this.scenes.update(dt);
       PIXI.tweenManager.update();
       this.container.filters[0].seed = Math.random();
-      this.container.filters[0].time += .01;
+      // this.container.filters[0].time += .01;
     });
   }
 }

@@ -1,14 +1,11 @@
-class HistoryManager extends PIXI.projection.Container2d {
+class HistoryManager extends PIXI.Container {
   constructor(scene) {
     super();
 
     this.game = scene.game;
     this.scene = scene;
-    scene.addChild(this);
 
-    this.proj.affine = PIXI.projection.AFFINE.AXIS_X;
     this.alpha = 0;
-
     this.text = new PIXI.Text('Text', {
       font: 'normal 40px Amatic SC',
       wordWrap: true,
