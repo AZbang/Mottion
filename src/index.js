@@ -1,6 +1,8 @@
 require('pixi-sound');
 require('pixi-tween');
 require('pixi-projection');
+require('pixi-particles');
+
 const Game = require('./game');
 
 WebFont.load({
@@ -16,9 +18,10 @@ WebFont.load({
       .add('thlen', 'assets/thlen.png')
       .add('lightmap', 'assets/lightmap.png')
       .add('mask', 'assets/mask.png')
+      .add('particle', 'assets/particle.png')
       .add('music', 'assets/music.mp3')
       .load((loader, resources) => {
-        PIXI.sound.play('music');
+        // PIXI.sound.play('music');
         let game = new Game();
         game.scenes.enableScene('playground');
 

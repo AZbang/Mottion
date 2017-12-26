@@ -35,8 +35,11 @@ class Playground extends PIXI.projection.Container2d {
   _bindEvents() {
     this.on('pointerdown', () => this.player.immunity());
     this.on('pointermove', (e) => {
-      let block = this.map.getBlockFromPos(e.data.global);
-      block && block.hit();
+      for(let i = 0; i < this.map.children.length; i++) {
+        let block = this.map.children[i];
+        if(block.containsPoint(e.data.global)) return block.hit();
+        else block.unhit();
+      }
     });
 
     this.player.on('deaded', () => this.restart());

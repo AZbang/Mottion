@@ -20,6 +20,7 @@ class HistoryManager extends PIXI.Container {
     this.addChild(this.text);
   }
   showText(txt, time) {
+    this.text.fontFamily = 'Amatic SC';
     this.text.setText(txt);
 
     let show = PIXI.tweenManager.createTween(this);

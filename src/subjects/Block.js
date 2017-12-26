@@ -26,6 +26,16 @@ class Block extends PIXI.projection.Sprite2d {
     this.height = map.blockSize+1;
     this.x = x+map.blockSize/2+.5;
     this.y = y+map.blockSize/2+.5;
+
+    this.jolting = PIXI.tweenManager.createTween(this);
+    this.jolting.from({rotation: -.1}).to({rotation: .1});
+    this.jolting.time = 200;
+    this.jolting.pingPong = true;
+    this.jolting.repeat = Infinity;
+
+    this.glow = new PIXI.filters.GlowFilter();
+    this.glow.enabled = false;
+    this.filters = [this.glow];
   }
   activate() {
     let activating = PIXI.tweenManager.createTween(this)
@@ -34,6 +44,10 @@ class Block extends PIXI.projection.Sprite2d {
     activating.time = 500;
     activating.easing = PIXI.tween.Easing.outBounce();
     activating.start();
+
+    this.glow.enabled = false;
+    this.jolting.stop();
+    this.rotation = 0;
 
     this.isActive = true;
     if(this.activationTexture) this.texture = this.activationTexture;
@@ -45,14 +59,16 @@ class Block extends PIXI.projection.Sprite2d {
     if(this.deactivationTexture) this.texture = this.deactivationTexture;
     this.emit('deactivated');
   }
+  unhit() {
+    this.glow.enabled = false;
+    this.jolting.stop();
+    this.rotation = 0;
+  }
   hit() {
     if(this.activation === null || this.isActive) return;
 
-    let jolting = PIXI.tweenManager.createTween(this);
-    jolting.from({rotation: 0}).to({rotation: Math.random() < .5 ? -.15 : .15});
-    jolting.time = 100;
-    jolting.pingPong = true;
-    jolting.start();
+    this.jolting.start();
+    this.glow.enabled = true;
 
     if(this.activation) this.activation--;
     else this.activate();

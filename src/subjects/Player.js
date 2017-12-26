@@ -22,10 +22,10 @@ class Player extends PIXI.Sprite {
     this.anchor.set(.5, 1);
     this.scale.set(.7);
     this.x = this.game.w/2+5;
-    this.y = this.game.h-this.map.blockSize*2.3;
+    this.y = this.game.h-this.map.blockSize*2;
 
     this.walking = PIXI.tweenManager.createTween(this);
-    this.walking.from({y: this.y}).to({y: this.y-5});
+    this.walking.from({y: this.y}).to({y: this.y-15});
     this.walking.time = 800;
     this.walking.loop = true;
     this.walking.pingPong = true;

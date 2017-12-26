@@ -17,6 +17,7 @@
     },
     "dependencies": {
         "pixi-filters": "^2.4.0",
+        "pixi-particles": "^2.1.9",
         "pixi-projection": "^0.1.8",
         "pixi-sound": "^2.0.0",
         "pixi-tween": "^0.2.0"

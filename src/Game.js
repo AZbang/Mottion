@@ -1,6 +1,7 @@
 const ScenesManager = require('./managers/ScenesManager');
 const filters = require('pixi-filters');
 const CloudsFilter = require('./shaders/clouds');
+const Sphere = require('./subjects/Sphere');
 
 class Game extends PIXI.Application {
   constructor() {
@@ -29,6 +30,16 @@ class Game extends PIXI.Application {
       vignettingBlur: 1
     })];
 
+    this.container.interactive = true;
+    this.container.cursor = 'none';
+    this.mouse = new Sphere();
+    this.container.addChild(this.mouse);
+
+    this.container.on('pointermove', (e) => {
+      this.mouse.x = e.data.global.x;
+      this.mouse.y = e.data.global.y;
+    });
+
     this._initTicker();
   }
   _initTicker() {
@@ -36,6 +47,7 @@ class Game extends PIXI.Application {
       this.scenes.update(dt);
       PIXI.tweenManager.update();
       this.container.filters[0].seed = Math.random();
+      this.mouse.update(dt);
       // this.container.filters[0].time += .01;
     });
   }
