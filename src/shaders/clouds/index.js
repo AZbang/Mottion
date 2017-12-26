@@ -3,24 +3,7 @@ const vert = require('../basic.vert');
 
 class CloudsFilter extends PIXI.Filter {
   constructor(options) {
-    super(vert(), frag(), {
-      cloudDensity: {
-        type: 'float',
-        value: 0.3
-      },
-      cloudHeight: {
-        type: 'float',
-        value: 0.3
-      },
-      speed: {
-        type: 'float',
-        value: 1.0
-      },
-      noisiness: {
-        type: 'float',
-        value: 0.5
-      }
-    });
+    super(vert(), frag());
 
     Object.assign(this, {
       cloudDensity: 0.3,

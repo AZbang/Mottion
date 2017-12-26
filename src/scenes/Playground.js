@@ -1,3 +1,5 @@
+const AlphaGradientFilter = require('../shaders/AlphaGradientFilter');
+
 const MapManager = require('../managers/MapManager');
 const LevelManager = require('../managers/LevelManager');
 const HistoryManager = require('../managers/HistoryManager');
@@ -16,6 +18,7 @@ class Playground extends PIXI.projection.Container2d {
     // Init objects
     this.projection = new PIXI.projection.Container2d();
     this.projection.proj.setAxisY({x: -this.game.w/2+50, y: 4000}, -1);
+    this.projection.filters = [new AlphaGradientFilter(.3, .1)];
     this.addChild(this.projection);
 
     this.map = new MapManager(this);
@@ -48,16 +51,27 @@ class Playground extends PIXI.projection.Container2d {
     });
 
     this.history.on('showen', () => {
-      this.map.isStop = true;
+      let tween = PIXI.tweenManager.createTween(this.projection.filters[0]);
+      tween.from({startGradient: .3, endGradient: .1}).to({startGradient: .7, endGradient: .5});
+      tween.time = 1000;
+      tween.start();
+
+      this.map.isStop = true
     });
     this.history.on('hidden', () => {
+      let tween = PIXI.tweenManager.createTween(this.projection.filters[0]);
+      tween.from({startGradient: .7, endGradient: .5}).to({startGradient: .5, endGradient: .2});
+      tween.time = 1000;
+      tween.start();
+
       this.map.isStop = false;
       this.map.scrollDown(1);
-      this.levels.nextLevel();
     });
 
     this.map.on('endedMap', () => this.levels.nextFragment());
     this.map.on('scrolledDown', () => this.player.moving());
+
+    this.levels.on('endedLevel', () => this.levels.nextLevel());
 
     this.levels.switchLevel(0);
     this.map.scrollDown(1);

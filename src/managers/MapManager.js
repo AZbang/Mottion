@@ -65,7 +65,6 @@ class MapManager extends PIXI.projection.Container2d {
       this.addFragment(map[i]);
     }
     this.emit('addedMap', map);
-    this.clearOutRangeBlocks();
     this.computingMapEnd();
   }
   addFragment(fragData) {
@@ -93,7 +92,7 @@ class MapManager extends PIXI.projection.Container2d {
       if(this.children[i].containsPoint(pos)) return this.children[i];
     }
   }
-  
+
   // Moving Map
   scrollDown(blocks) {
     if(this.isStop) return;
@@ -126,7 +125,7 @@ class MapManager extends PIXI.projection.Container2d {
 
   // Computing map end (amt blocks < max amt blocks)
   computingMapEnd() {
-    if(this.children.length < this.maxAxisX*(this.game.h/this.blockSize)) {
+    if(this.children.length < this.maxAxisX*(this.game.h/this.blockSize)*2) {
       this.emit('endedMap');
     }
   }
