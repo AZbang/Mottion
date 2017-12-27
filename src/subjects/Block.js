@@ -33,7 +33,7 @@ class Block extends PIXI.projection.Sprite2d {
     this.jolting.pingPong = true;
     this.jolting.repeat = Infinity;
 
-    this.glow = new PIXI.filters.GlowFilter();
+    this.glow = new PIXI.filters.AlphaFilter();
     this.glow.enabled = false;
     this.filters = [this.glow];
   }
@@ -45,7 +45,7 @@ class Block extends PIXI.projection.Sprite2d {
     activating.easing = PIXI.tween.Easing.outBounce();
     activating.start();
 
-    this.glow.enabled = false;
+    this.glow.alpha = 1.0;
     this.jolting.stop();
     this.rotation = 0;
 
@@ -69,6 +69,7 @@ class Block extends PIXI.projection.Sprite2d {
 
     this.jolting.start();
     this.glow.enabled = true;
+    this.glow.alpha = 5.0;
 
     if(this.activation) this.activation--;
     else this.activate();

@@ -40,8 +40,9 @@ class Playground extends PIXI.projection.Container2d {
     this.on('pointermove', (e) => {
       for(let i = 0; i < this.map.children.length; i++) {
         let block = this.map.children[i];
-        if(block.containsPoint(e.data.global)) return block.hit();
-        else block.unhit();
+        if(block.containsPoint(e.data.global)) {
+          return block.hit();
+        } else block.unhit();
       }
     });
 
@@ -60,7 +61,7 @@ class Playground extends PIXI.projection.Container2d {
     });
     this.history.on('hidden', () => {
       let tween = PIXI.tweenManager.createTween(this.projection.filters[0]);
-      tween.from({startGradient: .7, endGradient: .5}).to({startGradient: .5, endGradient: .2});
+      tween.from({startGradient: .7, endGradient: .5}).to({startGradient: .3, endGradient: .1});
       tween.time = 1000;
       tween.start();
 

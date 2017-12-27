@@ -10,7 +10,7 @@ class HistoryManager extends PIXI.Container {
       font: 'normal 40px Amatic SC',
       wordWrap: true,
       wordWrapWidth: this.game.w/2,
-      fill: '#2d5bff',
+      fill: '#fff',
       padding: 10,
       align: 'center'
     });

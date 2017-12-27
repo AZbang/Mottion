@@ -20,8 +20,8 @@ class Thlen extends PIXI.Container {
     scene.addChild(this.thlen);
   }
   update() {
-    this.displacementSprite.x += 10;
-    this.displacementSprite.y += 10;
+    this.displacementSprite.x += 5;
+    this.displacementSprite.y += 5;
   }
 }
 
