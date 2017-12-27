@@ -1,11 +1,16 @@
-const AlphaGradientFilter = require('../shaders/AlphaGradientFilter');
-
+// managers
 const MapManager = require('../managers/MapManager');
 const LevelManager = require('../managers/LevelManager');
 const HistoryManager = require('../managers/HistoryManager');
 const ScreenManager = require('../managers/ScreenManager');
+
+// subjects
 const Player = require('../subjects/Player');
 const Thlen = require('../subjects/Thlen');
+
+// filters
+const AlphaGradientFilter = require('../filters/AlphaGradientFilter');
+
 
 class Playground extends PIXI.projection.Container2d {
   constructor(game) {

@@ -1,9 +1,12 @@
+// objects
 const ScenesManager = require('./managers/ScenesManager');
-const filters = require('pixi-filters');
-const GrayscaleFilter = require('./shaders/GrayscaleFilter');
-const NoiseBlurFilter = require('./shaders/NoiseBlurFilter');
-
 const Sphere = require('./subjects/Sphere');
+
+// filters
+const GrayscaleFilter = require('./filters/GrayscaleFilter');
+const NoiseBlurFilter = require('./filters/NoiseBlurFilter');
+const CloudsFilter = require('./filters/CloudsFilter');
+
 
 class Game extends PIXI.Application {
   constructor() {
@@ -24,9 +27,9 @@ class Game extends PIXI.Application {
     this.scenes = new ScenesManager(this);
     this.container.addChild(this.scenes);
 
-    this.container.filterArea = new PIXI.Rectangle(0, 0, this.w, this.h);
     this.grayscale = new GrayscaleFilter();
-    this.container.filters = [this.grayscale, new NoiseBlurFilter()];
+    this.noiseBlur = new NoiseBlurFilter();
+    this.container.filters = [this.grayscale, this.noiseBlur];
 
     this.container.interactive = true;
     this.container.cursor = 'none';
@@ -44,10 +47,11 @@ class Game extends PIXI.Application {
   }
   _initTicker() {
     this.ticker.add((dt) => {
-      this.scenes.update(dt);
       PIXI.tweenManager.update();
+      this.scenes.update(dt);
       this.mouse.update(dt);
-      // this.container.filters[0].time += .01;
+
+      this.clouds.time = performance.now();
     });
   }
 }

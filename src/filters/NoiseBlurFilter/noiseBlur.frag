@@ -3,7 +3,7 @@ precision mediump float;
 varying vec2 vTextureCoord;
 uniform sampler2D uSampler;
 
-float blurRadius = 0.001;
+uniform float blurRadius;
 
 vec2 random(vec2 p) {
 	p = fract(p * vec2(443.897, 441.423));

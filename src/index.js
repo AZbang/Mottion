@@ -16,6 +16,7 @@ WebFont.load({
       .add('bg', 'assets/bg.png')
       .add('displacement', 'assets/displacement.png')
       .add('thlen', 'assets/thlen.png')
+      .add('noise', 'assets/noise_grayscale.png')
       .add('lightmap', 'assets/lightmap.png')
       .add('mask', 'assets/mask.png')
       .add('particle', 'assets/particle.png')
