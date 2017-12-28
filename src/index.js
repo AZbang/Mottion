@@ -11,18 +11,19 @@ WebFont.load({
   },
   active() {
     PIXI.loader
-      .add('blocks', 'assets/blocks.json')
-      .add('player', 'assets/player.png')
       .add('bg', 'assets/bg.png')
-      .add('displacement', 'assets/displacement.png')
       .add('thlen', 'assets/thlen.png')
-      .add('noise', 'assets/noise_grayscale.png')
-      .add('lightmap', 'assets/lightmap.png')
-      .add('mask', 'assets/mask.png')
-      .add('particle', 'assets/particle.png')
-      .add('music', 'assets/music.mp3')
+
+      .add('blocks', 'assets/spritesheets/blocks.json')
+      .add('player', 'assets/spritesheets/player.json')
+
+      .add('displacement', 'assets/filters/displacement.png')
+      .add('noise', 'assets/filters/noise_grayscale.png')
+      .add('particle', 'assets/filters/particle.png')
+
+      .add('music', 'assets/sounds/music.mp3')
+
       .load((loader, resources) => {
-        // PIXI.sound.play('music');
         let game = new Game();
         game.scenes.enableScene('playground');
 

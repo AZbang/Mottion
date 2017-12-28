@@ -62,7 +62,8 @@ class Playground extends PIXI.projection.Container2d {
       tween.time = 1000;
       tween.start();
 
-      this.map.isStop = true
+      this.map.isStop = true;
+      this.player.stopMove();
     });
     this.history.on('hidden', () => {
       let tween = PIXI.tweenManager.createTween(this.projection.filters[0]);
@@ -72,6 +73,7 @@ class Playground extends PIXI.projection.Container2d {
 
       this.map.isStop = false;
       this.map.scrollDown(1);
+      this.player.startMove();
     });
 
     this.map.on('endedMap', () => this.levels.nextFragment());

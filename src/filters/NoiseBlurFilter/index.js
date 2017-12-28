@@ -5,7 +5,7 @@ class NoiseBlurFilter extends PIXI.Filter {
   constructor() {
     super(vert(), frag());
 
-    this.blurRadius = 0.0005;
+    this.blurRadius = 0.0002;
   }
   set blurRadius(v) {
     this.uniforms.blurRadius = v;

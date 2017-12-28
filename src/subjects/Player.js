@@ -11,18 +11,34 @@
     actionRight
 */
 
-class Player extends PIXI.Sprite {
+const RUN_TOP = [];
+for(let i = 0; i < 4; i++) {
+  let texture = PIXI.Texture.fromImage('player_run_top_' + (i+1));
+  RUN_TOP.push({texture, time: 70});
+}
+
+const RUN_LEFT = [];
+for(let i = 0; i < 5; i++) {
+  let texture = PIXI.Texture.fromImage('player_run_left_' + (i+1));
+  RUN_LEFT.push({texture, time: 70});
+}
+
+class Player extends PIXI.extras.AnimatedSprite {
   constructor(scene, map) {
-    super(PIXI.Texture.fromImage('player'));
+    super(RUN_TOP);
 
     this.game = scene.game;
     this.scene = scene;
     this.map = map;
 
+    this.SCALE = .7;
     this.anchor.set(.5, 1);
-    this.scale.set(.7);
+    this.scale.set(this.SCALE);
     this.x = this.game.w/2+5;
     this.y = this.game.h-this.map.blockSize*2;
+
+    this.loop = true;
+    this.play();
 
     this.walking = PIXI.tweenManager.createTween(this);
     this.walking.from({y: this.y}).to({y: this.y-15});
@@ -34,13 +50,13 @@ class Player extends PIXI.Sprite {
     this.lastMove = null;
     this.speed = this.map.speed || 500;
     this.isDead = false;
+    this.isStop = false;
 
-    this.IMMUNITY_BLOCKS = 2;
+    this.IMMUNITY_BLOCKS = 1;
     this.immunityCount = 5;
-    this.isImmunity = false;
   }
   moving() {
-    if(this.isDead || this.isImmunity) return;
+    if(this.isDead || this.isStop) return;
 
     let cur = this.map.getBlockFromPos({x: this.x, y: this.y});
     if(cur && cur.isActive) {
@@ -81,26 +97,49 @@ class Player extends PIXI.Sprite {
   immunity() {
     if(!this.immunityCount) return;
 
-    let immunity = PIXI.tweenManager.createTween(this);
-    immunity.from({alpha: .5}).to({alpha: 1});
-    immunity.time = this.speed*this.IMMUNITY_BLOCKS;
-    immunity.start();
+    let block = this.map.getBlockFromPos({x: this.x, y: this.y-(this.map.blockSize*2)});
+    if(block) {
+      block.activationTexture = PIXI.Texture.fromImage('cell1-fill.png');
+      block.activate();
+      this.immunityCount--;
+      this.emit('actionImmunity');
+    }
+  }
+  startMove() {
+    this.isStop = false;
+    this.textures = RUN_TOP;
+    this.scale.x = this.SCALE;
+    this.walking.start();
+    this.gotoAndPlay(0);
+  }
+  stopMove() {
+    this.isStop = true;
+    this.textures = RUN_TOP;
+    this.scale.x = this.SCALE;
+    this.walking.stop();
+    this.gotoAndStop(0);
 
-    this.map.scrollDown(this.IMMUNITY_BLOCKS);
-    immunity.on('end', () => this.isImmunity = false);
-    this.isImmunity = true;
-    this.lastMove = 'top';
-    this.immunityCount--;
-
-    this.emit('actionImmunity');
+    this.emit('actionStop');
   }
   top() {
+    if(this.lastMove !== 'top') {
+      this.textures = RUN_TOP;
+      this.scale.x = this.SCALE;
+      this.gotoAndPlay(0);
+    }
+
     this.lastMove = 'top';
     this.map.scrollDown(1);
 
     this.emit('actionTop');
   }
   left() {
+    if(this.lastMove !== 'left') {
+      this.scale.x = this.SCALE;
+      this.textures = RUN_LEFT;
+      this.gotoAndPlay(0);
+    }
+
     this.lastMove = 'left';
     let move = PIXI.tweenManager.createTween(this);
     move.from({x: this.x}).to({x: this.x-this.map.blockSize-20});
@@ -111,6 +150,12 @@ class Player extends PIXI.Sprite {
     this.emit('actionLeft');
   }
   right() {
+    if(this.lastMove !== 'right') {
+      this.scale.x = -this.SCALE;
+      this.textures = RUN_LEFT;
+      this.gotoAndPlay(0);
+    }
+
     this.lastMove = 'right';
     let move = PIXI.tweenManager.createTween(this);
     move.from({x: this.x}).to({x: this.x+this.map.blockSize+20});

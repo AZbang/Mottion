@@ -50,8 +50,6 @@ class Game extends PIXI.Application {
       PIXI.tweenManager.update();
       this.scenes.update(dt);
       this.mouse.update(dt);
-
-      this.clouds.time = performance.now();
     });
   }
 }
