@@ -55,8 +55,8 @@ class HistoryManager extends PIXI.Container {
     this.emit('hidden');
   }
   update() {
-    this.displacementSprite.x += 2;
-    this.displacementSprite.y += 2;
+    this.displacementSprite.x += .5;
+    this.displacementSprite.y += .5;
   }
 }
 

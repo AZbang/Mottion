@@ -12,7 +12,7 @@
 */
 
 const RUN_TOP = [];
-for(let i = 0; i < 4; i++) {
+for(let i = 0; i < 8; i++) {
   let texture = PIXI.Texture.fromImage('player_run_top_' + (i+1));
   RUN_TOP.push({texture, time: 70});
 }
