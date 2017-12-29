@@ -53,23 +53,16 @@ class Playground extends PIXI.projection.Container2d {
 
     this.player.on('deaded', () => this.restart());
     this.player.on('collision', (block) => {
-      if(block.action === 'history') this.history.showText(this.levels.getCurrentLevel().history.ru, 3000);
+      if(block.action === 'history')
+        this.history.show(this.levels.getCurrentLevel().history);
     });
 
     this.history.on('showen', () => {
-      let tween = PIXI.tweenManager.createTween(this.projection.filters[0]);
-      tween.from({startGradient: .3, endGradient: .1}).to({startGradient: .7, endGradient: .5});
-      tween.time = 1000;
-      tween.start();
-
       this.map.isStop = true;
       this.player.stopMove();
     });
     this.history.on('hidden', () => {
-      let tween = PIXI.tweenManager.createTween(this.projection.filters[0]);
-      tween.from({startGradient: .7, endGradient: .5}).to({startGradient: .3, endGradient: .1});
-      tween.time = 1000;
-      tween.start();
+      this.levels.nextLevel()
 
       this.map.isStop = false;
       this.map.scrollDown(1);
@@ -78,8 +71,6 @@ class Playground extends PIXI.projection.Container2d {
 
     this.map.on('endedMap', () => this.levels.nextFragment());
     this.map.on('scrolledDown', () => this.player.moving());
-
-    this.levels.on('endedLevel', () => this.levels.nextLevel());
 
     this.levels.switchLevel(0);
     this.map.scrollDown(1);
@@ -92,6 +83,7 @@ class Playground extends PIXI.projection.Container2d {
     // });
   }
   update() {
+    this.history.update();
     this.thlen.update();
   }
 }

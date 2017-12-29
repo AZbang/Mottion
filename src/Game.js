@@ -13,6 +13,8 @@ class Game extends PIXI.Application {
     super(window.innerWidth, window.innerHeight, {backgroundColor: 0xfcfcfc})
     document.body.appendChild(this.view);
 
+    this.lang = 'ru';
+
     this.w = window.innerWidth;
     this.h = window.innerHeight;
 
@@ -39,8 +41,7 @@ class Game extends PIXI.Application {
     this.container.on('pointermove', (e) => {
       this.grayscale.x = e.data.global.x/this.w;
       this.grayscale.y = e.data.global.y/this.h;
-      this.mouse.x = e.data.global.x;
-      this.mouse.y = e.data.global.y;
+      this.mouse.setPos(e.data.global);
     });
 
     this._initTicker();

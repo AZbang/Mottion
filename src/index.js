@@ -21,6 +21,8 @@ WebFont.load({
       .add('noise', 'assets/filters/noise_grayscale.png')
       .add('particle', 'assets/filters/particle.png')
 
+      .add('history_family', 'assets/history/family.png')
+
       .add('music', 'assets/sounds/music.mp3')
 
       .load((loader, resources) => {

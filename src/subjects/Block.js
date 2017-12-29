@@ -27,6 +27,11 @@ class Block extends PIXI.projection.Sprite2d {
     this.x = x+map.blockSize/2+.5;
     this.y = y+map.blockSize/2+.5;
 
+    let show = PIXI.tweenManager.createTween(this);
+    show.from({alpha: 0}).to({alpha: 1})
+    show.time = 1000;
+    show.start();
+
     this.jolting = PIXI.tweenManager.createTween(this);
     this.jolting.from({rotation: -.1}).to({rotation: .1});
     this.jolting.time = 200;
