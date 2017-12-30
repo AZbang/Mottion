@@ -1,3 +1,7 @@
+/*
+  Игровая сцена, здесь отрабатывает вся игра.
+*/
+
 // managers
 const MapManager = require('../managers/MapManager');
 const LevelManager = require('../managers/LevelManager');
@@ -12,13 +16,10 @@ const Thlen = require('../subjects/Thlen');
 const AlphaGradientFilter = require('../filters/AlphaGradientFilter');
 
 
-class Playground extends PIXI.projection.Container2d {
+class Playground extends PIXI.Container {
   constructor(game) {
     super();
     this.game = game;
-
-    // Constant for position object in projection
-    this.interactive = true;
 
     // Init objects
     this.projection = new PIXI.projection.Container2d();
@@ -38,6 +39,7 @@ class Playground extends PIXI.projection.Container2d {
     this.addChild(this.screen, this.history, this.player, this.thlen);
 
     // Controls
+    this.interactive = true;
     this._bindEvents();
   }
   _bindEvents() {

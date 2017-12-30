@@ -50,7 +50,7 @@ class ScenesManager extends PIXI.Container {
     this.emit('disabledScene', scene);
   }
   enableScene(id) {
-    this.disableScene();
+    this.activeScene && this.disableScene();
 
     let Scene = this.getScene(id);
     this.activeScene = this.addChild(new Scene(this.game, this));
