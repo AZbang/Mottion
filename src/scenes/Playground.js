@@ -1,7 +1,3 @@
-/*
-  Игровая сцена, здесь отрабатывает вся игра.
-*/
-
 // managers
 const MapManager = require('../managers/MapManager');
 const LevelManager = require('../managers/LevelManager');

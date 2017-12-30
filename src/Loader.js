@@ -38,6 +38,11 @@ class Loader {
       google: {
         families: ['Amatic SC']
       },
+      custom: {
+        families: ['Opificio Bold'],
+        urls: ['assets/fonts/fonts.css']
+      },
+      timeout: 1000,
       active: cb
     });
   }

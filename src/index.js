@@ -8,5 +8,5 @@ const Game = require('./Game');
 
 new Loader('assets/banner.png', () => {
   let game = new Game();
-  game.scenes.enableScene('playground');
+  game.scenes.enableScene('menu');
 });

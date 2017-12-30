@@ -1,3 +1,5 @@
 module.exports = {
-  'playground': require('./Playground')
+  'menu': require('./Menu'),
+  'playground': require('./Playground'),
+  'final': require('./Final')
 }
