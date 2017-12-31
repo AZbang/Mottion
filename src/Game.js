@@ -1,5 +1,8 @@
-// objects
+// managers
 const ScenesManager = require('./managers/ScenesManager');
+const SplashManager = require('./managers/SplashManager');
+
+// objects
 const Sphere = require('./subjects/Sphere');
 
 // filters
@@ -17,6 +20,10 @@ class Game extends PIXI.Application {
 
     this.w = window.innerWidth;
     this.h = window.innerHeight;
+
+    this.splash = new SplashManager(this);
+    this.stage.addChild(this.splash);
+    this.splash.show(0xECEEFF, 1000);
 
     this.container = new PIXI.Container();
     this.stage.addChild(this.container);

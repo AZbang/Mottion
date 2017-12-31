@@ -89,11 +89,9 @@ class Menu extends PIXI.Container {
     this.on('pointerdown', () => this.toPlayground())
   }
   toPlayground() {
-    let tween = PIXI.tweenManager.createTween(this);
-    tween.from({y: this.y}).to({y: -500});
-    tween.time = 600;
-    tween.start();
-    tween.on('end', () => this.game.scenes.enableScene('playground'));
+    this.game.splash.show(0xF9E4FF, 1000, () => {
+      this.game.scenes.enableScene('playground');
+    });
   }
   update() {
     this.count += 0.05;

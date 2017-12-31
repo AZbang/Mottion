@@ -12,7 +12,7 @@ var isDev = process.env.DEV !== 'production';
 gulp.task('js', () => {
 	return browserify({entries: './src/index.js', debug: isDev})
     .transform(browserifyShader)
-		.transform(babelify, { presets: ['es2015'] })
+		// .transform(babelify, { presets: ['es2015'] })
     .bundle()
 			.on('error', (err) => {
 				console.log(err.stack);

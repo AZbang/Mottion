@@ -2,7 +2,6 @@
 const MapManager = require('../managers/MapManager');
 const LevelManager = require('../managers/LevelManager');
 const HistoryManager = require('../managers/HistoryManager');
-const ScreenManager = require('../managers/ScreenManager');
 
 // subjects
 const Player = require('../subjects/Player');
@@ -18,8 +17,8 @@ class Playground extends PIXI.Container {
     this.game = game;
 
     this.bg = new PIXI.Sprite(PIXI.Texture.fromImage('bg'));
-    this.bg.width = this.w;
-    this.bg.height = this.h;
+    this.bg.width = this.game.w;
+    this.bg.height = this.game.h;
     this.addChild(this.bg);
 
     // Init objects
@@ -33,11 +32,10 @@ class Playground extends PIXI.Container {
 
     this.levels = new LevelManager(this, this.map);
 
-    this.screen = new ScreenManager(this);
     this.history = new HistoryManager(this);
     this.player = new Player(this, this.map);
     this.thlen = new Thlen(this);
-    this.addChild(this.screen, this.history, this.player, this.thlen);
+    this.addChild(this.history, this.player, this.thlen);
 
     // Controls
     this.interactive = true;
@@ -79,11 +77,9 @@ class Playground extends PIXI.Container {
     this.map.scrollDown(1);
   }
   restart() {
-    this.game.scenes.restartScene('playground');
-
-    // this.screen.splash(0xFFFFFF, 1000).then(() => {
-    //   this.game.scenes.restartScene('playground');
-    // });
+    this.game.splash.show(0xEEEEEE, 1000, () => {
+      this.game.scenes.enableScene('playground');
+    });
   }
   update() {
     this.history.update();
