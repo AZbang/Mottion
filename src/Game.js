@@ -21,11 +21,6 @@ class Game extends PIXI.Application {
     this.container = new PIXI.Container();
     this.stage.addChild(this.container);
 
-    this.bg = new PIXI.Sprite(PIXI.Texture.fromImage('bg'));
-    this.bg.width = this.w;
-    this.bg.height = this.h;
-    this.container.addChild(this.bg);
-
     this.scenes = new ScenesManager(this);
     this.container.addChild(this.scenes);
 

@@ -17,6 +17,11 @@ class Playground extends PIXI.Container {
     super();
     this.game = game;
 
+    this.bg = new PIXI.Sprite(PIXI.Texture.fromImage('bg'));
+    this.bg.width = this.w;
+    this.bg.height = this.h;
+    this.addChild(this.bg);
+
     // Init objects
     this.projection = new PIXI.projection.Container2d();
     this.projection.proj.setAxisY({x: -this.game.w/2+50, y: 4000}, -1);

@@ -22,6 +22,11 @@ class Loader {
   }
   _loadResources() {
     this.loader = new PIXI.loaders.Loader('assets/')
+      .add('sun', 'menu/sun.png')
+      .add('sky', 'menu/sky.png')
+      .add('mount', 'menu/mount.png')
+      .add('cloud', 'menu/cloud.png')
+
       .add('bg', 'bg.png')
       .add('thlen', 'thlen.png')
       .add('blocks', 'spritesheets/blocks.json')
