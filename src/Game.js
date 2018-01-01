@@ -13,20 +13,21 @@ const CloudsFilter = require('./filters/CloudsFilter');
 
 class Game extends PIXI.Application {
   constructor() {
-    super(window.innerWidth, window.innerHeight, {backgroundColor: 0xfcfcfc})
-    document.body.appendChild(this.view);
+    super();
 
     this.lang = 'ru';
-
-    this.w = window.innerWidth;
-    this.h = window.innerHeight;
+    this.w = 1920;
+    this.h = 880;
 
     this.splash = new SplashManager(this);
     this.stage.addChild(this.splash);
-    this.splash.show(0xECEEFF, 1000);
 
     this.container = new PIXI.Container();
+    this.container.interactive = true;
+    this.container.cursor = 'none';
     this.stage.addChild(this.container);
+    this.resize();
+
 
     this.scenes = new ScenesManager(this);
     this.container.addChild(this.scenes);
@@ -35,18 +36,22 @@ class Game extends PIXI.Application {
     this.noiseBlur = new NoiseBlurFilter();
     this.container.filters = [this.grayscale, this.noiseBlur];
 
-    this.container.interactive = true;
-    this.container.cursor = 'none';
     this.mouse = new Sphere();
     this.container.addChild(this.mouse);
 
-    this.container.on('pointermove', (e) => {
-      this.grayscale.x = e.data.global.x/this.w;
-      this.grayscale.y = e.data.global.y/this.h;
-      this.mouse.setPos(e.data.global);
-    });
-
+    this._bindEvents();
     this._initTicker();
+
+    this.splash.show(0xECEEFF, 1000);
+  }
+  _bindEvents() {
+    window.addEventListener("resize", this.resize.bind(this));
+
+    this.container.on('pointermove', (e) => {
+      this.mouse.setPos({x: e.data.global.x/this.scale, y: e.data.global.y/this.scale});
+      this.grayscale.x = e.data.global.x/this.w/this.scale;
+      this.grayscale.y = e.data.global.y/this.h/this.scale;
+    });
   }
   _initTicker() {
     this.ticker.add((dt) => {
@@ -54,6 +59,12 @@ class Game extends PIXI.Application {
       this.scenes.update(dt);
       this.mouse.update(dt);
     });
+  }
+  resize() {
+    this.scale = window.innerWidth/this.w;
+    this.renderer.resize(window.innerWidth, this.h*this.scale);
+    this.view.style.marginTop = window.innerHeight/2-this.h*this.scale/2 + 'px';
+    this.container.scale.set(this.scale);
   }
 }
 

@@ -61,6 +61,7 @@ class Player extends PIXI.extras.AnimatedSprite {
     let cur = this.map.getBlockFromPos({x: this.x, y: this.y});
     if(cur && cur.isActive) {
       this.emit('collision', cur);
+      cur.scale.set(.5);
 
       if(cur.playerDir === 'top') return this.top();
       if(cur.playerDir === 'left') return this.left();

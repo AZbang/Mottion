@@ -7,7 +7,7 @@ class SplashManager extends PIXI.Graphics {
   }
   show(color = 0xFFFFFF, time = 1000, cb) {
     this.beginFill(color);
-    this.drawRect(0, 0, this.game.w, this.game.h);
+    this.drawRect(0, 0, this.game.stage.width, this.game.stage.height);
 
     let hide = PIXI.tweenManager.createTween(this)
       .from({alpha: 1}).to({alpha: 0});
