@@ -16,6 +16,9 @@ class Playground extends PIXI.Container {
     super();
     this.game = game;
 
+    this.game.noiseBlur.blurRadius = 0.0001;
+    this.game.grayscale.r = 0.8;
+
     this.bg = new PIXI.Sprite(PIXI.Texture.fromImage('bg'));
     this.bg.width = this.game.w;
     this.bg.height = this.game.h;
@@ -61,13 +64,15 @@ class Playground extends PIXI.Container {
     this.history.on('showen', () => {
       this.map.isStop = true;
       this.player.stopMove();
+      this.projection.filters[0].enabled = false;
     });
     this.history.on('hidden', () => {
-      this.levels.nextLevel()
+      this.levels.nextLevel();
 
       this.map.isStop = false;
       this.map.scrollDown(1);
       this.player.startMove();
+      this.projection.filters[0].enabled = true;
     });
 
     this.map.on('endedMap', () => this.levels.nextFragment());

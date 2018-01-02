@@ -44,7 +44,7 @@ class HistoryManager extends PIXI.Container {
     show.start();
     this.emit('showen');
 
-    setInterval(() => this._hide(), data.time);
+    setTimeout(() => this._hide(), data.time);
   }
   _hide() {
     let hide = PIXI.tweenManager.createTween(this);

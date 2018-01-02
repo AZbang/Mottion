@@ -29,17 +29,14 @@ class MapManager extends PIXI.projection.Container2d {
     this.maxAxisX = params.maxX || 5;
     this.blockSize = params.tileSize || 100;
     this.setBlocksData(require('../content/blocks'));
-    this.resize();
+
+    this.x = this.game.w/2-this.maxAxisX*this.blockSize/2;
+    this.y = this.game.h-this.PADDING_BOTTOM;
 
     this.isStop = false;
 
     this.speed = 500;
     this.lastIndex = 0;
-  }
-  resize() {
-    this.x = this.game.w/2-this.maxAxisX*this.blockSize/2;
-    this.y = this.game.h-this.PADDING_BOTTOM;
-    this.emit('resized');
   }
 
   // Set params
@@ -89,7 +86,22 @@ class MapManager extends PIXI.projection.Container2d {
   // Collision Widh Block
   getBlockFromPos(pos) {
     for(let i = 0; i < this.children.length; i++) {
-      if(this.children[i].containsPoint(pos)) return this.children[i];
+      let block = this.children[i];
+      let x = block.transform.worldTransform.tx/this.game.scale-block.width/2;
+      let y = block.transform.worldTransform.ty/this.game.scale-block.height/2;
+      let w = block.width;
+      let h = block.height;
+
+      if(pos.x >= x && pos.x <= x+w && pos.y >= y && pos.y <= y+h) return this.children[i];
+    }
+  }
+  getBlocksFromPos(pos) {
+    return {
+      center: this.getBlockFromPos(pos),
+      top: this.getBlockFromPos({x: pos.x, y: pos.y-this.blockSize}),
+      bottom: this.getBlockFromPos({x: pos.x, y: pos.y+this.blockSize}),
+      left: this.getBlockFromPos({x: pos.x-this.blockSize, y: pos.y}),
+      right: this.getBlockFromPos({x: pos.x+this.blockSize, y: pos.y}),
     }
   }
 
@@ -133,7 +145,7 @@ class MapManager extends PIXI.projection.Container2d {
   // clear out range map blocks
   clearOutRangeBlocks() {
     for(let i = 0; i < this.children.length; i++) {
-      if(this.children[i].worldTransform.ty-this.blockSize/2 > this.game.h) {
+      if(this.children[i].transform.worldTransform.ty-this.blockSize/2 > this.game.h) {
         this.removeChild(this.children[i]);
       }
     }
