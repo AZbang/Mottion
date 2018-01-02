@@ -89,7 +89,7 @@ class Menu extends PIXI.Container {
     this.on('pointerdown', () => this.toPlayground())
   }
   toPlayground() {
-    this.game.splash.show(0xF9E4FF, 1000, () => {
+    this.game.splash.show(0xF9E4FF, 1000, 1000, () => {
       this.game.scenes.enableScene('playground');
     });
   }

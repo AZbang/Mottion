@@ -12,7 +12,6 @@ class HistoryManager extends PIXI.Container {
     this.addChild(this.displacementSprite);
     this.displacementFilter = new PIXI.filters.DisplacementFilter(this.displacementSprite);
 
-
     this.image = new PIXI.Sprite();
     this.image.anchor.set(.5, 0);
     this.image.x = this.game.w/2;

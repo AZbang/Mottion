@@ -19,15 +19,10 @@ class Game extends PIXI.Application {
     this.w = 1920;
     this.h = 880;
 
-    this.splash = new SplashManager(this);
-    this.stage.addChild(this.splash);
-
     this.container = new PIXI.Container();
     this.container.interactive = true;
     this.container.cursor = 'none';
     this.stage.addChild(this.container);
-    this.resize();
-
 
     this.scenes = new ScenesManager(this);
     this.container.addChild(this.scenes);
@@ -39,10 +34,13 @@ class Game extends PIXI.Application {
     this.mouse = new Sphere();
     this.container.addChild(this.mouse);
 
+    this.splash = new SplashManager(this);
+    this.stage.addChild(this.splash);
+    this.splash.show(0xECEEFF, 10, 1000);
+
     this._bindEvents();
     this._initTicker();
-
-    this.splash.show(0xECEEFF, 1000);
+    this.resize();
   }
   _bindEvents() {
     window.addEventListener("resize", this.resize.bind(this));

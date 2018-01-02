@@ -77,7 +77,7 @@ class Playground extends PIXI.Container {
     this.map.scrollDown(1);
   }
   restart() {
-    this.game.splash.show(0xEEEEEE, 1000, () => {
+    this.game.splash.show(0xEEEEEE, 500, 500, () => {
       this.game.scenes.enableScene('playground');
     });
   }
