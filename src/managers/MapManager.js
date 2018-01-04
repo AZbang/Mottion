@@ -1,90 +1,50 @@
 /*
   Движок тайловой карты
   События:
-    addedMap => map
-    addedFragment => fragments
-    addedBlock => block
     scrolledDown => dtDown
     scrolledTop => dtTop
-
-    resized
-    endedMap
-    clearedOutRangeBlocks
 */
-
-
 const Block = require('../subjects/Block');
-const DataFragmentConverter = require('../utils/DataFragmentConverter');
 
 class MapManager extends PIXI.projection.Container2d {
-  constructor(scene, params={}) {
-    super();
-    scene.addChild(this);
+  constructor(scene, map, blocks) {
+    super('levels');
 
     this.scene = scene;
     this.game = scene.game;
 
-    this.PADDING_BOTTOM = 280;
+    this.tileSize = map.tilewidth;
+    this.mapWidth = map.width;
+    this.mapHeight = map.height;
 
-    this.maxAxisX = params.maxX || 5;
-    this.blockSize = params.tileSize || 100;
-    this.setBlocksData(require('../content/blocks'));
+    this.map = map.layers[0].data;
+    this.triggers = map.layers[1].data;
+    this.blocks = blocks.tileproperties;
 
-    this.x = this.game.w/2-this.maxAxisX*this.blockSize/2;
-    this.y = this.game.h-this.PADDING_BOTTOM;
+    this.PROJECTION_PADDING_BOTTOM = 280;
+    this.x = this.game.w/2-this.mapWidth*this.tileSize/2;
+    this.y = -this.mapHeight*this.tileSize+this.game.h-this.PROJECTION_PADDING_BOTTOM;
 
     this.isStop = false;
-
     this.speed = 500;
-    this.lastIndex = 0;
-  }
 
-  // Set params
-  setBlocksData(data) {
-    this.BLOCKS = data || {};
+    this._parseMap();
   }
-  setMaxAxisX(max) {
-    this.maxAxisX = max || 6;
-    this.resize();
-  }
-  setBlockSize(size) {
-    this.blockSize = size || 100;
-    this.resize();
-  }
-  setSpeed(speed) {
-    this.speed = speed || 500;
-  }
-
-
-  // Map Manager
-  addMap(map) {
-    for(let i = map.length-1; i >= 0; i--) {
-      this.addFragment(map[i]);
+  _parseMap() {
+    for(let y = 0; y < this.mapHeight; y++) {
+      for(let x = 0; x < this.mapWidth; x++) {
+        !this.map[y*this.mapWidth+x] || this.addBlock(x*this.tileSize, y*this.tileSize, this.map[y*this.mapWidth+x], this.triggers[y*this.mapWidth+x]);
+      }
     }
-    this.emit('addedMap', map);
-    this.computingMapEnd();
+    this.checkOutRangeBlocks();
   }
-  addFragment(fragData) {
-    let frag = new DataFragmentConverter(fragData).fragment;
-    // add block to center X axis, for example: round((8-4)/2) => +2 padding to block X pos
-    for(let i = 0; i < frag.length; i++) {
-      this.addBlock(frag[i], Math.round((this.maxAxisX-frag.length)/2)+i, this.lastIndex);
-    }
-
-    this.lastIndex++;
-    this.emit('addedFragment', fragData);
-  }
-  addBlock(id, x, y) {
-    if(id === '_') return;
-
-    let posX = x*this.blockSize;
-    let posY = -y*this.blockSize;
-    let block = this.addChild(new Block(this, posX, posY, this.BLOCKS[id]));
-    this.emit('addedBlock', block);
+  addBlock(x, y, blockID, triggerID) {
+    let block = new Block(this, x, y, this.blocks[blockID-1], this.blocks[triggerID-1]);
+    this.addChild(block);
   }
 
   // Collision Widh Block
-  getBlockFromPos(pos) {
+  getBlock(pos) {
     for(let i = 0; i < this.children.length; i++) {
       let block = this.children[i];
       let x = block.transform.worldTransform.tx/this.game.scale-block.width/2;
@@ -95,13 +55,13 @@ class MapManager extends PIXI.projection.Container2d {
       if(pos.x >= x && pos.x <= x+w && pos.y >= y && pos.y <= y+h) return this.children[i];
     }
   }
-  getBlocksFromPos(pos) {
+  getNearBlocks(pos) {
     return {
-      center: this.getBlockFromPos(pos),
-      top: this.getBlockFromPos({x: pos.x, y: pos.y-this.blockSize}),
-      bottom: this.getBlockFromPos({x: pos.x, y: pos.y+this.blockSize}),
-      left: this.getBlockFromPos({x: pos.x-this.blockSize, y: pos.y}),
-      right: this.getBlockFromPos({x: pos.x+this.blockSize, y: pos.y}),
+      center: this.getBlock(pos),
+      top: this.getBlock({x: pos.x, y: pos.y-this.tileSize}),
+      bottom: this.getBlock({x: pos.x, y: pos.y+this.tileSize}),
+      left: this.getBlock({x: pos.x-this.tileSize, y: pos.y}),
+      right: this.getBlock({x: pos.x+this.tileSize, y: pos.y}),
     }
   }
 
@@ -111,12 +71,12 @@ class MapManager extends PIXI.projection.Container2d {
 
     // Scroll map down on X blocks
     let move = PIXI.tweenManager.createTween(this);
-    move.from({y: this.y}).to({y: this.y+blocks*this.blockSize});
+    move.from({y: this.y}).to({y: this.y+blocks*this.tileSize});
     move.time = this.speed*blocks;
+
     move.on('end', () => {
       this.emit('scrolledDown', blocks);
-      this.clearOutRangeBlocks();
-      this.computingMapEnd();
+      this.checkOutRangeBlocks();
     });
     move.start();
   }
@@ -125,31 +85,24 @@ class MapManager extends PIXI.projection.Container2d {
 
     // Scroll map top on X blocks
     let move = PIXI.tweenManager.createTween(this);
-    move.from({y: this.y}).to({y: this.y-blocks*this.blockSize});
+    move.from({y: this.y}).to({y: this.y-blocks*this.tileSize});
     move.time = this.speed*blocks;
+
     move.on('end', () => {
       this.emit('scrolledTop', blocks);
-      this.clearOutRangeBlocks();
-      this.computingMapEnd();
+      this.checkOutRangeBlocks();
     });
     move.start();
   }
 
-  // Computing map end (amt blocks < max amt blocks)
-  computingMapEnd() {
-    if(this.children.length < this.maxAxisX*(this.game.h/this.blockSize)*2) {
-      this.emit('endedMap');
-    }
-  }
-
   // clear out range map blocks
-  clearOutRangeBlocks() {
+  checkOutRangeBlocks() {
     for(let i = 0; i < this.children.length; i++) {
-      if(this.children[i].transform.worldTransform.ty-this.blockSize/2 > this.game.h) {
-        this.removeChild(this.children[i]);
-      }
+      let y = this.children[i].transform.worldTransform.ty-this.tileSize/2;
+      if(y > this.game.h || y < -this.tileSize) {
+        this.children[i].renderable && this.children[i].hide();
+      } else !this.children[i].renderable && this.children[i].show();
     }
-    this.emit('clearedOutRangeBlocks');
   }
 }
 

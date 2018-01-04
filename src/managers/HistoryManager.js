@@ -1,10 +1,11 @@
 class HistoryManager extends PIXI.Container {
-  constructor(scene) {
+  constructor(scene, history) {
     super();
 
     this.game = scene.game;
     this.scene = scene;
 
+    this.history = history;
     this.alpha = 0;
 
     this.displacementSprite = new PIXI.Sprite(PIXI.Texture.fromImage('displacement'));
@@ -34,7 +35,9 @@ class HistoryManager extends PIXI.Container {
     this.text.y = 300;
     this.addChild(this.text);
   }
-  show(data) {
+  show(id) {
+    let data = this.history[id];
+
     this.image.texture = PIXI.Texture.fromImage(data.image);
     this.text.setText(data.text[this.game.lang]);
 

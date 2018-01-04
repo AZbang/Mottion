@@ -1,47 +1,61 @@
 /*
   Класс Блока, используется для тайлового движка
   События:
+    showen
+    hidden
     activated
     deactivated
     hited
 */
 
 class Block extends PIXI.projection.Sprite2d {
-  constructor(map, x, y, params={}) {
-    super(PIXI.Texture.fromFrame(params.image || params.activationImage));
+  constructor(map, x, y, block={}, trigger={}) {
+    super();
 
     this.map = map;
     this.game = this.map.game;
 
-    this.score = params.score;
-    this.activation = params.activation || null;
-    this.deactivationTexture = params.image ? PIXI.Texture.fromFrame(params.image) : null;
-    this.activationTexture = params.activationImage ? PIXI.Texture.fromFrame(params.activationImage) : null;
-    this.isActive = params.active;
-    this.playerDir = params.playerDir || null;
-    this.action = params.action || null;
+    this.active = block.active || false;
+    this.activation = block.activation || null;
+    this.score = block.score || 0;
+
+    this.playerDir = trigger.playerDir;
+    this.historyID = trigger.historyID;
+    this.action = trigger.action;
+
+    this.activatedTexture = block.activatedTexture ? PIXI.Texture.fromFrame(block.activatedTexture) : null;
+    this.deactivatedTexture = block.deactivatedTexture ? PIXI.Texture.fromFrame(block.deactivatedTexture) : null;
+    this.texture = this.active ? this.activatedTexture : this.deactivatedTexture;
 
     this.anchor.set(.5);
-    this.width = map.blockSize+1;
-    this.height = map.blockSize+1;
-    this.x = x+map.blockSize/2+.5;
-    this.y = y+map.blockSize/2+.5;
-
-    let show = PIXI.tweenManager.createTween(this);
-    show.from({alpha: 0}).to({alpha: 1})
-    show.time = 1000;
-    show.start();
+    this.renderable = false;
+    this.width = map.tileSize+1;
+    this.height = map.tileSize+1;
+    this.x = x+map.tileSize/2+.5;
+    this.y = y+map.tileSize/2+.5;
 
     this.jolting = PIXI.tweenManager.createTween(this);
     this.jolting.from({rotation: -.1}).to({rotation: .1});
     this.jolting.time = 200;
     this.jolting.pingPong = true;
     this.jolting.repeat = Infinity;
-
-    this.glow = new PIXI.filters.AlphaFilter();
-    this.glow.enabled = false;
-    this.filters = [this.glow];
   }
+  show() {
+    this.renderable = true;
+
+    let show = PIXI.tweenManager.createTween(this);
+    show.from({alpha: 0}).to({alpha: 1})
+    show.time = 1000;
+    show.start();
+
+    this.emit('showen');
+  }
+  hide() {
+    this.renderable = false;
+
+    this.emit('hidden');
+  }
+
   activate() {
     let activating = PIXI.tweenManager.createTween(this)
       .from({width: this.width*3/4, height: this.height*3/4})
@@ -50,34 +64,31 @@ class Block extends PIXI.projection.Sprite2d {
     activating.easing = PIXI.tween.Easing.outBounce();
     activating.start();
 
-    this.glow.alpha = 1.0;
-    this.jolting.stop();
-    this.rotation = 0;
+    this.unhit();
 
-    this.isActive = true;
-    if(this.activationTexture) this.texture = this.activationTexture;
+    this.active = true;
+    this.texture = this.activatedTexture;
 
     this.emit('activated');
   }
   deactivate() {
-    this.isActive = false;
-    if(this.deactivationTexture) this.texture = this.deactivationTexture;
+    this.active = false;
+    if(this.deactivatedTexture) this.texture = this.deactivatedTexture;
+
     this.emit('deactivated');
   }
+
   unhit() {
-    this.glow.enabled = false;
     this.jolting.stop();
     this.rotation = 0;
   }
   hit() {
-    if(this.activation === null || this.isActive) return;
+    if(this.activation === null || this.active) return;
 
     this.jolting.start();
-    this.glow.enabled = true;
-    this.glow.alpha = 5.0;
-
     if(this.activation) this.activation--;
     else this.activate();
+
     this.emit('hited');
   }
 }

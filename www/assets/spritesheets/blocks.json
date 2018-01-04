@@ -1,76 +1,76 @@
 {
 "frames": {
-	"cell1-fill.png": {
+	"blockActivated": {
 		"frame": {"x":0, "y":302, "w":150, "h":150},
 		"spriteSourceSize": {"x":0,"y":0,"w":150,"h":150},
 		"sourceSize": {"w":150,"h":150}
 	},
-	"cell1.png": {
+	"blockDeactivated": {
 		"frame": {"x":0, "y":0, "w":150, "h":150},
 		"spriteSourceSize": {"x":0,"y":0,"w":150,"h":150},
 		"sourceSize": {"w":150,"h":150}
 	},
-	"cell2.png": {
+	"block2Deactivated": {
 		"frame": {"x":0, "y":151, "w":150, "h":150},
 		"spriteSourceSize": {"x":0,"y":0,"w":150,"h":150},
 		"sourceSize": {"w":150,"h":150}
 	},
-	"cell3.png": {
+	"cell3Activated": {
 		"frame": {"x":151, "y":0, "w":150, "h":150},
 		"spriteSourceSize": {"x":0,"y":0,"w":150,"h":150},
 		"sourceSize": {"w":150,"h":150}
 	},
-	"cell4-fill.png": {
+	"block4Activated": {
 		"frame": {"x":151, "y":302, "w":150, "h":150},
 		"spriteSourceSize": {"x":0,"y":0,"w":150,"h":150},
 		"sourceSize": {"w":150,"h":150}
 	},
-	"cell4.png": {
+	"block4Deactivated": {
 		"frame": {"x":151, "y":151, "w":150, "h":150},
 		"spriteSourceSize": {"x":0,"y":0,"w":150,"h":150},
 		"sourceSize": {"w":150,"h":150}
 	},
-	"islandB.png": {
+	"islandB": {
 		"frame": {"x":302, "y":303, "w":100, "h":100},
 		"spriteSourceSize": {"x":0,"y":0,"w":100,"h":100},
 		"sourceSize": {"w":100,"h":100}
 	},
-	"islandBL.png": {
+	"islandBL": {
 		"frame": {"x":302, "y":202, "w":100, "h":100},
 		"spriteSourceSize": {"x":0,"y":0,"w":100,"h":100},
 		"sourceSize": {"w":100,"h":100}
 	},
-	"islandBR.png": {
+	"islandBR": {
 		"frame": {"x":403, "y":303, "w":100, "h":100},
 		"spriteSourceSize": {"x":0,"y":0,"w":100,"h":100},
 		"sourceSize": {"w":100,"h":100}
 	},
-	"islandC.png": {
+	"islandC": {
 		"frame": {"x":403, "y":202, "w":100, "h":100},
 		"spriteSourceSize": {"x":0,"y":0,"w":100,"h":100},
 		"sourceSize": {"w":100,"h":100}
 	},
-	"islandL.png": {
+	"islandL": {
 		"frame": {"x":302, "y":0, "w":100, "h":100},
 		"spriteSourceSize": {"x":0,"y":0,"w":100,"h":100},
 		"sourceSize": {"w":100,"h":100}
 	},
-	"islandR.png": {
+	"islandR": {
 		"frame": {"x":302, "y":101, "w":100, "h":100},
 		"spriteSourceSize": {"x":0,"y":0,"w":100,"h":100},
 		"sourceSize": {"w":100,"h":100}
 	},
-	"islandT.png": {
+	"islandT": {
 		"frame": {"x":302, "y":404, "w":100, "h":100},
 		"spriteSourceSize": {"x":0,"y":0,"w":100,"h":100},
 		"sourceSize": {"w":100,"h":100}
 	},
-	"islandTL.png": {
+	"islandTL": {
 		"frame": {"x":403, "y":0, "w":100, "h":100},
 		"spriteSourceSize": {"x":0,"y":0,"w":100,"h":100},
 		"sourceSize": {"w":100,"h":100}
 	},
-	"islandTR.png": {
+	"islandTR": {
 		"frame": {"x":403, "y":101, "w":100, "h":100},
 		"spriteSourceSize": {"x":0,"y":0,"w":100,"h":100},
 		"sourceSize": {"w":100,"h":100}

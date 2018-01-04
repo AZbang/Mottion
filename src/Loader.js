@@ -21,21 +21,24 @@ class Loader {
     this.onLoaded && this.onLoaded();
   }
   _loadResources() {
-    this.loader = new PIXI.loaders.Loader('assets/')
-      .add('sun', 'menu/sun.png')
-      .add('sky', 'menu/sky.png')
-      .add('mount', 'menu/mount.png')
-      .add('cloud', 'menu/cloud.png')
+    PIXI.loader
+      .add('sun', 'assets/menu/sun.png')
+      .add('sky', 'assets/menu/sky.png')
+      .add('mount', 'assets/menu/mount.png')
+      .add('cloud', 'assets/menu/cloud.png')
 
-      .add('bg', 'bg.png')
-      .add('thlen', 'thlen.png')
-      .add('blocks', 'spritesheets/blocks.json')
-      .add('player', 'spritesheets/player.json')
-      .add('displacement', 'filters/displacement.png')
-      .add('noise', 'filters/noise_grayscale.png')
-      .add('particle', 'filters/particle.png')
-      .add('history_family', 'history/family.png')
-      .add('music', 'sounds/music.mp3')
+      .add('bg', 'assets/bg.png')
+      .add('thlen', 'assets/thlen.png')
+
+      .add('player', 'assets/spritesheets/player.json')
+      .add('blocks', 'assets/spritesheets/blocks.json')
+
+      .add('displacement', 'assets/filters/displacement.png')
+      .add('noise', 'assets/filters/noise_grayscale.png')
+      .add('particle', 'assets/filters/particle.png')
+
+      .add('history_family', 'assets/history/family.png')
+      .add('music', 'assets/sounds/music.mp3')
       .load(() => this._loadFonts(() => this.hideBanner()));
   }
   _loadFonts(cb) {

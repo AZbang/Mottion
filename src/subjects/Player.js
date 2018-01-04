@@ -32,15 +32,14 @@ class Player extends PIXI.extras.AnimatedSprite {
     this.map = map;
 
     this.SCALE = .7;
+
+    this.loop = true;
     this.anchor.set(.5, 1);
     this.scale.set(this.SCALE);
     this.x = this.game.w/2+5;
-    this.y = this.game.h-this.map.blockSize*1.5;
+    this.y = this.game.h-this.map.tileSize*1;
 
     this.collisionPoint = new PIXI.Point(960, 716);
-
-    this.loop = true;
-    this.play();
 
     this.walking = PIXI.tweenManager.createTween(this);
     this.walking.from({y: this.y}).to({y: this.y-15});
@@ -54,14 +53,15 @@ class Player extends PIXI.extras.AnimatedSprite {
     this.isDead = false;
     this.isStop = false;
 
+    this.OFFSET_X = 20;
     this.IMMUNITY_BLOCKS = 1;
     this.immunityCount = 5;
   }
   moving() {
     if(this.isDead || this.isStop) return;
-    let blocks = this.map.getBlocksFromPos(this.collisionPoint);
 
-    if(blocks.center && blocks.center.isActive) {
+    let blocks = this.map.getNearBlocks(this.collisionPoint);
+    if(blocks.center && blocks.center.active) {
       this.emit('moved');
       this.emit('collision', blocks.center);
 
@@ -70,11 +70,11 @@ class Player extends PIXI.extras.AnimatedSprite {
       if(blocks.center.playerDir === 'right') return this.right();
 
       //check top
-      if(blocks.top && blocks.top.isActive && this.lastMove !== 'bottom') return this.top();
+      if(blocks.top && blocks.top.active && this.lastMove !== 'bottom') return this.top();
       // check left
-      if(blocks.left && blocks.left.isActive && this.lastMove !== 'right') return this.left();
+      if(blocks.left && blocks.left.active && this.lastMove !== 'right') return this.left();
       // check rigth
-      if(blocks.right && blocks.right.isActive && this.lastMove !== 'left') return this.right();
+      if(blocks.right && blocks.right.active && this.lastMove !== 'left') return this.right();
       // or die
       this.top();
     } else this.dead();
@@ -92,11 +92,11 @@ class Player extends PIXI.extras.AnimatedSprite {
   immunity() {
     if(!this.immunityCount) return;
 
-    let block = this.map.getBlockFromPos({x: this.x, y: this.y-(this.map.blockSize*2)});
+    let block = this.map.getBlock({x: this.x, y: this.y-this.map.tileSize});
     if(block) {
-      block.activationTexture = PIXI.Texture.fromImage('cell1-fill.png');
-      block.activate();
       this.immunityCount--;
+      block.activate('cell1-fill.png');
+
       this.emit('actionImmunity');
     }
   }
@@ -125,6 +125,7 @@ class Player extends PIXI.extras.AnimatedSprite {
 
     this.lastMove = 'top';
     this.map.scrollDown(1);
+    this.map.once('scrolledDown', () => this.moving());
 
     this.emit('actionTop');
   }
@@ -137,11 +138,11 @@ class Player extends PIXI.extras.AnimatedSprite {
 
     this.lastMove = 'left';
     let move = PIXI.tweenManager.createTween(this);
-    move.from({x: this.x}).to({x: this.x-this.map.blockSize-20});
+    move.from({x: this.x}).to({x: this.x-this.map.tileSize-this.OFFSET_X});
     move.time = this.speed/2;
     move.start();
 
-    this.collisionPoint.x -= this.map.blockSize;
+    this.collisionPoint.x -= this.map.tileSize;
 
     move.on('end', () => this.moving());
     this.emit('actionLeft');
@@ -155,11 +156,11 @@ class Player extends PIXI.extras.AnimatedSprite {
 
     this.lastMove = 'right';
     let move = PIXI.tweenManager.createTween(this);
-    move.from({x: this.x}).to({x: this.x+this.map.blockSize+20});
+    move.from({x: this.x}).to({x: this.x+this.map.tileSize+this.OFFSET_X});
     move.time = this.speed/2;
     move.start();
 
-    this.collisionPoint.x += this.map.blockSize;
+    this.collisionPoint.x += this.map.tileSize;
 
     move.on('end', () => this.moving());
     this.emit('actionRight');
