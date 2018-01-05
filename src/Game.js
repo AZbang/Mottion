@@ -15,7 +15,7 @@ class Game extends PIXI.Application {
   constructor() {
     super();
 
-    this.lang = 'ru';
+    this.lang = 'en';
     this.w = 1920;
     this.h = 880;
 
