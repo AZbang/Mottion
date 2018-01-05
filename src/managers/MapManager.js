@@ -7,7 +7,7 @@
 const Block = require('../subjects/Block');
 
 class MapManager extends PIXI.projection.Container2d {
-  constructor(scene, map, blocks) {
+  constructor(scene, map, blocks, triggers) {
     super('levels');
 
     this.scene = scene;
@@ -18,35 +18,36 @@ class MapManager extends PIXI.projection.Container2d {
     this.mapHeight = map.height;
 
     this.map = map.layers[0].data;
-    this.triggers = map.layers[1].data;
+    this.triggersMap = map.layers[1].data;
     this.blocks = blocks.tileproperties;
+    this.triggers = triggers.tileproperties;
 
     this.PROJECTION_PADDING_BOTTOM = 280;
     this.x = this.game.w/2-this.mapWidth*this.tileSize/2;
     this.y = -this.mapHeight*this.tileSize+this.game.h-this.PROJECTION_PADDING_BOTTOM;
 
-    this.isStop = false;
     this.speed = 500;
 
     this._parseMap();
+    this.checkOutRangeBlocks();
   }
   _parseMap() {
     for(let y = 0; y < this.mapHeight; y++) {
       for(let x = 0; x < this.mapWidth; x++) {
-        !this.map[y*this.mapWidth+x] || this.addBlock(x*this.tileSize, y*this.tileSize, this.map[y*this.mapWidth+x], this.triggers[y*this.mapWidth+x]);
+        !this.map[y*this.mapWidth+x] || this.addBlock(x*this.tileSize, y*this.tileSize, this.map[y*this.mapWidth+x], this.triggersMap[y*this.mapWidth+x]);
       }
     }
-    this.checkOutRangeBlocks();
   }
   addBlock(x, y, blockID, triggerID) {
-    let block = new Block(this, x, y, this.blocks[blockID-1], this.blocks[triggerID-1]);
+    let block = new Block(this, x, y, this.blocks[blockID-1], this.triggers[triggerID-10]);
     this.addChild(block);
   }
 
-  // Collision Widh Block
+  // Collision
   getBlock(pos) {
     for(let i = 0; i < this.children.length; i++) {
       let block = this.children[i];
+
       let x = block.transform.worldTransform.tx/this.game.scale-block.width/2;
       let y = block.transform.worldTransform.ty/this.game.scale-block.height/2;
       let w = block.width;
@@ -95,7 +96,6 @@ class MapManager extends PIXI.projection.Container2d {
     move.start();
   }
 
-  // clear out range map blocks
   checkOutRangeBlocks() {
     for(let i = 0; i < this.children.length; i++) {
       let y = this.children[i].transform.worldTransform.ty-this.tileSize/2;

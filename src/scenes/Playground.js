@@ -1,6 +1,7 @@
 // content
 const map = require('../content/map');
 const blocks = require('../content/blocks');
+const triggers = require('../content/triggers');
 const history = require('../content/history');
 
 // managers
@@ -34,7 +35,7 @@ class Playground extends PIXI.Container {
     this.projection.filters = [new AlphaGradientFilter(.3, .1)];
     this.addChild(this.projection);
 
-    this.map = new MapManager(this, map, blocks);
+    this.map = new MapManager(this, map, blocks, triggers);
     this.projection.addChild(this.map);
 
     this.history = new HistoryManager(this, history);
@@ -57,17 +58,13 @@ class Playground extends PIXI.Container {
       }
     });
 
-    this.history.on('showen', () => {
-      this.player.stopMove();
-      this.projection.filters[0].enabled = false;
-    });
+
     this.history.on('hidden', () => {
       this.player.startMove();
-      this.projection.filters[0].enabled = true;
     });
 
     this.player.on('deaded', () => this.restart());
-    this.player.on('collision', (block) => {
+    this.player.on('collidedBlock', (block) => {
       block.historyID && this.history.show(block.historyID);
     });
     this.player.top();

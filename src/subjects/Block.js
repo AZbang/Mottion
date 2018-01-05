@@ -22,6 +22,10 @@ class Block extends PIXI.projection.Sprite2d {
     this.playerDir = trigger.playerDir;
     this.historyID = trigger.historyID;
     this.action = trigger.action;
+    this.animateShow = trigger.animateShow;
+    this.animateShowTime = trigger.animateShowTime;
+    this.animateShowRandomTime = trigger.animateShowRandomTime;
+    this.animateFly = trigger.animateFly;
 
     this.activatedTexture = block.activatedTexture ? PIXI.Texture.fromFrame(block.activatedTexture) : null;
     this.deactivatedTexture = block.deactivatedTexture ? PIXI.Texture.fromFrame(block.deactivatedTexture) : null;
@@ -34,6 +38,13 @@ class Block extends PIXI.projection.Sprite2d {
     this.x = x+map.tileSize/2+.5;
     this.y = y+map.tileSize/2+.5;
 
+    this.fly = PIXI.tweenManager.createTween(this.scale);
+    this.fly.from({x: 1, y: 1}).to({x: .8, y: .8});
+    this.fly.time = 4000;
+    this.fly.pingPong = true;
+    this.fly.repeat = Infinity;
+    this.animateFly && this.fly.start();
+
     this.jolting = PIXI.tweenManager.createTween(this);
     this.jolting.from({rotation: -.1}).to({rotation: .1});
     this.jolting.time = 200;
@@ -43,11 +54,13 @@ class Block extends PIXI.projection.Sprite2d {
   show() {
     this.renderable = true;
 
-    let show = PIXI.tweenManager.createTween(this);
-    show.from({alpha: 0}).to({alpha: 1})
-    show.time = 1000;
-    show.start();
-
+    if(this.animateShow) {
+      this.alpha = 0;
+      let show = PIXI.tweenManager.createTween(this);
+      show.from({alpha: 0}).to({alpha: 1})
+      show.time = 1000;
+      setTimeout(() => show.start(), this.animateShowRandomTime ? this.animateShowTime+Math.random()*this.animateShowRandomTime : this.animateShowTime);
+    }
     this.emit('showen');
   }
   hide() {

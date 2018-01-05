@@ -1,10 +1,9 @@
 /*
   Класс Player, взаимодействует с MapManager
   События
-    collision => collision block
-    moved
-    deaded
+    collidedBlock => collided block
 
+    actionDeaded
     actionImmunity
     actionTop
     actionLeft
@@ -57,18 +56,20 @@ class Player extends PIXI.extras.AnimatedSprite {
     this.IMMUNITY_BLOCKS = 1;
     this.immunityCount = 5;
   }
-  moving() {
+  updateMoving() {
     if(this.isDead || this.isStop) return;
 
     let blocks = this.map.getNearBlocks(this.collisionPoint);
-    if(blocks.center && blocks.center.active) {
-      this.emit('moved');
-      this.emit('collision', blocks.center);
+    if(blocks.center) {
+      this.emit('collidedBlock', blocks.center);
 
+      if(blocks.center.playerDir === 'stop') return this.stopMove();
       if(blocks.center.playerDir === 'top') return this.top();
       if(blocks.center.playerDir === 'left') return this.left();
       if(blocks.center.playerDir === 'right') return this.right();
 
+      // check dead
+      if(!blocks.center.active) return this.dead();
       //check top
       if(blocks.top && blocks.top.active && this.lastMove !== 'bottom') return this.top();
       // check left
@@ -77,7 +78,7 @@ class Player extends PIXI.extras.AnimatedSprite {
       if(blocks.right && blocks.right.active && this.lastMove !== 'left') return this.right();
       // or die
       this.top();
-    } else this.dead();
+    }
   }
   dead() {
     this.walking.stop();
@@ -106,6 +107,8 @@ class Player extends PIXI.extras.AnimatedSprite {
     this.scale.x = this.SCALE;
     this.walking.start();
     this.gotoAndPlay(0);
+
+    this.top();
   }
   stopMove() {
     this.isStop = true;
@@ -125,7 +128,7 @@ class Player extends PIXI.extras.AnimatedSprite {
 
     this.lastMove = 'top';
     this.map.scrollDown(1);
-    this.map.once('scrolledDown', () => this.moving());
+    this.map.once('scrolledDown', () => this.updateMoving());
 
     this.emit('actionTop');
   }
@@ -144,7 +147,7 @@ class Player extends PIXI.extras.AnimatedSprite {
 
     this.collisionPoint.x -= this.map.tileSize;
 
-    move.on('end', () => this.moving());
+    move.on('end', () => this.updateMoving());
     this.emit('actionLeft');
   }
   right() {
@@ -162,7 +165,7 @@ class Player extends PIXI.extras.AnimatedSprite {
 
     this.collisionPoint.x += this.map.tileSize;
 
-    move.on('end', () => this.moving());
+    move.on('end', () => this.updateMoving());
     this.emit('actionRight');
   }
 }

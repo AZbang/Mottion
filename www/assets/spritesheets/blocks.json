@@ -15,7 +15,7 @@
 		"spriteSourceSize": {"x":0,"y":0,"w":150,"h":150},
 		"sourceSize": {"w":150,"h":150}
 	},
-	"cell3Activated": {
+	"block3Activated": {
 		"frame": {"x":151, "y":0, "w":150, "h":150},
 		"spriteSourceSize": {"x":0,"y":0,"w":150,"h":150},
 		"sourceSize": {"w":150,"h":150}
