@@ -11,6 +11,7 @@ const HistoryManager = require('../managers/HistoryManager');
 // subjects
 const Player = require('../subjects/Player');
 const Thlen = require('../subjects/Thlen');
+const Clouds = require('../subjects/Clouds');
 
 // filters
 const AlphaGradientFilter = require('../filters/AlphaGradientFilter');
@@ -24,15 +25,12 @@ class Playground extends PIXI.Container {
     this.game.noiseBlur.blurRadius = 0.0001;
     this.game.grayscale.r = 0.8;
 
-    this.bg = new PIXI.Sprite(PIXI.Texture.fromImage('bg'));
-    this.bg.width = this.game.w;
-    this.bg.height = this.game.h;
-    this.addChild(this.bg);
-
     // Init objects
+    this.clouds = new Clouds(this);
+    this.addChild(this.clouds);
+
     this.projection = new PIXI.projection.Container2d();
     this.projection.proj.setAxisY({x: -this.game.w/2+50, y: 4000}, -1);
-    this.projection.filters = [new AlphaGradientFilter(.3, .1)];
     this.addChild(this.projection);
 
     this.map = new MapManager(this, map, blocks, triggers);
@@ -75,6 +73,7 @@ class Playground extends PIXI.Container {
     });
   }
   update() {
+    this.clouds.update();
     this.history.update();
     this.thlen.update();
   }

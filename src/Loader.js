@@ -26,6 +26,7 @@ class Loader {
       .add('sky', 'assets/menu/sky.png')
       .add('mount', 'assets/menu/mount.png')
       .add('cloud', 'assets/menu/cloud.png')
+      .add('bg_cloud', 'assets/cloud.png')
 
       .add('bg', 'assets/bg.png')
       .add('thlen', 'assets/thlen.png')
