@@ -27,6 +27,10 @@ class Playground extends PIXI.Container {
 
     // Init objects
     this.clouds = new Clouds(this);
+    this.clouds.filters = [new PIXI.filters.AdvancedBloomFilter({
+      bloomScale: .4,
+      brightness: 0.5
+    })];
     this.addChild(this.clouds);
 
     this.projection = new PIXI.projection.Container2d();
@@ -38,8 +42,8 @@ class Playground extends PIXI.Container {
 
     this.history = new HistoryManager(this, history);
     this.player = new Player(this, this.map);
-    this.thlen = new Thlen(this);
-    this.addChild(this.history, this.player, this.thlen);
+    // this.thlen = new Thlen(this);
+    this.addChild(this.history, this.player);
 
     // Controls
     this.interactive = true;
@@ -55,7 +59,6 @@ class Playground extends PIXI.Container {
         } else block.unhit();
       }
     });
-
 
     this.history.on('hidden', () => {
       this.player.startMove();
@@ -75,7 +78,6 @@ class Playground extends PIXI.Container {
   update() {
     this.clouds.update();
     this.history.update();
-    this.thlen.update();
   }
 }
 

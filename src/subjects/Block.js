@@ -64,7 +64,11 @@ class Block extends PIXI.projection.Sprite2d {
     this.emit('showen');
   }
   hide() {
-    this.renderable = false;
+    let hide = PIXI.tweenManager.createTween(this);
+    hide.from({width: this.width, height: this.height, alpha: 1}).to({width: 0, height: 0, alpha: 0});
+    hide.on('end', () => this.renderable = false);
+    hide.time = 300;
+    setTimeout(() => hide.start(), Math.random()*this.map.speed/2);
 
     this.emit('hidden');
   }

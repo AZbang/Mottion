@@ -36,9 +36,9 @@ class Player extends PIXI.extras.AnimatedSprite {
     this.anchor.set(.5, 1);
     this.scale.set(this.SCALE);
     this.x = this.game.w/2+5;
-    this.y = this.game.h-this.map.tileSize*1;
+    this.y = this.game.h-this.map.tileSize*2;
 
-    this.collisionPoint = new PIXI.Point(960, 716);
+    this.collisionPoint = new PIXI.Point(this.game.w/2, this.game.h-this.map.tileSize*2);
 
     this.walking = PIXI.tweenManager.createTween(this);
     this.walking.from({y: this.y}).to({y: this.y-15});

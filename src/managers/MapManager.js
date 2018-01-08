@@ -13,7 +13,7 @@ class MapManager extends PIXI.projection.Container2d {
     this.scene = scene;
     this.game = scene.game;
 
-    this.tileSize = map.tilewidth;
+    this.tileSize = 150;
     this.mapWidth = map.width;
     this.mapHeight = map.height;
 
@@ -98,10 +98,11 @@ class MapManager extends PIXI.projection.Container2d {
 
   checkOutRangeBlocks() {
     for(let i = 0; i < this.children.length; i++) {
-      let y = this.children[i].transform.worldTransform.ty-this.tileSize/2;
-      if(y > this.game.h || y < -this.tileSize) {
-        this.children[i].renderable && this.children[i].hide();
-      } else !this.children[i].renderable && this.children[i].show();
+      let block = this.children[i];
+      let y = block.transform.worldTransform.ty/this.game.scale-this.tileSize/2;
+      if(y > this.game.h-this.tileSize*2) {
+        block.renderable && block.hide();
+      } else !block.renderable && block.show();
     }
   }
 }
