@@ -47,15 +47,10 @@ class Game extends PIXI.Application {
   }
   _bindEvents() {
     window.addEventListener("resize", this.resize.bind(this));
-
     this.stage.on('pointermove', (e) => {
       this.mouse.setPos({x: e.data.global.x/this.scale, y: e.data.global.y/this.scale});
       this.grayscale.x = e.data.global.x/this.w/this.scale;
       this.grayscale.y = e.data.global.y/this.h/this.scale;
-    });
-    this.stage.on('pointerup', (e) => {
-      console.log(e.data.global.x, e.data.global.y)
-      console.log(this.mouse.emitter.spawnPos.x, this.mouse.emitter.spawnPos.y);
     });
   }
   _initTicker() {

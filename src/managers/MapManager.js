@@ -22,7 +22,7 @@ class MapManager extends PIXI.projection.Container2d {
     this.blocks = blocks.tileproperties;
     this.triggers = triggers.tileproperties;
 
-    this.PROJECTION_PADDING_BOTTOM = 280;
+    this.PROJECTION_PADDING_BOTTOM = 240;
     this.x = this.game.w/2-this.mapWidth*this.tileSize/2;
     this.y = -this.mapHeight*this.tileSize+this.game.h-this.PROJECTION_PADDING_BOTTOM;
 
@@ -60,7 +60,6 @@ class MapManager extends PIXI.projection.Container2d {
     return {
       center: this.getBlock(pos),
       top: this.getBlock({x: pos.x, y: pos.y-this.tileSize}),
-      bottom: this.getBlock({x: pos.x, y: pos.y+this.tileSize}),
       left: this.getBlock({x: pos.x-this.tileSize, y: pos.y}),
       right: this.getBlock({x: pos.x+this.tileSize, y: pos.y}),
     }
@@ -100,7 +99,7 @@ class MapManager extends PIXI.projection.Container2d {
     for(let i = 0; i < this.children.length; i++) {
       let block = this.children[i];
       let y = block.transform.worldTransform.ty/this.game.scale-this.tileSize/2;
-      if(y > this.game.h-this.tileSize*2) {
+      if(y >= this.game.h-this.tileSize*2) {
         block.renderable && block.hide();
       } else !block.renderable && block.show();
     }

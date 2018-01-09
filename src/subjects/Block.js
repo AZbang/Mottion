@@ -19,7 +19,7 @@ class Block extends PIXI.projection.Sprite2d {
     this.activation = block.activation || null;
     this.score = block.score || 0;
 
-    this.playerDir = trigger.playerDir;
+    this.playerDir = trigger.playerDir || null;
     this.historyID = trigger.historyID;
     this.action = trigger.action;
     this.animateShow = trigger.animateShow;

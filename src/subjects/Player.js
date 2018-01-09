@@ -71,7 +71,7 @@ class Player extends PIXI.extras.AnimatedSprite {
       // check dead
       if(!blocks.center.active) return this.dead();
       //check top
-      if(blocks.top && blocks.top.active && this.lastMove !== 'bottom') return this.top();
+      if(blocks.left && blocks.top.active) return this.top();
       // check left
       if(blocks.left && blocks.left.active && this.lastMove !== 'right') return this.left();
       // check rigth

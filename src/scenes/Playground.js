@@ -44,6 +44,8 @@ class Playground extends PIXI.Container {
     this.addChild(this.history, this.player);
 
     PIXI.sound.play('sound_fire', {loop: true});
+    PIXI.sound.volume('sound_fire', .5);
+
     PIXI.sound.play('sound_noise', {loop: true});
     PIXI.sound.volume('sound_noise', .3);
 
