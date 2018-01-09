@@ -22,14 +22,9 @@ class Loader {
   }
   _loadResources() {
     PIXI.loader
-      .add('sun', 'assets/menu/sun.png')
-      .add('sky', 'assets/menu/sky.png')
-      .add('mount', 'assets/menu/mount.png')
-      .add('cloud', 'assets/menu/cloud.png')
-      .add('bg_cloud', 'assets/cloud.png')
-
       .add('bg', 'assets/bg.png')
       .add('thlen', 'assets/thlen.png')
+      .add('cloud', 'assets/cloud.png')
 
       .add('player', 'assets/spritesheets/player.json')
       .add('blocks', 'assets/spritesheets/blocks.json')
@@ -39,7 +34,12 @@ class Loader {
       .add('particle', 'assets/filters/particle.png')
 
       .add('history_family', 'assets/history/family.png')
-      .add('music', 'assets/sounds/music.mp3')
+
+      .add('music_sadday', 'assets/sounds/bensound-sadday.mp3')
+      .add('sound_fire', 'assets/sounds/fire.mp3')
+      .add('sound_noise', 'assets/sounds/noise.mp3')
+      .add('sound_run', 'assets/sounds/run.mp3')
+
       .load(() => this._loadFonts(() => this.hideBanner()));
   }
   _loadFonts(cb) {

@@ -107,7 +107,7 @@ class Player extends PIXI.extras.AnimatedSprite {
     this.scale.x = this.SCALE;
     this.walking.start();
     this.gotoAndPlay(0);
-
+    PIXI.sound.play('sound_run', {loop: true});
     this.top();
   }
   stopMove() {
@@ -116,7 +116,7 @@ class Player extends PIXI.extras.AnimatedSprite {
     this.scale.x = this.SCALE;
     this.walking.stop();
     this.gotoAndStop(0);
-
+    PIXI.sound.stop('sound_run');
     this.emit('actionStop');
   }
   top() {

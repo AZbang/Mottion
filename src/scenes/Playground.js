@@ -10,7 +10,6 @@ const HistoryManager = require('../managers/HistoryManager');
 
 // subjects
 const Player = require('../subjects/Player');
-const Thlen = require('../subjects/Thlen');
 const Clouds = require('../subjects/Clouds');
 
 // filters
@@ -42,8 +41,11 @@ class Playground extends PIXI.Container {
 
     this.history = new HistoryManager(this, history);
     this.player = new Player(this, this.map);
-    // this.thlen = new Thlen(this);
     this.addChild(this.history, this.player);
+
+    PIXI.sound.play('sound_fire', {loop: true});
+    PIXI.sound.play('sound_noise', {loop: true});
+    PIXI.sound.volume('sound_noise', .3);
 
     // Controls
     this.interactive = true;

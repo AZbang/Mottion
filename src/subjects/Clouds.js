@@ -5,7 +5,7 @@ class Clouds extends PIXI.Container {
     this.scene = scene;
     this.game = scene.game;
 
-    this.textureCloud = PIXI.Texture.fromImage('bg_cloud');
+    this.textureCloud = PIXI.Texture.fromImage('cloud');
     this.amt = Math.round(this.game.h/this.textureCloud.height)*3;
     this.PADDING = 100;
 

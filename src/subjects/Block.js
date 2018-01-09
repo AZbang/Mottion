@@ -38,8 +38,8 @@ class Block extends PIXI.projection.Sprite2d {
     this.x = x+map.tileSize/2+.5;
     this.y = y+map.tileSize/2+.5;
 
-    this.fly = PIXI.tweenManager.createTween(this.scale);
-    this.fly.from({x: 1, y: 1}).to({x: .8, y: .8});
+    this.fly = PIXI.tweenManager.createTween(this);
+    this.fly.from({width: this.width, height: this.height}).to({width: this.width-40, height: this.height-40});
     this.fly.time = 4000;
     this.fly.pingPong = true;
     this.fly.repeat = Infinity;
@@ -65,9 +65,9 @@ class Block extends PIXI.projection.Sprite2d {
   }
   hide() {
     let hide = PIXI.tweenManager.createTween(this);
-    hide.from({width: this.width, height: this.height, alpha: 1}).to({width: 0, height: 0, alpha: 0});
+    hide.from({width: this.width, height: this.height, y: this.y, alpha: 1}).to({width: 0, height: 0, y: this.y+this.height, alpha: 0});
     hide.on('end', () => this.renderable = false);
-    hide.time = 300;
+    hide.time = 400;
     setTimeout(() => hide.start(), Math.random()*this.map.speed/2);
 
     this.emit('hidden');

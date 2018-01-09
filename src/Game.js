@@ -42,6 +42,7 @@ class Game extends PIXI.Application {
     this._initTicker();
     this.resize();
 
+    PIXI.sound.play('music_sadday');
     this.splash.show(0xECEEFF, 10, 1000);
   }
   _bindEvents() {

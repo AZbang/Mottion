@@ -13,7 +13,7 @@ class MapManager extends PIXI.projection.Container2d {
     this.scene = scene;
     this.game = scene.game;
 
-    this.tileSize = 150;
+    this.tileSize = 120;
     this.mapWidth = map.width;
     this.mapHeight = map.height;
 
