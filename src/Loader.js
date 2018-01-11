@@ -14,9 +14,11 @@ class Loader {
     this._loadResources();
   }
   showBanner() {
+    document.body.style.background = '#fff';
     this.banner.style.display = 'block';
   }
   hideBanner() {
+    document.body.style.background = '#000';
     this.banner.style.display = 'none';
     this.onLoaded && this.onLoaded();
   }
@@ -25,6 +27,8 @@ class Loader {
       .add('bg', 'assets/bg.png')
       .add('thlen', 'assets/thlen.png')
       .add('cloud', 'assets/cloud.png')
+      .add('gear', 'assets/gear.png')
+      .add('house', 'assets/house.png')
 
       .add('player', 'assets/spritesheets/player.json')
       .add('blocks', 'assets/spritesheets/blocks.json')

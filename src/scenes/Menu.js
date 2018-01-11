@@ -1,4 +1,4 @@
-const Clouds = require('../subjects/Clouds');
+const BackgroundManager = require('../managers/BackgroundManager');
 
 class Menu extends PIXI.Container {
   constructor(game) {
@@ -8,8 +8,7 @@ class Menu extends PIXI.Container {
     this.game.noiseBlur.blurRadius = 0.0005;
     this.game.grayscale.r = 5.0;
 
-    this.clouds = new Clouds(this);
-    this.addChild(this.clouds);
+    this.background = new BackgroundManager(this);
 
     this.label = new PIXI.Text('Mottion', {
       font: 'normal 200px Opificio Bold',
@@ -45,9 +44,6 @@ class Menu extends PIXI.Container {
     this.game.splash.show(0xF9E4FF, 1000, 1000, () => {
       this.game.scenes.enableScene('playground');
     });
-  }
-  update() {
-    this.clouds.update();
   }
 }
 

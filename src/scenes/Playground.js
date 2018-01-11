@@ -7,10 +7,10 @@ const history = require('../content/history');
 // managers
 const MapManager = require('../managers/MapManager');
 const HistoryManager = require('../managers/HistoryManager');
+const BackgroundManager = require('../managers/BackgroundManager');
 
 // subjects
 const Player = require('../subjects/Player');
-const Clouds = require('../subjects/Clouds');
 
 // filters
 const AlphaGradientFilter = require('../filters/AlphaGradientFilter');
@@ -25,12 +25,11 @@ class Playground extends PIXI.Container {
     this.game.grayscale.r = 0.8;
 
     // Init objects
-    this.clouds = new Clouds(this);
-    this.clouds.filters = [new PIXI.filters.AdvancedBloomFilter({
-      bloomScale: .4,
-      brightness: 0.5
-    })];
-    this.addChild(this.clouds);
+    this.background = new BackgroundManager(this);
+    // this.background.filters = [new PIXI.filters.AdvancedBloomFilter({
+    //   bloomScale: .4,
+    //   brightness: 0.5
+    // })];
 
     this.projection = new PIXI.projection.Container2d();
     this.projection.proj.setAxisY({x: -this.game.w/2+50, y: 4000}, -1);
@@ -80,7 +79,6 @@ class Playground extends PIXI.Container {
     });
   }
   update() {
-    this.clouds.update();
     this.history.update();
   }
 }
