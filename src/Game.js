@@ -11,14 +11,12 @@ const DebuggerManager = require('./managers/DebuggerManager');
 const Sphere = require('./subjects/Sphere');
 const GrayscaleFilter = require('./filters/GrayscaleFilter');
 const NoiseBlurFilter = require('./filters/NoiseBlurFilter');
+const settings = require('./settings');
 
 class Game extends PIXI.Application {
   constructor() {
     super();
-
-    this.lang = 'en';
-    this.w = 1920;
-    this.h = 880;
+    Object.assign(this, settings);
 
     this.debug = new DebuggerManager(this);
     this.scenes = new ScenesManager(this);
