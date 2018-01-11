@@ -1,11 +1,13 @@
 class DebuggerManager extends PIXI.Graphics {
-  constructor(game) {
+  constructor(game, scene) {
     super();
 
     this.game = game;
 
     this.points = [];
     this.rects = [];
+
+    this.game.ticker.add(() => this.update());
   }
   addPoint(point) {
     this.points.push(point);

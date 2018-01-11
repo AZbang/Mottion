@@ -1,7 +1,9 @@
 class SplashManager extends PIXI.Graphics {
-  constructor(game) {
+  constructor(game, scene) {
     super();
+
     this.game = game;
+    this.scene = scene;
 
     this.alpha = 0;
   }

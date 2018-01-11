@@ -7,11 +7,11 @@
 const Block = require('../subjects/Block');
 
 class MapManager extends PIXI.projection.Container2d {
-  constructor(scene, map, blocks, triggers) {
-    super('levels');
+  constructor(game, scene, map, blocks, triggers) {
+    super();
 
     this.scene = scene;
-    this.game = scene.game;
+    this.game = game;
 
     this.tileSize = 120;
     this.mapWidth = map.width;
@@ -39,7 +39,7 @@ class MapManager extends PIXI.projection.Container2d {
     }
   }
   addBlock(x, y, blockID, triggerID) {
-    let block = new Block(this, x, y, this.blocks[blockID-1], this.triggers[triggerID-10]);
+    let block = new Block(this.game, this.scene, this, x, y, this.blocks[blockID-1], this.triggers[triggerID-10]);
     this.addChild(block);
   }
 

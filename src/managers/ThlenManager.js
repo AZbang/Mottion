@@ -1,9 +1,9 @@
-class Thlen extends PIXI.Container {
-  constructor(scene) {
+class ThlenManager extends PIXI.Container {
+  constructor(game, scene) {
     super();
 
     this.scene = scene;
-    this.game = scene.game;
+    this.game = game;
 
     this.displacementSprite = new PIXI.Sprite(PIXI.Texture.fromImage('displacement'));
     this.displacementSprite.texture.baseTexture.wrapMode = PIXI.WRAP_MODES.REPEAT;
@@ -27,6 +27,7 @@ class Thlen extends PIXI.Container {
     this.filters = [this.displacementFilter];
 
     this.count = 0;
+    this.game.ticker.add(() => this.update());
   }
   update() {
     this.count += 0.05;
@@ -39,4 +40,4 @@ class Thlen extends PIXI.Container {
   }
 }
 
-module.exports = Thlen;
+module.exports = ThlenManager;

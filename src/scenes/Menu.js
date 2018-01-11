@@ -5,11 +5,28 @@ class Menu extends PIXI.Container {
     super();
     this.game = game;
 
+    this.background = new BackgroundManager(game, this);
+    this.addChild(this.background);
+
+    this._addLabel();
+    this._addCitaty();
+
+    this._setFilters();
+    this._bindEvents();
+  }
+  _bindEvents() {
+    this.interactive = true;
+    this.on('pointerdown', () => this.toPlayground());
+  }
+  _setFilters() {
     this.game.noiseBlur.blurRadius = 0.0005;
     this.game.grayscale.r = 5.0;
-
-    this.background = new BackgroundManager(this);
-
+    this.filters = [new PIXI.filters.AdvancedBloomFilter({
+      bloomScale: .4,
+      brightness: 0.5
+    })];
+  }
+  _addLabel() {
     this.label = new PIXI.Text('Mottion', {
       font: 'normal 200px Opificio Bold',
       fill: '#5774f6',
@@ -19,7 +36,8 @@ class Menu extends PIXI.Container {
     this.label.y = 330;
     this.label.x = this.game.w/2;
     this.addChild(this.label);
-
+  }
+  _addCitaty() {
     this.citaty = new PIXI.Text('He played with his dreams, and dreams played to them.', {
       font: 'normal 60px Opificio Bold',
       fill: '#5774f6',
@@ -31,14 +49,6 @@ class Menu extends PIXI.Container {
     this.citaty.y = 500;
     this.citaty.x = this.game.w/2;
     this.addChild(this.citaty);
-
-    this.filters = [new PIXI.filters.AdvancedBloomFilter({
-      bloomScale: .4,
-      brightness: 0.5
-    })];
-
-    this.interactive = true;
-    this.on('pointerdown', () => this.toPlayground())
   }
   toPlayground() {
     this.game.splash.show(0xF9E4FF, 1000, 1000, () => {

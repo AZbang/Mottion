@@ -23,10 +23,10 @@ for(let i = 0; i < 5; i++) {
 }
 
 class Player extends PIXI.extras.AnimatedSprite {
-  constructor(scene, map) {
+  constructor(game, scene, map) {
     super(RUN_TOP);
 
-    this.game = scene.game;
+    this.game = game;
     this.scene = scene;
     this.map = map;
 

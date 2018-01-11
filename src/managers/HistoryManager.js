@@ -1,24 +1,18 @@
 class HistoryManager extends PIXI.Container {
-  constructor(scene, history) {
+  constructor(game, scene, history) {
     super();
 
-    this.game = scene.game;
+    this.game = game;
     this.scene = scene;
 
     this.history = history;
     this.alpha = 0;
-
-    this.displacementSprite = new PIXI.Sprite(PIXI.Texture.fromImage('displacement'));
-    this.displacementSprite.texture.baseTexture.wrapMode = PIXI.WRAP_MODES.REPEAT;
-    this.addChild(this.displacementSprite);
-    this.displacementFilter = new PIXI.filters.DisplacementFilter(this.displacementSprite);
 
     // this.image = new PIXI.Sprite();
     // this.image.anchor.set(.5, 0);
     // this.image.x = this.game.w/2;
     // this.image.y = 75;
     // this.image.scale.set(.5);
-    // this.image.filters = [this.displacementFilter];
     // this.addChild(this.image);
 
     this.text = new PIXI.Text('Text', {
@@ -54,10 +48,6 @@ class HistoryManager extends PIXI.Container {
     hide.time = 1000;
     hide.start();
     this.emit('hidden');
-  }
-  update() {
-    this.displacementSprite.x += .5;
-    this.displacementSprite.y += .5;
   }
 }
 

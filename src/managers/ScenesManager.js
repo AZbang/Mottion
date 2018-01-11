@@ -7,13 +7,14 @@
     restartedScene => scene
     disabledScene => scene
     enabledScene => scenes
-    updated => dt
 */
 
 class ScenesManager extends PIXI.Container {
-  constructor(game) {
+  constructor(game, scene) {
     super();
+    
     this.game = game;
+    this.scene = scene;
 
     this.scenes = require('../scenes');
     this.activeScene = null;
@@ -57,11 +58,6 @@ class ScenesManager extends PIXI.Container {
     this.activeScene._idScene = id;
 
     this.emit('enabledScene', this.activeScene);
-  }
-
-  update(dt) {
-    this.activeScene && this.activeScene.update && this.activeScene.update(dt);
-    this.emit('updated', dt);
   }
 }
 
