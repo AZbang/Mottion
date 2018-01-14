@@ -5,9 +5,10 @@ class BackgroundManager extends PIXI.Container {
     this.scene = scene;
     this.game = game;
 
-    this.cloudSize = PIXI.Texture.fromImage('cloud').orig;
+    this.cloudSize = PIXI.Texture.fromImage('cloud.png').orig;
     this.padding = 100;
-    this.speed = 5;
+    this.speed = 2;
+    this.amplitude = 10;
 
     this._generateBg();
     this.game.ticker.add(() => this.update());
@@ -17,7 +18,7 @@ class BackgroundManager extends PIXI.Container {
     for(let i = -2; i < amt; i++) {
       let y = i*this.cloudSize.height/2;
       this.addCloud(0, y, true);
-      Math.random() < .5 ? this.addGear(0, y, true) : this.addHouse(0, y, true);
+      i % 2 ? this.addGear(0, y, true) : this.addHouse(0, y, true);
     }
   }
   addObject(texture, isFront) {
@@ -35,7 +36,7 @@ class BackgroundManager extends PIXI.Container {
   }
   addCloud(x, y, isFront) {
     let pad = 100;
-    let cloud = this.addObject(PIXI.Texture.fromImage('cloud'), isFront);
+    let cloud = this.addObject(PIXI.Texture.fromImage('cloud.png'), isFront);
     cloud.type = 'cloud';
 
     cloud.scale.set((this.game.w+pad*2)/this.cloudSize.width);
@@ -48,11 +49,11 @@ class BackgroundManager extends PIXI.Container {
     let t = 0;
     cloud.update = () => {
       t += 0.05;
-      cloud.x += Math.sin(i * 30 + t);
+      cloud.x += Math.sin(i * this.amplitude + t);
     }
   }
   addGear(x, y, isFront) {
-    let gear = this.addObject(PIXI.Texture.fromImage('gear'), isFront);
+    let gear = this.addObject(PIXI.Texture.fromImage('gear.png'), isFront);
     gear.type = 'gear';
 
     gear.x = Math.random() < .5 ? x+gear.width : x+this.game.w-gear.width;
@@ -65,7 +66,7 @@ class BackgroundManager extends PIXI.Container {
     }
   }
   addHouse(x, y, isFront) {
-    let house = this.addObject(PIXI.Texture.fromImage('house'), isFront);
+    let house = this.addObject(PIXI.Texture.fromImage('house.png'), isFront);
     house.type = 'house';
     house.visible = Math.random() < .2;
 

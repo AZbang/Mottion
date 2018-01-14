@@ -24,20 +24,13 @@ class Loader {
   }
   _loadResources() {
     PIXI.loader
-      .add('bg', 'assets/bg.png')
-      .add('thlen', 'assets/thlen.png')
-      .add('cloud', 'assets/cloud.png')
-      .add('gear', 'assets/gear.png')
-      .add('house', 'assets/house.png')
-
+      .add('objects', 'assets/spritesheets/objects.json')
       .add('player', 'assets/spritesheets/player.json')
       .add('blocks', 'assets/spritesheets/blocks.json')
 
       .add('displacement', 'assets/filters/displacement.png')
       .add('noise', 'assets/filters/noise_grayscale.png')
       .add('particle', 'assets/filters/particle.png')
-
-      .add('history_family', 'assets/history/family.png')
 
       .add('music_sadday', 'assets/sounds/bensound-sadday.mp3')
       .add('sound_fire', 'assets/sounds/fire.mp3')

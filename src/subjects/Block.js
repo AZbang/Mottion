@@ -9,35 +9,35 @@
 */
 
 class Block extends PIXI.projection.Sprite2d {
-  constructor(game, scene, map, x, y, block={}, trigger={}) {
+  constructor(game, scene, map, x, y, data={}) {
     super();
 
     this.map = map;
     this.game = game;
     this.scene = scene;
 
-    this.active = block.active || false;
-    this.activation = block.activation || null;
-    this.score = block.score || 0;
+    this.active = data.active || false;
+    this.activation = data.activation || null;
+    this.score = data.score || 0;
 
-    this.playerDir = trigger.playerDir || null;
-    this.historyID = trigger.historyID;
-    this.action = trigger.action;
-    this.animateShow = trigger.animateShow;
-    this.animateShowTime = trigger.animateShowTime;
-    this.animateShowRandomTime = trigger.animateShowRandomTime;
-    this.animateFly = trigger.animateFly;
+    this.playerDir = data.playerDir || null;
+    this.historyID = data.historyID;
+    this.action = data.action;
+    this.animateShow = data.animateShow;
+    this.animateShowTime = data.animateShowTime;
+    this.animateShowRandomTime = data.animateShowRandomTime;
+    this.animateFly = data.animateFly;
 
-    this.activatedTexture = block.activatedTexture ? PIXI.Texture.fromFrame(block.activatedTexture) : null;
-    this.deactivatedTexture = block.deactivatedTexture ? PIXI.Texture.fromFrame(block.deactivatedTexture) : null;
+    this.activatedTexture = data.activatedTexture ? PIXI.Texture.fromFrame(data.activatedTexture) : null;
+    this.deactivatedTexture = data.deactivatedTexture ? PIXI.Texture.fromFrame(data.deactivatedTexture) : null;
     this.texture = this.active ? this.activatedTexture : this.deactivatedTexture;
 
     this.anchor.set(.5);
     this.renderable = false;
-    this.width = map.tileSize+1;
-    this.height = map.tileSize+1;
-    this.x = x+map.tileSize/2+.5;
-    this.y = y+map.tileSize/2+.5;
+    this.width = map.tileSize-10;
+    this.height = map.tileSize-10;
+    this.x = x+map.tileSize/2-5;
+    this.y = y+map.tileSize/2-5;
 
     this.fly = PIXI.tweenManager.createTween(this);
     this.fly.from({width: this.width, height: this.height}).to({width: this.width-40, height: this.height-40});
@@ -58,8 +58,8 @@ class Block extends PIXI.projection.Sprite2d {
     if(this.animateShow) {
       this.alpha = 0;
       let show = PIXI.tweenManager.createTween(this);
-      show.from({alpha: 0}).to({alpha: 1})
-      show.time = 1000;
+      show.from({width: 0, height: 0, y: this.y+this.height, alpha: 0}).to({width: this.map.tileSize-10, height: this.map.tileSize-10, y: this.y, alpha: 1})
+      show.time = 300;
       setTimeout(() => show.start(), this.animateShowRandomTime ? this.animateShowTime+Math.random()*this.animateShowRandomTime : this.animateShowTime);
     }
     this.emit('showen');

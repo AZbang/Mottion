@@ -68,12 +68,12 @@ class Playground extends PIXI.Container {
     PIXI.sound.volume('sound_noise', .3);
   }
   _setFilters() {
-    this.game.noiseBlur.blurRadius = 0.0001;
+    this.game.noiseBlur.blurRadius = 0.0003;
     this.game.grayscale.r = 0.8;
-    this.background.filters = [new PIXI.filters.AdvancedBloomFilter({
-      bloomScale: .4,
-      brightness: 0.5
-    })];
+    // this.background.filters = [new PIXI.filters.AdvancedBloomFilter({
+    //   bloomScale: .4,
+    //   brightness: 0.5
+    // })];
   }
   restart() {
     this.game.splash.show(0xEEEEEE, 500, 500, () => {

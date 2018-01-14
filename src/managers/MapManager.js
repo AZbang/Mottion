@@ -5,6 +5,9 @@
     scrolledTop => dtTop
 */
 const Block = require('../subjects/Block');
+const FLIPPED_HORIZONTALLY_FLAG = 0x80000000;
+const FLIPPED_VERTICALLY_FLAG   = 0x40000000;
+const FLIPPED_DIAGONALLY_FLAG   = 0x20000000;
 
 class MapManager extends PIXI.projection.Container2d {
   constructor(game, scene, map, blocks, triggers) {
@@ -21,6 +24,7 @@ class MapManager extends PIXI.projection.Container2d {
     this.triggersMap = map.layers[1].data;
     this.blocks = blocks.tileproperties;
     this.triggers = triggers.tileproperties;
+    this.divideGid = triggers.tilecount;
 
     this.PROJECTION_PADDING_BOTTOM = 240;
     this.x = this.game.w/2-this.mapWidth*this.tileSize/2;
@@ -31,15 +35,29 @@ class MapManager extends PIXI.projection.Container2d {
     this._parseMap();
     this.checkOutRangeBlocks();
   }
+  _getBlockProps(blockGid, triggerGid) {
+    let flips = {
+      horizontalFlip: !!(blockGid & FLIPPED_HORIZONTALLY_FLAG),
+      verticalFlip: !!(blockGid & FLIPPED_VERTICALLY_FLAG),
+      diagonalFlip: !!(blockGid & FLIPPED_DIAGONALLY_FLAG)
+    }
+
+    if(flips.horizontalFlip || flips.verticalFlip || flips.diagonalFlip)
+      blockGid &= ~(FLIPPED_HORIZONTALLY_FLAG |
+               FLIPPED_VERTICALLY_FLAG |
+               FLIPPED_DIAGONALLY_FLAG);
+
+    return Object.assign({}, flips, this.blocks[blockGid-this.divideGid-1], this.triggers[triggerGid-1]);
+  }
   _parseMap() {
     for(let y = 0; y < this.mapHeight; y++) {
       for(let x = 0; x < this.mapWidth; x++) {
-        !this.map[y*this.mapWidth+x] || this.addBlock(x*this.tileSize, y*this.tileSize, this.map[y*this.mapWidth+x], this.triggersMap[y*this.mapWidth+x]);
+        this.map[y*this.mapWidth+x] && this.addBlock(x*this.tileSize, y*this.tileSize, this.map[y*this.mapWidth+x], this.triggersMap[y*this.mapWidth+x]);
       }
     }
   }
-  addBlock(x, y, blockID, triggerID) {
-    let block = new Block(this.game, this.scene, this, x, y, this.blocks[blockID-1], this.triggers[triggerID-10]);
+  addBlock(x, y, blockGid, triggerGid) {
+    let block = new Block(this.game, this.scene, this, x, y, this._getBlockProps(blockGid, triggerGid));
     this.addChild(block);
   }
 
@@ -99,9 +117,10 @@ class MapManager extends PIXI.projection.Container2d {
     for(let i = 0; i < this.children.length; i++) {
       let block = this.children[i];
       let y = block.transform.worldTransform.ty/this.game.scale-this.tileSize/2;
-      if(y >= this.game.h-this.tileSize*2) {
-        block.renderable && block.hide();
-      } else !block.renderable && block.show();
+      if(y >= this.game.h-this.tileSize*2) block.renderable && block.hide();
+      else if(y >= 0) {
+        !block.renderable && block.show();
+      }
     }
   }
 }
