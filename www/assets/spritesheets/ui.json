@@ -1,0 +1,20 @@
+{
+"frames": {
+	"check.png": {
+		"frame": {"x":93, "y":0, "w":82, "h":82},
+		"spriteSourceSize": {"x":0,"y":0,"w":82,"h":82},
+		"sourceSize": {"w":82,"h":82}
+	},
+	"check_active.png": {
+		"frame": {"x":0, "y":0, "w":92, "h":94},
+		"spriteSourceSize": {"x":0,"y":0,"w":92,"h":94},
+		"sourceSize": {"w":92,"h":94}
+	}
+
+},
+"meta": {
+	"image": "ui.png",
+	"size": {"w": 176, "h": 95},
+	"scale": "1"
+}
+}

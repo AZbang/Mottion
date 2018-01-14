@@ -12,7 +12,7 @@
 class ScenesManager extends PIXI.Container {
   constructor(game, scene) {
     super();
-    
+
     this.game = game;
     this.scene = scene;
 
@@ -54,6 +54,7 @@ class ScenesManager extends PIXI.Container {
     this.activeScene && this.disableScene();
 
     let Scene = this.getScene(id);
+    console.log(id, Scene, new Scene(this.game, this));
     this.activeScene = this.addChild(new Scene(this.game, this));
     this.activeScene._idScene = id;
 

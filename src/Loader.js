@@ -27,11 +27,13 @@ class Loader {
       .add('objects', 'assets/spritesheets/objects.json')
       .add('player', 'assets/spritesheets/player.json')
       .add('blocks', 'assets/spritesheets/blocks.json')
+      .add('ui', 'assets/spritesheets/ui.json')
 
       .add('displacement', 'assets/filters/displacement.png')
       .add('noise', 'assets/filters/noise_grayscale.png')
       .add('particle', 'assets/filters/particle.png')
 
+      .add('music_slowmotion', 'assets/sounds/bensound-slowmotion.mp3')
       .add('music_sadday', 'assets/sounds/bensound-sadday.mp3')
       .add('sound_fire', 'assets/sounds/fire.mp3')
       .add('sound_noise', 'assets/sounds/noise.mp3')

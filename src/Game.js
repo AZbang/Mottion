@@ -5,19 +5,22 @@ require('pixi-particles');
 require('pixi-filters');
 
 const emitterData = require('./content/emitter.json');
+const SettingsManager = require('./managers/SettingsManager');
 const ScenesManager = require('./managers/ScenesManager');
 const SplashManager = require('./managers/SplashManager');
 const DebuggerManager = require('./managers/DebuggerManager');
 const Sphere = require('./subjects/Sphere');
 const GrayscaleFilter = require('./filters/GrayscaleFilter');
 const NoiseBlurFilter = require('./filters/NoiseBlurFilter');
-const settings = require('./settings');
 
 class Game extends PIXI.Application {
   constructor() {
-    super();
-    Object.assign(this, settings);
+    super({backgroundColor: 0xFFFFFF});
 
+    this.w = 1920;
+    this.h = 880;
+
+    this.settings = new SettingsManager(this);
     this.debug = new DebuggerManager(this);
     this.scenes = new ScenesManager(this);
     this.splash = new SplashManager(this);
@@ -29,7 +32,7 @@ class Game extends PIXI.Application {
     this._addTicker();
     this.resize();
 
-    PIXI.sound.play('music_sadday');
+    PIXI.sound.play('music_slowmotion');
     this.splash.show(0xECEEFF, 10, 1000);
   }
   _bindEvents() {
