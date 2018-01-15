@@ -11,21 +11,20 @@ class Settings extends PIXI.Container {
     this.inputPadding = 130;
     this.inputs = 0;
 
-    this.background = new BackgroundManager(this.game, this);
-    this.addChild(this.background);
+    this.background = new BackgroundManager(this);
 
-    this._addCheckBoxInput('Filters', this.settings.filrers, () => this.settings.toggleFilters());
-    this._addCheckBoxInput('Music', this.settings.music, () => this.settings.toggleMusic());
-    this._addCheckBoxInput('Sounds', this.settings.sounds, () => this.settings.toggleSounds());
-    this._addListInput('Lang: ', this.settings.langs, this.settings.langIndex, (i) => this.settings.setLang(i));
-    this._addButton('close.png', this.game.w-100, 100, () => this.game.toScene('menu', 0xF9E4FF));
+    this.addCheckBoxInput('Filters', this.settings.filrers, () => this.settings.toggleFilters());
+    this.addCheckBoxInput('Music', this.settings.music, () => this.settings.toggleMusic());
+    this.addCheckBoxInput('Sounds', this.settings.sounds, () => this.settings.toggleSounds());
+    this.addListInput('Lang: ', this.settings.langs, this.settings.langIndex, (i) => this.settings.setLang(i));
+    this.addButton('close.png', this.game.w-100, 100, () => this.game.toScene('menu', 0xF9E4FF));
 
     this._setFilters();
   }
   _setFilters() {
     this.game.noiseBlur.blurRadius = 0.0005;
   }
-  _addListInput(val, list, current, set) {
+  addListInput(val, list, current, set) {
     this.inputs++;
 
     let txt = new PIXI.Text(val + list[current], {
@@ -47,7 +46,7 @@ class Settings extends PIXI.Container {
       set && set(current);
     });
   }
-  _addCheckBoxInput(val, active, toggle) {
+  addCheckBoxInput(val, active, toggle) {
     this.inputs++;
 
     let txt = new PIXI.Text(val, {
@@ -74,7 +73,7 @@ class Settings extends PIXI.Container {
       active = !active;
     });
   }
-  _addButton(id, x, y, click) {
+  addButton(id, x, y, click) {
     let btn = new PIXI.Sprite.fromImage(id);
     this.addChild(btn);
 

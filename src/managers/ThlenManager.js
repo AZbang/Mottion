@@ -1,9 +1,10 @@
 class ThlenManager extends PIXI.Container {
-  constructor(game, scene) {
+  constructor(scene) {
     super();
+    scene.addChild(this);
 
     this.scene = scene;
-    this.game = game;
+    this.game = scene.game;
 
     this.displacementSprite = new PIXI.Sprite(PIXI.Texture.fromImage('displacement'));
     this.displacementSprite.texture.baseTexture.wrapMode = PIXI.WRAP_MODES.REPEAT;

@@ -44,9 +44,6 @@ class Loader {
   }
   _loadFonts(cb) {
     WebFont.load({
-      google: {
-        families: ['Amatic SC']
-      },
       custom: {
         families: ['Opificio Bold'],
         urls: ['assets/fonts/fonts.css']

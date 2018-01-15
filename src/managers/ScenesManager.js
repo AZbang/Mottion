@@ -7,10 +7,11 @@
 */
 
 class ScenesManager extends PIXI.Container {
-  constructor(game, scene) {
+  constructor(scene) {
     super();
+    scene.addChild(this);
 
-    this.game = game;
+    this.game = scene.game;
     this.scene = scene;
 
     this.scenes = require('../scenes');

@@ -4,7 +4,6 @@ require('pixi-projection');
 require('pixi-particles');
 require('pixi-filters');
 
-const emitterData = require('./content/emitter.json');
 const SettingsManager = require('./managers/SettingsManager');
 const ScenesManager = require('./managers/ScenesManager');
 const SplashManager = require('./managers/SplashManager');
@@ -20,12 +19,13 @@ class Game extends PIXI.Application {
     this.w = 1920;
     this.h = 880;
 
-    this.settings = new SettingsManager(this);
-    this.debug = new DebuggerManager(this);
-    this.scenes = new ScenesManager(this);
-    this.splash = new SplashManager(this);
-    this.mouse = new Sphere(this, emitterData);
-    this.stage.addChild(this.scenes, this.debug, this.mouse, this.splash);
+    // У сцены обязательно должна присутствовать ссылка на game. Совместимость с Managers
+    this.stage.game = this;
+    this.settings = new SettingsManager(this.stage);
+    this.debug = new DebuggerManager(this.stage);
+    this.scenes = new ScenesManager(this.stage);
+    this.splash = new SplashManager(this.stage);
+    this.mouse = new Sphere(this.stage);
 
     this._bindEvents();
     this._setFilters();
@@ -33,17 +33,14 @@ class Game extends PIXI.Application {
     this.resize();
 
     PIXI.sound.play('music_sadday');
-    this.splash.show(0xECEEFF, 10, 1000);
   }
   _bindEvents() {
     this.stage.interactive = true;
     this.stage.cursor = 'none';
 
-    window.addEventListener("resize", this.resize.bind(this));
+    window.addEventListener('resize', () => this.resize(this));
     this.stage.on('pointermove', (e) => {
       this.mouse.setPos({x: e.data.global.x/this.scale, y: e.data.global.y/this.scale});
-      // this.grayscale.x = e.data.global.x/this.w/this.scale;
-      // this.grayscale.y = e.data.global.y/this.h/this.scale;
     });
   }
   _addTicker() {
@@ -52,7 +49,6 @@ class Game extends PIXI.Application {
     });
   }
   _setFilters() {
-    // this.grayscale = new GrayscaleFilter();
     this.noiseBlur = new NoiseBlurFilter();
     this.stage.filters = [this.noiseBlur];
   }

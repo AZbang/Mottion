@@ -1,13 +1,21 @@
+const emitterData = require('../content/emitter.json');
+
 class Sphere extends PIXI.Container {
-  constructor(game, emitterData) {
+  constructor(scene) {
     super();
-    this.game = game;
+    scene.addChild(this);
+
+    this.game = scene.game;
+    this.scene = scene;
 
     this.emitter = new PIXI.particles.Emitter(this, [PIXI.Texture.fromImage('particle')], emitterData);
     this.game.ticker.add((dt) => this.update(dt));
   }
   lerp(start, end, amt) {
     return (1-amt)*start+amt*end;
+  }
+  getPos() {
+    return this.emitter.spawnPos;
   }
   setPos(pos) {
     this.emitter.spawnPos.x = pos.x;

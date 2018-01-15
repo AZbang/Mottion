@@ -1,5 +1,5 @@
 class SettingsManager {
-  constructor(game, scene) {
+  constructor(game) {
     this.game = game;
 
     this.filters = true;

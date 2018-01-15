@@ -5,19 +5,18 @@ class Menu extends PIXI.Container {
     super();
     this.game = game;
 
-    this.background = new BackgroundManager(game, this);
-    this.addChild(this.background);
+    this.background = new BackgroundManager(this);
 
-    this._addLabel('Mottion');
-    this._addCitaty('He played with his dreams, and dreams played to them.');
-    this._addButton('settings.png', this.game.w-100, this.game.h-100, () => this.game.toScene('settings', 0xF9E4FF));
+    this.addLabel('Mottion');
+    this.addCitaty('He played with his dreams, and dreams played to them.');
+    this.addButton('settings.png', this.game.w-100, this.game.h-100, () => this.game.toScene('settings', 0xF9E4FF));
 
     this._setFilters();
   }
   _setFilters() {
     this.game.noiseBlur.blurRadius = 0.0005;
   }
-  _addLabel(txt) {
+  addLabel(txt) {
     this.label = new PIXI.Text(txt, {
       font: 'normal 200px Opificio Bold',
       fill: '#5774f6',
@@ -30,7 +29,7 @@ class Menu extends PIXI.Container {
     this.label.on('pointerdown', () => this.game.toScene('playground', 0xF9E4FF));
     this.addChild(this.label);
   }
-  _addCitaty(txt) {
+  addCitaty(txt) {
     this.citaty = new PIXI.Text(txt, {
       font: 'normal 60px Opificio Bold',
       fill: '#5774f6',
@@ -45,7 +44,7 @@ class Menu extends PIXI.Container {
     this.citaty.on('pointerdown', () => this.game.toScene('playground', 0xF9E4FF));
     this.addChild(this.citaty);
   }
-  _addButton(id, x, y, click) {
+  addButton(id, x, y, click) {
     let btn = new PIXI.Sprite.fromImage(id);
     this.addChild(btn);
 

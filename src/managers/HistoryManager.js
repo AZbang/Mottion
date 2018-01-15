@@ -1,6 +1,9 @@
+const history = require('../content/history');
+
 class HistoryManager extends PIXI.Container {
-  constructor(game, scene, history) {
+  constructor(scene) {
     super();
+    scene.addChild(this);
 
     this.game = game;
     this.scene = scene;

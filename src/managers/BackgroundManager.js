@@ -1,9 +1,10 @@
 class BackgroundManager extends PIXI.Container {
-  constructor(game, scene) {
+  constructor(scene) {
     super();
+    scene.addChild(this);
 
-    this.scene = scene;
     this.game = game;
+    this.scene = scene.game;
 
     this.cloudSize = PIXI.Texture.fromImage('cloud.png').orig;
     this.cloudScale = (this.game.w+100*2)/this.cloudSize.width;

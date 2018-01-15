@@ -9,12 +9,12 @@
 */
 
 class Block extends PIXI.projection.Sprite2d {
-  constructor(game, scene, map, x, y, data={}) {
+  constructor(scene, map, x, y, data={}) {
     super();
 
-    this.map = map;
-    this.game = game;
+    this.game = scene.game;
     this.scene = scene;
+    this.map = map;
 
     this.active = data.active || false;
     this.activation = data.activation || null;

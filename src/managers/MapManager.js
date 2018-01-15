@@ -4,17 +4,21 @@
     scrolledDown => dtDown
     scrolledTop => dtTop
 */
+
+const map = require('../content/map');
+const blocks = require('../content/blocks');
+const triggers = require('../content/triggers');
+
 const Block = require('../subjects/Block');
-const FLIPPED_HORIZONTALLY_FLAG = 0x80000000;
-const FLIPPED_VERTICALLY_FLAG   = 0x40000000;
-const FLIPPED_DIAGONALLY_FLAG   = 0x20000000;
 
 class MapManager extends PIXI.projection.Container2d {
-  constructor(game, scene, map, blocks, triggers) {
+  constructor(scene) {
     super();
 
     this.scene = scene;
-    this.game = game;
+    this.game = scene.game;
+
+    this._createProjection();
 
     this.tileSize = 120;
     this.mapWidth = map.width;
@@ -34,7 +38,18 @@ class MapManager extends PIXI.projection.Container2d {
 
     this._parseMap();
   }
+  _createProjection() {
+    let projection = new PIXI.projection.Container2d();
+    projection.proj.setAxisY({x: -this.game.w/2+50, y: 4000}, -1);
+
+    projection.addChild(this);
+    this.scene.addChild(projection);
+  }
   _getBlockProps(blockGid, triggerGid) {
+    const FLIPPED_HORIZONTALLY_FLAG = 0x80000000;
+    const FLIPPED_VERTICALLY_FLAG   = 0x40000000;
+    const FLIPPED_DIAGONALLY_FLAG   = 0x20000000;
+
     let flips = {
       horizontalFlip: !!(blockGid & FLIPPED_HORIZONTALLY_FLAG),
       verticalFlip: !!(blockGid & FLIPPED_VERTICALLY_FLAG),
@@ -56,7 +71,7 @@ class MapManager extends PIXI.projection.Container2d {
     }
   }
   addBlock(x, y, blockGid, triggerGid) {
-    let block = new Block(this.game, this.scene, this, x, y, this._getBlockProps(blockGid, triggerGid));
+    let block = new Block(this.scene, this, x, y, this._getBlockProps(blockGid, triggerGid));
     this.addChild(block);
   }
 

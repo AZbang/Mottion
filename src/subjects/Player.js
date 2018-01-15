@@ -23,10 +23,11 @@ for(let i = 0; i < 5; i++) {
 }
 
 class Player extends PIXI.extras.AnimatedSprite {
-  constructor(game, scene, map) {
+  constructor(scene, map) {
     super(RUN_TOP);
-
-    this.game = game;
+    scene.addChild(this);
+    
+    this.game = scene.game;
     this.scene = scene;
     this.map = map;
 
@@ -81,25 +82,14 @@ class Player extends PIXI.extras.AnimatedSprite {
     }
   }
   dead() {
-    this.walking.stop();
+    this.stopMove();
     this.isDead = true;
-
-    let dead = PIXI.tweenManager.createTween(this.scale);
-    dead.from(this.scale).to({x: 0, y: 0});
-    dead.time = 200;
-    dead.start();
-    dead.on('end', () => this.emit('deaded'));
+    this.visible = false;
   }
-  immunity() {
-    if(!this.immunityCount) return;
-
-    let block = this.map.getBlock({x: this.x, y: this.y-this.map.tileSize});
-    if(block) {
-      this.immunityCount--;
-      block.activate('cell1-fill.png');
-
-      this.emit('actionImmunity');
-    }
+  live() {
+    this.startMove();
+    this.isDead = false;
+    this.visible = true;
   }
   startMove() {
     this.isStop = false;
