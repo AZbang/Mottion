@@ -6,6 +6,7 @@ class BackgroundManager extends PIXI.Container {
     this.game = game;
 
     this.cloudSize = PIXI.Texture.fromImage('cloud.png').orig;
+    this.cloudScale = (this.game.w+100*2)/this.cloudSize.width;
     this.padding = 100;
     this.speed = 2;
     this.amplitude = 10;
@@ -30,16 +31,17 @@ class BackgroundManager extends PIXI.Container {
   respawnObject(object) {
     this.removeChild(object);
 
-    if(object.type === 'cloud') this.addCloud(0, -object.height, false);
-    else if(object.type === 'gear') this.addGear(0, -object.height, false);
-    else this.addHouse(0, -object.height, false);
+    let y = this.cloudSize.height*this.cloudScale;
+    if(object.type === 'cloud') this.addCloud(0, -y, false);
+    else if(object.type === 'gear') this.addGear(0, -y, false);
+    else this.addHouse(0, -y, false);
   }
   addCloud(x, y, isFront) {
     let pad = 100;
     let cloud = this.addObject(PIXI.Texture.fromImage('cloud.png'), isFront);
     cloud.type = 'cloud';
 
-    cloud.scale.set((this.game.w+pad*2)/this.cloudSize.width);
+    cloud.scale.set(this.cloudScale);
     cloud.scale.x *= Math.random() < .5 ? 1 : -1;
 
     cloud.x = cloud.scale.x > 0 ? x-pad : this.game.w+pad;

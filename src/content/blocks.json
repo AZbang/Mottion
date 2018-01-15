@@ -132,7 +132,7 @@
      "25":
         {
          "activatedTexture":"blueF.png",
-         "activation":12,
+         "activation":10,
          "active":false,
          "deactivatedTexture":"blueE.png",
          "score":12,
@@ -291,7 +291,7 @@
      "6":
         {
          "activatedTexture":"greenF.png",
-         "activation":15,
+         "activation":10,
          "active":false,
          "deactivatedTexture":"greenE.png",
          "score":10,
