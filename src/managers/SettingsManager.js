@@ -5,7 +5,11 @@ class SettingsManager {
     this.filters = true;
     this.sounds = true;
     this.music = true;
-    this.lang = 'en';
+    this.langs = ['en', 'ru'];
+    this.langIndex = 0;
+  }
+  get lang() {
+    return this.langs[this.langIndex];
   }
   toggleFilters() {
 
@@ -16,7 +20,7 @@ class SettingsManager {
   toggleMusic() {
 
   }
-  setLang() {
+  setLang(id) {
 
   }
 }

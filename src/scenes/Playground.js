@@ -69,7 +69,6 @@ class Playground extends PIXI.Container {
   }
   _setFilters() {
     this.game.noiseBlur.blurRadius = 0.0003;
-    this.game.grayscale.r = 0.8;
     // this.background.filters = [new PIXI.filters.AdvancedBloomFilter({
     //   bloomScale: .4,
     //   brightness: 0.5

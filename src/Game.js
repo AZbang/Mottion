@@ -32,7 +32,7 @@ class Game extends PIXI.Application {
     this._addTicker();
     this.resize();
 
-    PIXI.sound.play('music_slowmotion');
+    PIXI.sound.play('music_sadday');
     this.splash.show(0xECEEFF, 10, 1000);
   }
   _bindEvents() {
@@ -42,8 +42,8 @@ class Game extends PIXI.Application {
     window.addEventListener("resize", this.resize.bind(this));
     this.stage.on('pointermove', (e) => {
       this.mouse.setPos({x: e.data.global.x/this.scale, y: e.data.global.y/this.scale});
-      this.grayscale.x = e.data.global.x/this.w/this.scale;
-      this.grayscale.y = e.data.global.y/this.h/this.scale;
+      // this.grayscale.x = e.data.global.x/this.w/this.scale;
+      // this.grayscale.y = e.data.global.y/this.h/this.scale;
     });
   }
   _addTicker() {
@@ -52,15 +52,20 @@ class Game extends PIXI.Application {
     });
   }
   _setFilters() {
-    this.grayscale = new GrayscaleFilter();
+    // this.grayscale = new GrayscaleFilter();
     this.noiseBlur = new NoiseBlurFilter();
-    this.stage.filters = [this.grayscale, this.noiseBlur];
+    this.stage.filters = [this.noiseBlur];
   }
   resize() {
     this.scale = window.innerWidth/this.w;
     this.renderer.resize(window.innerWidth, this.h*this.scale);
     this.view.style.marginTop = window.innerHeight/2-this.h*this.scale/2 + 'px';
     this.stage.scale.set(this.scale);
+  }
+  toScene(scene, color) {
+    this.splash.show(color, 1000, 1000, () => {
+      this.scenes.enableScene(scene);
+    });
   }
 }
 

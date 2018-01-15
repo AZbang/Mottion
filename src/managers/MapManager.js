@@ -33,7 +33,6 @@ class MapManager extends PIXI.projection.Container2d {
     this.speed = 500;
 
     this._parseMap();
-    this.checkOutRangeBlocks();
   }
   _getBlockProps(blockGid, triggerGid) {
     let flips = {
@@ -118,7 +117,7 @@ class MapManager extends PIXI.projection.Container2d {
       let block = this.children[i];
       let y = block.transform.worldTransform.ty/this.game.scale-this.tileSize/2;
       if(y >= this.game.h-this.tileSize*2) block.renderable && block.hide();
-      else if(y >= 0) {
+      else if(y >= -this.tileSize*2) {
         !block.renderable && block.show();
       }
     }

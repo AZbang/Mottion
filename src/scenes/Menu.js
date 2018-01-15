@@ -8,26 +8,17 @@ class Menu extends PIXI.Container {
     this.background = new BackgroundManager(game, this);
     this.addChild(this.background);
 
-    this._addLabel();
-    this._addCitaty();
+    this._addLabel('Mottion');
+    this._addCitaty('He played with his dreams, and dreams played to them.');
+    this._addButton('settings.png', this.game.w-100, this.game.h-100, () => this.game.toScene('settings', 0xF9E4FF));
 
     this._setFilters();
-    this._bindEvents();
-  }
-  _bindEvents() {
-    this.interactive = true;
-    this.on('pointerdown', () => this.toPlayground());
   }
   _setFilters() {
     this.game.noiseBlur.blurRadius = 0.0005;
-    this.game.grayscale.r = 5.0;
-    this.filters = [new PIXI.filters.AdvancedBloomFilter({
-      bloomScale: .4,
-      brightness: 0.5
-    })];
   }
-  _addLabel() {
-    this.label = new PIXI.Text('Mottion', {
+  _addLabel(txt) {
+    this.label = new PIXI.Text(txt, {
       font: 'normal 200px Opificio Bold',
       fill: '#5774f6',
       align: 'center'
@@ -35,10 +26,12 @@ class Menu extends PIXI.Container {
     this.label.anchor.set(.5);
     this.label.y = 330;
     this.label.x = this.game.w/2;
+    this.label.interactive = true;
+    this.label.on('pointerdown', () => this.game.toScene('playground', 0xF9E4FF));
     this.addChild(this.label);
   }
-  _addCitaty() {
-    this.citaty = new PIXI.Text('He played with his dreams, and dreams played to them.', {
+  _addCitaty(txt) {
+    this.citaty = new PIXI.Text(txt, {
       font: 'normal 60px Opificio Bold',
       fill: '#5774f6',
       wordWrap: true,
@@ -48,12 +41,19 @@ class Menu extends PIXI.Container {
     this.citaty.anchor.set(.5);
     this.citaty.y = 500;
     this.citaty.x = this.game.w/2;
+    this.citaty.interactive = true;
+    this.citaty.on('pointerdown', () => this.game.toScene('playground', 0xF9E4FF));
     this.addChild(this.citaty);
   }
-  toPlayground() {
-    this.game.splash.show(0xF9E4FF, 1000, 1000, () => {
-      this.game.scenes.enableScene('playground');
-    });
+  _addButton(id, x, y, click) {
+    let btn = new PIXI.Sprite.fromImage(id);
+    this.addChild(btn);
+
+    btn.x = x;
+    btn.y = y;
+    btn.anchor.set(.5);
+    btn.interactive = true;
+    btn.on('pointerdown', () => click && click());
   }
 }
 

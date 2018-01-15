@@ -1,9 +1,6 @@
 /*
   Класс для переключения видимого контейнера (рабочих сцен)
   События:
-    addedScenes => scenes
-    addedScene => scenes
-    removedScene => scene
     restartedScene => scene
     disabledScene => scene
     enabledScene => scenes
@@ -28,16 +25,13 @@ class ScenesManager extends PIXI.Container {
     for(let id in scenes) {
       this.addScene(id, scenes[id]);
     }
-    this.emit('addedScenes', scenes);
   }
   addScene(id, scene) {
     this.scenes[id] = scene;
-    this.emit('addedScene', scene);
   }
   removeScene(id) {
     let _scene = this.scenes[id];
     this.scenes[id] = null;
-    this.emit('removedScene', _scene);
   }
 
   // Controls
@@ -54,7 +48,6 @@ class ScenesManager extends PIXI.Container {
     this.activeScene && this.disableScene();
 
     let Scene = this.getScene(id);
-    console.log(id, Scene, new Scene(this.game, this));
     this.activeScene = this.addChild(new Scene(this.game, this));
     this.activeScene._idScene = id;
 

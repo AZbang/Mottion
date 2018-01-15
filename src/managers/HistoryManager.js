@@ -19,7 +19,7 @@ class HistoryManager extends PIXI.Container {
       font: 'normal 50px Opificio Bold',
       wordWrap: true,
       wordWrapWidth: this.game.w*3/4,
-      fill: '#fff',
+      fill: '#ff408c',
       padding: 10,
       align: 'center'
     });
@@ -32,7 +32,7 @@ class HistoryManager extends PIXI.Container {
     let data = this.history[id];
 
     // this.image.texture = PIXI.Texture.fromImage(data.image);
-    this.text.setText(data.text[this.game.lang]);
+    this.text.setText(data.text[this.game.settings.lang]);
 
     let show = PIXI.tweenManager.createTween(this);
     show.from({alpha: 0}).to({alpha: 1});

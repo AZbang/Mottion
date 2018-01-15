@@ -5,5 +5,5 @@ new Loader('assets/banner.png', () => {
   window.game = new Game();
 
   document.body.appendChild(game.view);
-  game.scenes.enableScene('settings');
+  game.scenes.enableScene('menu');
 });

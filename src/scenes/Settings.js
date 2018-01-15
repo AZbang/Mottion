@@ -7,50 +7,82 @@ class Settings extends PIXI.Container {
     this.game = game;
     this.settings = game.settings;
 
-    this.top = 30;
-    this.inputPadding = 200;
+    this.top = 90;
+    this.inputPadding = 130;
     this.inputs = 0;
 
     this.background = new BackgroundManager(this.game, this);
     this.addChild(this.background);
 
-    this.addInput('Filters', this.settings.filrers, () => this.settings.toggleFilters());
-    this.addInput('Music', this.settings.music, () => this.settings.toggleMusic());
-    this.addInput('Sounds', this.settings.sounds, () => this.settings.toggleSounds());
+    this._addCheckBoxInput('Filters', this.settings.filrers, () => this.settings.toggleFilters());
+    this._addCheckBoxInput('Music', this.settings.music, () => this.settings.toggleMusic());
+    this._addCheckBoxInput('Sounds', this.settings.sounds, () => this.settings.toggleSounds());
+    this._addListInput('Lang: ', this.settings.langs, this.settings.langIndex, (i) => this.settings.setLang(i));
+    this._addButton('close.png', this.game.w-100, 100, () => this.game.toScene('menu', 0xF9E4FF));
 
     this._setFilters();
   }
   _setFilters() {
     this.game.noiseBlur.blurRadius = 0.0005;
-    this.game.grayscale.r = 5.0;
   }
-  addInput(val, active, toggle) {
+  _addListInput(val, list, current, set) {
+    this.inputs++;
+
+    let txt = new PIXI.Text(val + list[current], {
+      font: 'normal 120px Opificio Bold',
+      fill: '#ff408c',
+      align: 'center'
+    });
+    txt.anchor.set(.5);
+    txt.x = this.game.w/2;
+    txt.y = this.top+this.inputs*this.inputPadding;
+    this.addChild(txt);
+
+    txt.interactive = true;
+    txt.on('pointerdown', () => {
+      if(current >= list.length-1) current = 0;
+      else current++;
+
+      txt.text = val + list[current];
+      set && set(current);
+    });
+  }
+  _addCheckBoxInput(val, active, toggle) {
     this.inputs++;
 
     let txt = new PIXI.Text(val, {
-      font: 'normal 200px Opificio Bold',
+      font: 'normal 100px Opificio Bold',
       fill: '#ff408c',
       align: 'center'
     });
     txt.anchor.set(0, .5);
-    txt.x = 650;
+    txt.x = 200+650;
     txt.y = this.top+this.inputs*this.inputPadding;
     this.addChild(txt);
 
     let check = PIXI.Sprite.fromImage('check.png');
+    check.texture = PIXI.Texture.fromImage(active ? 'check_active.png' : 'check.png');
     check.y = this.top+this.inputs*this.inputPadding;
-    check.x = 550;
-    check.active = active;
+    check.x = 200+550;
     check.anchor.set(.5);
-    check.texture = PIXI.Texture.fromImage(check.active ? 'check_active.png' : 'check.png');
     this.addChild(check);
 
     check.interactive = true;
     check.on('pointerdown', () => {
-      check.active != check.active;
-      check.texture = PIXI.Texture.fromImage(check.active ? 'check_active.png' : 'check.png');
-      toggle && toggle(check.active);
+      check.texture = PIXI.Texture.fromImage(!active ? 'check_active.png' : 'check.png');
+      toggle && toggle(!active);
+      active = !active;
     });
+  }
+  _addButton(id, x, y, click) {
+    let btn = new PIXI.Sprite.fromImage(id);
+    this.addChild(btn);
+
+    btn.x = x;
+    btn.y = y;
+    btn.anchor.set(.5);
+    btn.interactive = true;
+    btn.on('pointerdown', () => click && click());
   }
 }
 
