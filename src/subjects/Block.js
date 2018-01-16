@@ -16,20 +16,18 @@ class Block extends PIXI.projection.Sprite2d {
     this.scene = scene;
     this.map = map;
 
-    this.active = data.active || false;
-    this.activation = data.activation || null;
-    this.score = data.score || 0;
+    Object.assign(this, {
+      active: false,
+      activation: null,
+      score: 0,
+      playerDir: null,
+      checkpoint: false,
+      historyID: null,
+      showDelay: false
+    }, data);
 
-    this.playerDir = data.playerDir || null;
-    this.historyID = data.historyID;
-    this.action = data.action;
-    this.animateShow = data.animateShow;
-    this.animateShowTime = data.animateShowTime;
-    this.animateShowRandomTime = data.animateShowRandomTime;
-    this.animateFly = data.animateFly;
-
-    this.activatedTexture = data.activatedTexture ? PIXI.Texture.fromFrame(data.activatedTexture) : null;
-    this.deactivatedTexture = data.deactivatedTexture ? PIXI.Texture.fromFrame(data.deactivatedTexture) : null;
+    this.activatedTexture = data.activatedTexture ? PIXI.Texture.fromFrame(data.activatedTexture) : PIXI.Texture.WHITE;
+    this.deactivatedTexture = data.deactivatedTexture ? PIXI.Texture.fromFrame(data.deactivatedTexture) : PIXI.Texture.WHITE;
     this.texture = this.active ? this.activatedTexture : this.deactivatedTexture;
 
     this.anchor.set(.5);
@@ -39,37 +37,59 @@ class Block extends PIXI.projection.Sprite2d {
     this.x = x+map.tileSize/2-5;
     this.y = y+map.tileSize/2-5;
 
-    this.fly = PIXI.tweenManager.createTween(this);
-    this.fly.from({width: this.width, height: this.height}).to({width: this.width-40, height: this.height-40});
-    this.fly.time = 4000;
-    this.fly.pingPong = true;
-    this.fly.repeat = Infinity;
-    this.animateFly && this.fly.start();
-
     this.jolting = PIXI.tweenManager.createTween(this);
     this.jolting.from({rotation: -.1}).to({rotation: .1});
     this.jolting.time = 200;
     this.jolting.pingPong = true;
     this.jolting.repeat = Infinity;
   }
-  show() {
+  show(delay) {
+    if(this.renderable) return;
     this.renderable = true;
 
-    if(this.animateShow) {
-      this.alpha = 0;
-      let show = PIXI.tweenManager.createTween(this);
-      show.from({width: 0, height: 0, y: this.y+this.height, alpha: 0}).to({width: this.map.tileSize-10, height: this.map.tileSize-10, y: this.y, alpha: 1})
-      show.time = 300;
-      setTimeout(() => show.start(), this.animateShowRandomTime ? this.animateShowTime+Math.random()*this.animateShowRandomTime : this.animateShowTime);
-    }
+    PIXI.tweenManager.createTween(this, {
+      from: {
+        width: 0,
+        height: 0,
+        y: this.y+this.height,
+        alpha: 0
+      },
+      to: {
+        width: this.map.tileSize-10,
+        height: this.map.tileSize-10,
+        y: this.y,
+        alpha: 1
+      },
+      time: 300,
+      easing: PIXI.tween.Easing.outBounce(),
+      delay: this.showDelay ? delay+Math.random()*1000 : 0
+    }).start();
+
     this.emit('showen');
   }
-  hide() {
-    let hide = PIXI.tweenManager.createTween(this);
-    hide.from({width: this.width, height: this.height, y: this.y, alpha: 1}).to({width: 0, height: 0, y: this.y+this.height, alpha: 0});
-    hide.on('end', () => this.renderable = false);
-    hide.time = 400;
-    setTimeout(() => hide.start(), Math.random()*this.map.speed/2);
+  hide(delay) {
+    if(!this.renderable) return;
+    this.renderable = true;
+
+    PIXI.tweenManager.createTween(this, {
+      from: {
+        width: this.width,
+        height: this.height,
+        y: this.y,
+        alpha: 1
+      },
+      to: {
+        width: 0,
+        height: 0,
+        y: this.y+this.height,
+        alpha: 0
+      },
+      time: 300,
+      delay: Math.random()*this.map.speed/2,
+      on: {
+        end: () => this.renderable = false
+      }
+    }).start();
 
     this.emit('hidden');
   }

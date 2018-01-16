@@ -26,7 +26,7 @@ class Player extends PIXI.extras.AnimatedSprite {
   constructor(scene, map) {
     super(RUN_TOP);
     scene.addChild(this);
-    
+
     this.game = scene.game;
     this.scene = scene;
     this.map = map;
@@ -38,7 +38,6 @@ class Player extends PIXI.extras.AnimatedSprite {
     this.scale.set(this.SCALE);
     this.x = this.game.w/2+5;
     this.y = this.game.h-this.map.tileSize*2;
-
     this.collisionPoint = new PIXI.Point(this.game.w/2, this.game.h-this.map.tileSize*2);
 
     this.walking = PIXI.tweenManager.createTween(this);
@@ -82,14 +81,21 @@ class Player extends PIXI.extras.AnimatedSprite {
     }
   }
   dead() {
-    this.stopMove();
     this.isDead = true;
     this.visible = false;
+    this.stopMove();
+    this.emit('deaded');
   }
   live() {
-    this.startMove();
     this.isDead = false;
     this.visible = true;
+    this.startMove();
+    this.top();
+
+    this.y = this.game.h-this.map.tileSize*2;
+    this.collisionPoint = new PIXI.Point(this.game.w/2, this.game.h-this.map.tileSize*2);
+
+    this.emit('lived');
   }
   startMove() {
     this.isStop = false;
@@ -117,8 +123,7 @@ class Player extends PIXI.extras.AnimatedSprite {
     }
 
     this.lastMove = 'top';
-    this.map.scrollDown(1);
-    this.map.once('scrolledDown', () => this.updateMoving());
+    this.map.scrollDown(1, () => this.updateMoving());
 
     this.emit('actionTop');
   }

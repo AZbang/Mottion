@@ -32,10 +32,10 @@ class HistoryManager extends PIXI.Container {
     this.addChild(this.text);
   }
   show(id) {
-    let data = this.history[id];
+    this.currentHistory = this.history[id];
 
     // this.image.texture = PIXI.Texture.fromImage(data.image);
-    this.text.setText(data.text[this.game.settings.lang]);
+    this.text.setText(this.currentHistory.text[this.game.settings.lang]);
 
     let show = PIXI.tweenManager.createTween(this);
     show.from({alpha: 0}).to({alpha: 1});
@@ -43,7 +43,7 @@ class HistoryManager extends PIXI.Container {
     show.start();
     this.emit('showen');
 
-    setTimeout(() => this._hide(), data.time);
+    setTimeout(() => this._hide(), this.currentHistory.time);
   }
   _hide() {
     let hide = PIXI.tweenManager.createTween(this);

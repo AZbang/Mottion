@@ -7,16 +7,17 @@ class GameplayManager {
     this.player = scene.player;
     this.history = scene.history;
 
-    this.checkpointBlock = null;
+    this.passedBlocks = 0;
 
     this.game.ticker.add(() => this.update());
     this._bindEvent();
   }
   _bindEvent() {
-    this.history.on('hidden', () => this.player.startMove());
+    this.history.on('hidden', () => this.hideHistory());
     this.player.on('deaded', () => this.restart());
     this.player.on('collidedBlock', (block) => this.checkCollide(block));
-    this.player.top();
+    this.player.on('actionTop', () => this.passedBlocks++);
+    this.player.live();
   }
 
   // функция активации блока при удержании мышки на блоке
@@ -30,25 +31,31 @@ class GameplayManager {
 
   // Проверяем коллизию блока на различные триггеры
   checkCollide(block) {
-    this.checkHistory(block);
-    this.checkCheckpoint(block);
+    this.showHistory(block);
+    this.saveCheckpoint(block);
+  }
+
+  // Проверить на чекпоинт
+  saveCheckpoint(block) {
+    if(block.checkpoint) this.passedBlocks = 0;
   }
   // Если блок имеет свойство historyID, то показать фрагмент сюжета с таким идентификатором. (content/history.json)
-  checkHistory(block) {
+  showHistory(block) {
     if(block.historyID) {
       this.history.show(block.historyID);
+      this.map.showTime = this.history.currentHistory.time;
       block.historyID = null;
     }
   }
-  // Проверить на чекпоинт
-  checkCheckpoint(block) {
-    if(block.checkpoint) this.checkpointBlock = block;
+  hideHistory() {
+    this.player.startMove();
+    this.map.showTime = 500;
   }
 
   // При проигрыше отправлять карту к последнему чекпоинту
   restart() {
-    this.game.splash.show(0xEEEEEE, 500, 500, () => {
-      this.game.map.moveTo(this.checkpointBlock, 500, () => {
+    this.game.splash.show(0xEEEEEE, 100, 100, () => {
+      this.map.scrollTop(this.passedBlocks+1, () => {
         this.player.live();
       })
     });

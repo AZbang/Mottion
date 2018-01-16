@@ -18,8 +18,6 @@ class MapManager extends PIXI.projection.Container2d {
     this.scene = scene;
     this.game = scene.game;
 
-    this._createProjection();
-
     this.tileSize = 120;
     this.mapWidth = map.width;
     this.mapHeight = map.height;
@@ -35,7 +33,9 @@ class MapManager extends PIXI.projection.Container2d {
     this.y = -this.mapHeight*this.tileSize+this.game.h-this.PROJECTION_PADDING_BOTTOM;
 
     this.speed = 500;
+    this.showDelay = 5000;
 
+    this._createProjection();
     this._parseMap();
   }
   _createProjection() {
@@ -98,43 +98,32 @@ class MapManager extends PIXI.projection.Container2d {
   }
 
   // Moving Map
-  scrollDown(blocks) {
-    if(this.isStop) return;
-
-    // Scroll map down on X blocks
-    let move = PIXI.tweenManager.createTween(this);
-    move.from({y: this.y}).to({y: this.y+blocks*this.tileSize});
-    move.time = this.speed*blocks;
-
-    move.on('end', () => {
-      this.emit('scrolledDown', blocks);
-      this.checkOutRangeBlocks();
-    });
-    move.start();
+  scrollDown(blocks, cb) {
+    this.scrollTo(this.y+blocks*this.tileSize, this.speed*blocks, cb);
   }
-  scrollTop(blocks) {
-    if(this.isStop) return;
-
-    // Scroll map top on X blocks
+  scrollTop(blocks, cb) {
+    this.scrollTo(this.y-blocks*this.tileSize, this.speed*blocks, cb);
+  }
+  scrollTo(y, time, cb) {
     let move = PIXI.tweenManager.createTween(this);
-    move.from({y: this.y}).to({y: this.y-blocks*this.tileSize});
-    move.time = this.speed*blocks;
+    move.from({y: this.y}).to({y: y});
+    move.time = time;
 
+    let isDown = this.y < y;
     move.on('end', () => {
-      this.emit('scrolledTop', blocks);
+      cb && cb();
+      this.emit('scrolled');
       this.checkOutRangeBlocks();
     });
     move.start();
   }
 
-  checkOutRangeBlocks() {
+  checkOutRangeBlocks(isDown) {
     for(let i = 0; i < this.children.length; i++) {
       let block = this.children[i];
       let y = block.transform.worldTransform.ty/this.game.scale-this.tileSize/2;
-      if(y >= this.game.h-this.tileSize*2) block.renderable && block.hide();
-      else if(y >= -this.tileSize*2) {
-        !block.renderable && block.show();
-      }
+      if(y >= this.game.h-this.tileSize*2) block.hide();
+      else if(y >= -this.tileSize*2) block.show(this.showDelay);
     }
   }
 }

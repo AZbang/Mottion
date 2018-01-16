@@ -5,10 +5,6 @@ const BackgroundManager = require('../managers/BackgroundManager');
 const GameplayManager = require('../managers/GameplayManager');
 const Player = require('../subjects/Player');
 
-// filters
-const AlphaGradientFilter = require('../filters/AlphaGradientFilter');
-
-
 class Playground extends PIXI.Container {
   constructor(game) {
     super();
@@ -20,7 +16,7 @@ class Playground extends PIXI.Container {
     this.history = new HistoryManager(this);
     this.player = new Player(this, this.map);
     this.gameplay = new GameplayManager(this);
-    
+
     this._addSounds();
     this._setFilters();
   }

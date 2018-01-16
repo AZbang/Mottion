@@ -15,7 +15,7 @@ gulp.task('js', () => {
 		// .transform(babelify, { presets: ['es2015'] })
     .bundle()
 			.on('error', (err) => {
-				console.log(err.stack);
+				console.log(err.message);
 				notifier.notify({
 		      'title': 'JS Error',
 		      'message': err.message
