@@ -7,14 +7,11 @@
     deactivated
     hited
 */
+const Tile = require('./Tile');
 
-class Block extends PIXI.projection.Sprite2d {
+class Block extends Tile {
   constructor(scene, map, x, y, data={}) {
-    super();
-
-    this.game = scene.game;
-    this.scene = scene;
-    this.map = map;
+    super(scene, map, x, y, data={});
 
     Object.assign(this, {
       active: false,
@@ -25,17 +22,6 @@ class Block extends PIXI.projection.Sprite2d {
       historyID: null,
       showDelay: false
     }, data);
-
-    this.activatedTexture = data.activatedTexture ? PIXI.Texture.fromFrame(data.activatedTexture) : PIXI.Texture.WHITE;
-    this.deactivatedTexture = data.deactivatedTexture ? PIXI.Texture.fromFrame(data.deactivatedTexture) : PIXI.Texture.WHITE;
-    this.texture = this.active ? this.activatedTexture : this.deactivatedTexture;
-
-    this.anchor.set(.5);
-    this.renderable = false;
-    this.width = map.tileSize-10;
-    this.height = map.tileSize-10;
-    this.x = x+map.tileSize/2-5;
-    this.y = y+map.tileSize/2-5;
 
     this.jolting = PIXI.tweenManager.createTween(this);
     this.jolting.from({rotation: -.1}).to({rotation: .1});

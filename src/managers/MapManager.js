@@ -9,33 +9,24 @@ const map = require('../content/map');
 const blocks = require('../content/blocks');
 const triggers = require('../content/triggers');
 const Block = require('../subjects/Block');
+const TiledManager = require('./TiledManager');
 
 class MapManager extends PIXI.projection.Container2d {
-  constructor(scene) {
+  constructor(scene, checkpoint) {
     super();
-
     this.scene = scene;
     this.game = scene.game;
 
+    this.tiled = new TiledManager(map, blocks, triggers);
     this.tileSize = 120;
-    this.mapWidth = map.width;
-    this.mapHeight = map.height;
-
-    this.map = map.layers[0].data;
-    this.triggersMap = map.layers[1].data;
-    this.blocks = blocks.tileproperties;
-    this.triggers = triggers.tileproperties;
-    this.divideGid = triggers.tilecount;
-
-    this.PROJECTION_PADDING_BOTTOM = 240;
-    this.x = this.game.w/2-this.mapWidth*this.tileSize/2;
-    this.y = -this.mapHeight*this.tileSize+this.game.h-this.PROJECTION_PADDING_BOTTOM;
-
     this.speed = 500;
     this.showDelay = 5000;
+    this.PROJECTION_PADDING_BOTTOM = 240;
+    this.x = this.game.w/2-this.mapWidth*this.tileSize/2;
+    this.y = -this.mapHeight*this.tileSize+this.game.h-this.PROJECTION_PADDING_BOTTOM+checkpoint;
 
     this._createProjection();
-    this._parseMap();
+    this.generateMap();
   }
   _createProjection() {
     let projection = new PIXI.projection.Container2d();
@@ -44,37 +35,16 @@ class MapManager extends PIXI.projection.Container2d {
     projection.addChild(this);
     this.scene.addChild(projection);
   }
-  _getBlockProps(blockGid, triggerGid) {
-    const FLIPPED_HORIZONTALLY_FLAG = 0x80000000;
-    const FLIPPED_VERTICALLY_FLAG   = 0x40000000;
-    const FLIPPED_DIAGONALLY_FLAG   = 0x20000000;
 
-    let flips = {
-      horizontalFlip: !!(blockGid & FLIPPED_HORIZONTALLY_FLAG),
-      verticalFlip: !!(blockGid & FLIPPED_VERTICALLY_FLAG),
-      diagonalFlip: !!(blockGid & FLIPPED_DIAGONALLY_FLAG)
-    }
-
-    if(flips.horizontalFlip || flips.verticalFlip || flips.diagonalFlip)
-      blockGid &= ~(FLIPPED_HORIZONTALLY_FLAG |
-               FLIPPED_VERTICALLY_FLAG |
-               FLIPPED_DIAGONALLY_FLAG);
-
-    return Object.assign({}, flips, this.blocks[blockGid-this.divideGid-1], this.triggers[triggerGid-1]);
+  generateMap() {
+    this.tiled.data.forEach((tile) => {
+      this.addBlock(tile.x*this.tileSize, tile.y*this.tileSize, tile.data);
+    });
   }
-  _parseMap() {
-    for(let y = 0; y < this.mapHeight; y++) {
-      for(let x = 0; x < this.mapWidth; x++) {
-        this.map[y*this.mapWidth+x] && this.addBlock(x*this.tileSize, y*this.tileSize, this.map[y*this.mapWidth+x], this.triggersMap[y*this.mapWidth+x]);
-      }
-    }
-  }
-  addBlock(x, y, blockGid, triggerGid) {
-    let block = new Block(this.scene, this, x, y, this._getBlockProps(blockGid, triggerGid));
+  addBlock(x, y, data) {
+    let block = new Block(this.scene, this, x, y, data);
     this.addChild(block);
   }
-
-  // Collision
   getBlock(pos) {
     for(let i = 0; i < this.children.length; i++) {
       let block = this.children[i];
