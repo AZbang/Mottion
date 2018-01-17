@@ -3,65 +3,56 @@ require('pixi-tween');
 require('pixi-projection');
 require('pixi-particles');
 require('pixi-filters');
+require('./filters');
 
-const SettingsManager = require('./managers/SettingsManager');
-const ScenesManager = require('./managers/ScenesManager');
-const SplashManager = require('./managers/SplashManager');
-const DebuggerManager = require('./managers/DebuggerManager');
-const Sphere = require('./subjects/Sphere');
-const GrayscaleFilter = require('./filters/GrayscaleFilter');
-const NoiseBlurFilter = require('./filters/NoiseBlurFilter');
+const Settings = require('./core/Settings');
+const Music = require('./core/Music');
+const Store = require('./core/Store');
+const Scenes = require('./core/Scenes');
+const Splash = require('./core/Splash');
+const Mouse = require('./core/Mouse');
+const Debugger = require('./core/Debugger');
 
-class Game extends PIXI.Application {
+class Game extends PIXI.Container {
   constructor() {
-    super({backgroundColor: 0xFFFFFF});
+    super();
+
+    this.renderer = PIXI.autoDetectRenderer({background: 0xFFFFFF});
+    this.ticker = new PIXI.ticker.Ticker();
+    this.view = this.renderer.view;
+    document.body.appendChild(this.view);
 
     this.w = 1920;
     this.h = 880;
+    this.resolution = null;
 
-    // У сцены обязательно должна присутствовать ссылка на game. Совместимость с Managers
-    this.stage.game = this;
-    this.settings = new SettingsManager(this.stage);
-    this.debug = new DebuggerManager(this.stage);
-    this.scenes = new ScenesManager(this.stage);
-    this.splash = new SplashManager(this.stage);
-    this.mouse = new Sphere(this.stage);
+    this.store = new Store(this);
+    this.settings = new Settings(this);
+    this.scenes = new Scenes(this);
+    this.audio = new Music(this);
 
-    this._bindEvents();
-    this._setFilters();
-    this._addTicker();
-    this.resize();
+    this.mouse = new Mouse(this);
+    this.splash = new Splash(this);
+    this.debug = new Debugger(this);
 
-    PIXI.sound.play('music_sadday');
-  }
-  _bindEvents() {
-    this.stage.interactive = true;
-    this.stage.cursor = 'none';
+    this.noiseBlur = new PIXI.filters.NoiseBlurFilter();
+    this.filters = [this.noiseBlur];
 
-    window.addEventListener('resize', () => this.resize(this));
-    this.stage.on('pointermove', (e) => {
-      this.mouse.setPos({x: e.data.global.x/this.scale, y: e.data.global.y/this.scale});
-    });
-  }
-  _addTicker() {
     this.ticker.add((dt) => {
       PIXI.tweenManager.update();
+      this.renderer.render(this);
     });
+    this.ticker.start();
+    this.resize();
   }
-  _setFilters() {
-    this.noiseBlur = new NoiseBlurFilter();
-    this.stage.filters = [this.noiseBlur];
+  _bindEvents() {
+    window.addEventListener('resize', () => this.resize(this));
   }
   resize() {
-    this.scale = window.innerWidth/this.w;
-    this.renderer.resize(window.innerWidth, this.h*this.scale);
-    this.view.style.marginTop = window.innerHeight/2-this.h*this.scale/2 + 'px';
-    this.stage.scale.set(this.scale);
-  }
-  toScene(scene, color) {
-    this.splash.show(color, 1000, 1000, () => {
-      this.scenes.enableScene(scene);
-    });
+    this.resolution = window.innerWidth/this.w;
+    this.renderer.resize(window.innerWidth, this.h*this.resolution);
+    this.view.style.marginTop = window.innerHeight/2-this.h*this.resolution/2 + 'px';
+    this.scale.set(this.resolution);
   }
 }
 

@@ -10,15 +10,22 @@ class Playground extends PIXI.Container {
     super();
     this.game = game;
 
-    this.background = new BackgroundManager(this);
+    Object.assign(this, {
+      score: 0,
+      checkpoint: 0
+    }, this.game.store.getPlayground());
 
-    this.map = new MapManager(this);
+    this.background = new BackgroundManager(this);
     this.history = new HistoryManager(this);
-    this.player = new Player(this, this.map);
+    this.map = new MapManager(this);
+    this.player = new Player(this);
+
     this.gameplay = new GameplayManager(this);
 
     this._addSounds();
     this._setFilters();
+
+    this.game.splash.show(0xFFFFFF, 1000, 1000);
   }
   _addSounds() {
     PIXI.sound.play('sound_fire', {loop: true});

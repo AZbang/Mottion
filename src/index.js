@@ -1,9 +1,7 @@
-const Loader = require('./Loader');
+const Loader = require('./core/Loader');
 const Game = require('./Game');
 
-new Loader('assets/banner.png', () => {
+new Loader().loadResources(() => {
   window.game = new Game();
-
-  document.body.appendChild(game.view);
-  game.toScene('menu', 0xFFFFFF);
+  game.scenes.toScene('menu', 0xFFFFFF, 1, 1000);
 });

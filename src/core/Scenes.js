@@ -6,13 +6,12 @@
     enabledScene => scenes
 */
 
-class ScenesManager extends PIXI.Container {
-  constructor(scene) {
+class Scenes extends PIXI.Container {
+  constructor(game) {
     super();
-    scene.addChild(this);
+    game.addChild(this);
 
-    this.game = scene.game;
-    this.scene = scene;
+    this.game = game;
 
     this.scenes = require('../scenes');
     this.activeScene = null;
@@ -54,6 +53,11 @@ class ScenesManager extends PIXI.Container {
 
     this.emit('enabledScene', this.activeScene);
   }
+  toScene(scene, color, show=1000, hide=1000) {
+    this.game.splash.show(color, show, hide, () => {
+      this.enableScene(scene);
+    });
+  }
 }
 
-module.exports = ScenesManager;
+module.exports = Scenes;

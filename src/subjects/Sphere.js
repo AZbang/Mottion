@@ -3,10 +3,7 @@ const emitterData = require('../content/emitter.json');
 class Sphere extends PIXI.Container {
   constructor(scene) {
     super();
-    scene.addChild(this);
-
-    this.game = scene.game;
-    this.scene = scene;
+    this.game = scene.game || scene;
 
     this.emitter = new PIXI.particles.Emitter(this, [PIXI.Texture.fromImage('particle')], emitterData);
     this.game.ticker.add((dt) => this.update(dt));

@@ -13,10 +13,10 @@ class Settings extends PIXI.Container {
 
     this.background = new BackgroundManager(this);
 
-    this.addCheckBoxInput('Filters', this.settings.filrers, () => this.settings.toggleFilters());
+    // this.addCheckBoxInput('Filters', this.settings.filrers, () => this.settings.toggleFilters());
     this.addCheckBoxInput('Music', this.settings.music, () => this.settings.toggleMusic());
     this.addCheckBoxInput('Sounds', this.settings.sounds, () => this.settings.toggleSounds());
-    this.addListInput('Lang: ', this.settings.langs, this.settings.langIndex, (i) => this.settings.setLang(i));
+    this.addListInput('Lang: ', this.settings.LANGS, this.settings.langIndex, (i) => this.settings.setLang(i));
     this.addButton('close.png', this.game.w-100, 100, () => this.game.toScene('menu', 0xF9E4FF));
 
     this._setFilters();

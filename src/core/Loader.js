@@ -1,17 +1,11 @@
 class Loader {
-  constructor(bannerUrl, onLoaded) {
-    this.bannerUrl = bannerUrl;
-    this.onLoaded = onLoaded;
-
+  constructor() {
     this.banner = document.createElement('img');
-    this.banner.src = bannerUrl;
+    this.banner.src = 'assets/banner.png';
     this.banner.style.position = 'absolute';
     this.banner.style.top = (window.innerHeight/2-100) + 'px';
     this.banner.style.left = (window.innerWidth/2-256) + 'px';
     document.body.appendChild(this.banner);
-
-    this.showBanner();
-    this._loadResources();
   }
   showBanner() {
     document.body.style.background = '#fff';
@@ -20,9 +14,10 @@ class Loader {
   hideBanner() {
     document.body.style.background = '#000';
     this.banner.style.display = 'none';
-    this.onLoaded && this.onLoaded();
   }
-  _loadResources() {
+  loadResources(loaded) {
+    this.showBanner();
+
     PIXI.loader
       .add('objects', 'assets/spritesheets/objects.json')
       .add('player', 'assets/spritesheets/player.json')
@@ -33,16 +28,19 @@ class Loader {
       .add('noise', 'assets/filters/noise_grayscale.png')
       .add('particle', 'assets/filters/particle.png')
 
-      // .add('music_november', 'assets/sounds/bensound-november.mp3')
-      // .add('music_slowmotion', 'assets/sounds/bensound-slowmotion.mp3')
+      .add('music_november', 'assets/sounds/bensound-november.mp3')
+      .add('music_slowmotion', 'assets/sounds/bensound-slowmotion.mp3')
       .add('music_sadday', 'assets/sounds/bensound-sadday.mp3')
       .add('sound_fire', 'assets/sounds/fire.mp3')
       .add('sound_noise', 'assets/sounds/noise.mp3')
       .add('sound_run', 'assets/sounds/run.mp3')
 
-      .load(() => this._loadFonts(() => this.hideBanner()));
+      .load(() => this.loadFonts(() => {
+        this.hideBanner();
+        loaded && loaded();
+      }));
   }
-  _loadFonts(cb) {
+  loadFonts(cb) {
     WebFont.load({
       custom: {
         families: ['Opificio Bold'],

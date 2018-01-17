@@ -9,7 +9,7 @@ class Menu extends PIXI.Container {
 
     this.addLabel('Mottion');
     this.addCitaty('He played with his dreams, and dreams played to them.');
-    this.addButton('settings.png', this.game.w-100, this.game.h-100, () => this.game.toScene('settings', 0xF9E4FF));
+    this.addButton('settings.png', this.game.w-100, this.game.h-100, () => this.game.scenes.toScene('settings', 0xF9E4FF));
 
     this._setFilters();
   }
@@ -26,7 +26,7 @@ class Menu extends PIXI.Container {
     this.label.y = 330;
     this.label.x = this.game.w/2;
     this.label.interactive = true;
-    this.label.on('pointerdown', () => this.game.toScene('playground', 0xF9E4FF));
+    this.label.on('pointerdown', () => this.game.scenes.toScene('playground', 0xF9E4FF));
     this.addChild(this.label);
   }
   addCitaty(txt) {
@@ -41,7 +41,7 @@ class Menu extends PIXI.Container {
     this.citaty.y = 500;
     this.citaty.x = this.game.w/2;
     this.citaty.interactive = true;
-    this.citaty.on('pointerdown', () => this.game.toScene('playground', 0xF9E4FF));
+    this.citaty.on('pointerdown', () => this.game.scenes.toScene('playground', 0xF9E4FF));
     this.addChild(this.citaty);
   }
   addButton(id, x, y, click) {

@@ -11,25 +11,24 @@
 */
 
 const RUN_TOP = [];
+const RUN_LEFT = [];
 for(let i = 0; i < 8; i++) {
   let texture = PIXI.Texture.fromImage('player_run_top_' + (i+1));
   RUN_TOP.push({texture, time: 70});
 }
-
-const RUN_LEFT = [];
 for(let i = 0; i < 5; i++) {
   let texture = PIXI.Texture.fromImage('player_run_left_' + (i+1));
   RUN_LEFT.push({texture, time: 70});
 }
 
 class Player extends PIXI.extras.AnimatedSprite {
-  constructor(scene, map) {
+  constructor(scene) {
     super(RUN_TOP);
     scene.addChild(this);
 
     this.game = scene.game;
+    this.map = scene.map;
     this.scene = scene;
-    this.map = map;
 
     this.SCALE = .7;
 

@@ -47,49 +47,45 @@ class Block extends PIXI.projection.Sprite2d {
     if(this.renderable) return;
     this.renderable = true;
 
-    PIXI.tweenManager.createTween(this, {
-      from: {
-        width: 0,
-        height: 0,
-        y: this.y+this.height,
-        alpha: 0
-      },
-      to: {
-        width: this.map.tileSize-10,
-        height: this.map.tileSize-10,
-        y: this.y,
-        alpha: 1
-      },
-      time: 300,
-      easing: PIXI.tween.Easing.outBounce(),
-      delay: this.showDelay ? delay+Math.random()*1000 : 0
-    }).start();
+    this.alpha = 0;
 
+    let show = PIXI.tweenManager.createTween(this);
+    show.from({
+      width: 0,
+      height: 0,
+      y: this.y+this.height,
+      alpha: 0
+    }).to({
+      width: this.map.tileSize-10,
+      height: this.map.tileSize-10,
+      y: this.y,
+      alpha: 1
+    });
+    show.time = this.map.speed*2;
+    show.easing = PIXI.tween.Easing.outBounce();
+    if(this.showDelay) setTimeout(() => show.start(), delay+Math.random()*this.map.speed);
+    else show.start();
     this.emit('showen');
   }
   hide(delay) {
     if(!this.renderable) return;
     this.renderable = true;
 
-    PIXI.tweenManager.createTween(this, {
-      from: {
-        width: this.width,
-        height: this.height,
-        y: this.y,
-        alpha: 1
-      },
-      to: {
-        width: 0,
-        height: 0,
-        y: this.y+this.height,
-        alpha: 0
-      },
-      time: 300,
-      delay: Math.random()*this.map.speed/2,
-      on: {
-        end: () => this.renderable = false
-      }
-    }).start();
+    let hide = PIXI.tweenManager.createTween(this);
+    hide.from({
+      width: this.width,
+      height: this.height,
+      y: this.y,
+      alpha: 1
+    }).to({
+      width: 0,
+      height: 0,
+      y: this.y+this.height,
+      alpha: 0
+    });
+    setTimeout(() => hide.start(), Math.random()*this.map.speed/2);
+    hide.on('end', () => this.renderable = false);
+    hide.time = this.map.speed;
 
     this.emit('hidden');
   }

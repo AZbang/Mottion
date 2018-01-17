@@ -7,8 +7,6 @@ class GameplayManager {
     this.player = scene.player;
     this.history = scene.history;
 
-    this.passedBlocks = 0;
-
     this.game.ticker.add(() => this.update());
     this._bindEvent();
   }
@@ -24,7 +22,7 @@ class GameplayManager {
   activateBlock(pos) {
     for(let i = 0; i < this.map.children.length; i++) {
       let block = this.map.children[i];
-      if(block.containsPoint({x: pos.x*this.game.scale, y: pos.y*this.game.scale})) return block.hit();
+      if(block.containsPoint({x: pos.x*this.game.resolution, y: pos.y*this.game.resolution})) return block.hit();
       else block.unhit();
     }
   }
@@ -37,7 +35,7 @@ class GameplayManager {
 
   // Проверить на чекпоинт
   saveCheckpoint(block) {
-    if(block.checkpoint) this.passedBlocks = 0;
+    if(block.checkpoint) this.checkpoint = block.y;
   }
   // Если блок имеет свойство historyID, то показать фрагмент сюжета с таким идентификатором. (content/history.json)
   showHistory(block) {

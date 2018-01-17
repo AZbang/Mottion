@@ -1,11 +1,9 @@
-class SplashManager extends PIXI.Graphics {
-  constructor(scene) {
+class Splash extends PIXI.Graphics {
+  constructor(game) {
     super();
-    scene.addChild(this);
+    game.addChild(this);
 
-    this.game = scene.game;
-    this.scene = scene;
-
+    this.game = game;
     this.alpha = 0;
   }
   show(color=0xFFFFFF, showTime=1000, endTime=1000, showEvent, endEvent) {
@@ -28,4 +26,4 @@ class SplashManager extends PIXI.Graphics {
   }
 }
 
-module.exports = SplashManager;
+module.exports = Splash;

@@ -8,7 +8,6 @@
 const map = require('../content/map');
 const blocks = require('../content/blocks');
 const triggers = require('../content/triggers');
-
 const Block = require('../subjects/Block');
 
 class MapManager extends PIXI.projection.Container2d {
@@ -80,8 +79,8 @@ class MapManager extends PIXI.projection.Container2d {
     for(let i = 0; i < this.children.length; i++) {
       let block = this.children[i];
 
-      let x = block.transform.worldTransform.tx/this.game.scale-block.width/2;
-      let y = block.transform.worldTransform.ty/this.game.scale-block.height/2;
+      let x = block.transform.worldTransform.tx/this.game.resolution-block.width/2;
+      let y = block.transform.worldTransform.ty/this.game.resolution-block.height/2;
       let w = block.width;
       let h = block.height;
 
@@ -121,7 +120,7 @@ class MapManager extends PIXI.projection.Container2d {
   checkOutRangeBlocks(isDown) {
     for(let i = 0; i < this.children.length; i++) {
       let block = this.children[i];
-      let y = block.transform.worldTransform.ty/this.game.scale-this.tileSize/2;
+      let y = block.transform.worldTransform.ty/this.game.resolution-this.tileSize/2;
       if(y >= this.game.h-this.tileSize*2) block.hide();
       else if(y >= -this.tileSize*2) block.show(this.showDelay);
     }

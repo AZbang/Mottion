@@ -1,9 +1,8 @@
-class DebuggerManager extends PIXI.Graphics {
-  constructor(scene) {
+class Debugger extends PIXI.Graphics {
+  constructor(game) {
     super();
-    scene.addChild(this);
-
-    this.game = scene.game;
+    game.addChild(this);
+    this.game = game;
 
     this.points = [];
     this.rects = [];
@@ -32,4 +31,4 @@ class DebuggerManager extends PIXI.Graphics {
   }
 }
 
-module.exports = DebuggerManager;
+module.exports = Debugger;
