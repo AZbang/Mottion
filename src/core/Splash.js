@@ -14,15 +14,20 @@ class Splash extends PIXI.Graphics {
       .from({alpha: 1}).to({alpha: 0});
     hide.on('end', () => endEvent && endEvent());
     hide.time = endTime;
-
-    let show = PIXI.tweenManager.createTween(this)
-      .from({alpha: 0}).to({alpha: 1});
-    show.time = showTime;
-    show.on('end', () => {
+    
+    if(showTime) {
+      let show = PIXI.tweenManager.createTween(this)
+        .from({alpha: 0}).to({alpha: 1});
+      show.time = showTime;
+      show.on('end', () => {
+        showEvent && showEvent();
+        hide.start();
+      });
+      show.start();
+    } else {
       showEvent && showEvent();
       hide.start();
-    });
-    show.start();
+    }
   }
 }
 

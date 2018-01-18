@@ -3,12 +3,11 @@ class Settings {
     this.game = game;
 
     Object.assign(this, {
-      filters: true,
       sounds: true,
       music: true,
       langIndex: 0
     }, this.game.store.getSettings());
-    
+
     this.LANGS = ['en', 'ru'];
   }
   get lang() {
@@ -16,14 +15,17 @@ class Settings {
   }
   toggleSounds() {
     this.sounds = !this.sounds;
-    this.game.audio.playSounds(this.sounds);
+    this.game.audio.toggleSounds(this.sounds);
+    this.game.store.saveSettings(this);
   }
   toggleMusic() {
     this.music = !this.music;
-    this.game.audio.playMusic(this.music);
+    this.game.audio.toggleMusic(this.music);
+    this.game.store.saveSettings(this);
   }
   setLang(id) {
     this.langIndex = id;
+    this.game.store.saveSettings(this);
   }
 }
 

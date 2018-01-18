@@ -3,5 +3,6 @@ const Game = require('./Game');
 
 new Loader().loadResources(() => {
   window.game = new Game();
-  game.scenes.toScene('menu', 0xFFFFFF, 1, 1000);
+  game.audio.playMusic('november');
+  game.scenes.toScene('menu', 0xFFFFFF, 0, 1000);
 });

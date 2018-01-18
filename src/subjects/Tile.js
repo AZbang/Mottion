@@ -16,9 +16,20 @@ class Tile extends PIXI.projection.Sprite2d {
     this.scene = scene;
     this.map = map;
 
+    Object.assign(this, {
+      score: 0,
+      active: false,
+      activation: null,
+      playerDir: null,
+      checkpoint: false,
+      historyID: null,
+      showDelay: false
+    }, data);
+
+
     this.activatedTexture = data.activatedTexture ? PIXI.Texture.fromFrame(data.activatedTexture) : PIXI.Texture.WHITE;
     this.deactivatedTexture = data.deactivatedTexture ? PIXI.Texture.fromFrame(data.deactivatedTexture) : PIXI.Texture.WHITE;
-    this.texture = this.active ? this.activatedTexture : this.deactivatedTexture;
+    this.texture = data.active ? this.activatedTexture : this.deactivatedTexture;
 
     this.anchor.set(.5);
     this.renderable = false;

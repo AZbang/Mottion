@@ -3,6 +3,7 @@ const MapManager = require('../managers/MapManager');
 const HistoryManager = require('../managers/HistoryManager');
 const BackgroundManager = require('../managers/BackgroundManager');
 const GameplayManager = require('../managers/GameplayManager');
+const InterfaceManager = require('../managers/InterfaceManager');
 const Player = require('../subjects/Player');
 
 class Playground extends PIXI.Container {
@@ -13,28 +14,20 @@ class Playground extends PIXI.Container {
     Object.assign(this, {
       score: 0,
       checkpoint: 0
-    }, this.game.store.getPlayground());
+    }, this.game.store.getGameplay());
 
     this.background = new BackgroundManager(this);
-    this.history = new HistoryManager(this);
-    this.map = new MapManager(this);
-    this.player = new Player(this);
 
+    this.map = new MapManager(this, this.checkpoint);
+    this.history = new HistoryManager(this);
+    this.player = new Player(this);
     this.gameplay = new GameplayManager(this);
 
-    this._addSounds();
-    this._setFilters();
+    this.ui = new InterfaceManager(this);
+    this.ui.addButton('settings.png', this.game.w-100, 100, () => this.game.scenes.toScene('settings', 0xF9E4FF));
 
-    this.game.splash.show(0xFFFFFF, 1000, 1000);
-  }
-  _addSounds() {
-    PIXI.sound.play('sound_fire', {loop: true});
-    PIXI.sound.volume('sound_fire', .5);
-    PIXI.sound.play('sound_noise', {loop: true});
-    PIXI.sound.volume('sound_noise', .3);
-  }
-  _setFilters() {
     this.game.noiseBlur.blurRadius = 0.0003;
+    this.game.splash.show(0xFFFFFF, 0, 1000);
   }
 }
 

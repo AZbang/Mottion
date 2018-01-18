@@ -3,22 +3,28 @@ class Music {
     this.game = game;
 
     this.sounds = ['sound_fire', 'sound_noise', 'sound_run'];
-    this.music = ['music_november', 'music_slowmotion', 'music_sadday'];
+    this.musics = ['music_november', 'music_slowmotion', 'music_sadday'];
   }
-  play(id) {
-    PIXI.sound.play(id);
+  playSound(id, params) {
+    PIXI.sound.play('sound_' + id, params);
   }
-  stop(id) {
-    PIXI.sound.stop(id);
+  stopSound(id) {
+    PIXI.sound.stop('sound_' + id);
   }
-  playMusic(play) {
+  playMusic(id, params) {
+    PIXI.sound.play('music_' + id, params);
+  }
+  stopMusic(id) {
+    PIXI.sound.stop('music_' + id);
+  }
+  toggleMusic(play) {
     this.musics.forEach((id) => {
-      play ? PIXI.sound.stop(id) : PIXI.sound.stop(id);
+      play ? PIXI.sound.volume(id, 1) : PIXI.sound.volume(id, 0);
     });
   }
-  playSounds(play) {
+  toggleSounds(play) {
     this.sounds.forEach((id) => {
-      play ? PIXI.sound.stop(id) : PIXI.sound.stop(id);
+      play ? PIXI.sound.volume(id, 1) : PIXI.sound.volume(id, 0);
     });
   }
 }

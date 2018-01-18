@@ -11,17 +11,7 @@ const Tile = require('./Tile');
 
 class Block extends Tile {
   constructor(scene, map, x, y, data={}) {
-    super(scene, map, x, y, data={});
-
-    Object.assign(this, {
-      active: false,
-      activation: null,
-      score: 0,
-      playerDir: null,
-      checkpoint: false,
-      historyID: null,
-      showDelay: false
-    }, data);
+    super(scene, map, x, y, data);
 
     this.jolting = PIXI.tweenManager.createTween(this);
     this.jolting.from({rotation: -.1}).to({rotation: .1});
@@ -87,7 +77,7 @@ class Block extends Tile {
     this.unhit();
 
     this.active = true;
-    this.texture = this.activatedTexture;
+    if(this.activatedTexture) this.texture = this.activatedTexture;
 
     this.emit('activated');
   }

@@ -14,16 +14,16 @@ class Store {
   }
   getSettings() {
     return {
-      langIndex: localStorage.getItem('langIndex'),
-      music: localStorage.getItem('music'),
-      sounds: localStorage.getItem('sounds'),
-      filters: localStorage.getItem('filters')
+      langIndex: localStorage.getItem('langIndex') || 0,
+      music: localStorage.getItem('music') || true,
+      sounds: localStorage.getItem('sounds') || true,
+      filters: localStorage.getItem('filters') || true
     }
   }
   getGameplay() {
     return {
-      score: localStorage.getItem('score'),
-      checkpoint: localStorage.getItem('checkpoint')
+      score: localStorage.getItem('score') || 0,
+      checkpoint: localStorage.getItem('checkpoint') || 0
     }
   }
 }

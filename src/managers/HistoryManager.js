@@ -33,8 +33,7 @@ class HistoryManager extends PIXI.Container {
   }
   show(id) {
     this.currentHistory = this.history[id];
-
-    // this.image.texture = PIXI.Texture.fromImage(data.image);
+    console.log(this.game.settings.lang);
     this.text.setText(this.currentHistory.text[this.game.settings.lang]);
 
     let show = PIXI.tweenManager.createTween(this);
