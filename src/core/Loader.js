@@ -1,3 +1,5 @@
+const WebFont = require('webfontloader');
+
 class Loader {
   constructor() {
     this.banner = document.createElement('img');
