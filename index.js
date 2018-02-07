@@ -11,13 +11,11 @@ app.on('window-all-closed', () => {
 app.on('ready', () => {
   mainWindow = new BrowserWindow({
     frame: true,
-    height: 320*2,
-    width: 460*2,
+    height: 320*3,
+    width: 460*3,
   });
 
-  mainWindow.loadURL('file://' + __dirname + '/www/index.html');
-  // mainWindow.setResizable(false);
-
+  mainWindow.loadURL('http://localhost:1338');
   mainWindow.on('closed', () => {
     mainWindow = null;
   });

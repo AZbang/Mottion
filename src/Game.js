@@ -44,6 +44,7 @@ class Game extends PIXI.Container {
     });
     this.ticker.start();
     this.resize();
+    this._bindEvents();
   }
   _bindEvents() {
     window.addEventListener('resize', () => this.resize(this));
