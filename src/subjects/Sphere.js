@@ -1,4 +1,4 @@
-const emitterData = require('../content/emitter.json');
+const emitterData = require('../content/sphereEmitter.json');
 
 class Sphere extends PIXI.Container {
   constructor(scene) {

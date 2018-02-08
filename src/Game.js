@@ -12,6 +12,7 @@ const Scenes = require('./core/Scenes');
 const Splash = require('./core/Splash');
 const Mouse = require('./core/Mouse');
 const Debugger = require('./core/Debugger');
+const ParticlesManager = require('./managers/ParticlesManager');
 
 class Game extends PIXI.Container {
   constructor() {
@@ -30,8 +31,9 @@ class Game extends PIXI.Container {
     this.settings = new Settings(this);
     this.scenes = new Scenes(this);
     this.audio = new Music(this);
-
     this.mouse = new Mouse(this);
+    this.bgParticles = new ParticlesManager(this);
+
     this.splash = new Splash(this);
     this.debug = new Debugger(this);
 

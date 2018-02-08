@@ -122,7 +122,7 @@ class Player extends PIXI.extras.AnimatedSprite {
     }
 
     this.lastMove = 'top';
-    this.map.scrollDown(1, () => this.updateMoving());
+    this.map.scrollDown(1);
     this.emit('actionTop');
   }
   left() {

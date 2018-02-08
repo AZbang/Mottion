@@ -1,46 +1,49 @@
 const gulp = require('gulp');
-const browserify = require('browserify');
+const sourcemaps = require('gulp-sourcemaps');
 const connect = require('gulp-connect');
-const notifier = require('node-notifier');
-const babelify = require('babelify');
-const source = require('vinyl-source-stream')
+const source = require('vinyl-source-stream');
+const buffer = require('vinyl-buffer');
+const browserify = require('browserify');
 const browserifyShader = require('browserify-shader');
-const gulpIf = require('gulp-if');
-
-var isDev = process.env.DEV !== 'production';
-
-gulp.task('js', () => {
-	return browserify({entries: './src/index.js', debug: isDev})
-    .transform(browserifyShader)
-		// .transform(babelify, { presets: ['es2015'] })
-    .bundle()
-			.on('error', (err) => {
-				console.log(err.message);
-				notifier.notify({
-		      'title': 'JS Error',
-		      'message': err.message
-		    });
-			})
-      .pipe(source('app.js'))
-      .pipe(gulp.dest('./www'))
-      .pipe(connect.reload());
-});
-
+const watchify = require('watchify');
 
 // server
 gulp.task('server', () => {
 	return connect.server({
-		port: 1338,
+		port: 3338,
 		livereload: true,
-		root: './www'
+		root: './dist'
 	});
 });
 
+function compile(watch) {
+  var bundler = watchify(browserify('./src/index.js', { debug: true }).transform(browserifyShader));
 
-// Watch files
-gulp.task('watch', () => {
-	gulp.watch('./src/**/*.*', ['js']);
-});
+  function rebundle() {
+    bundler.bundle()
+      .on('error', function(err) { console.error(err); this.emit('end'); })
+      .pipe(source('app.js'))
+      .pipe(buffer())
+      .pipe(sourcemaps.init({ loadMaps: true }))
+      .pipe(sourcemaps.write('./'))
+      .pipe(gulp.dest('./dist'))
+			.pipe(connect.reload());
+  }
 
-// Tasks
-gulp.task('default', ['js', 'server', 'watch']);
+  if(watch) {
+    bundler.on('update', function() {
+      console.log('-> bundling...');
+      rebundle();
+    });
+  }
+
+  rebundle();
+}
+
+function watch() {
+  return compile(true);
+}
+
+gulp.task('build', () => compile());
+gulp.task('watch', () => watch());
+gulp.task('default', ['server', 'watch']);

@@ -38,7 +38,6 @@ class Block extends Tile {
       alpha: 1
     });
     show.time = this.map.speed*2;
-    show.easing = PIXI.tween.Easing.outBounce();
     if(this.showDelay) setTimeout(() => show.start(), delay+Math.random()*this.map.speed);
     else show.start();
     this.emit('showen');

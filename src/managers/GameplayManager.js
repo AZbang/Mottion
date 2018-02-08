@@ -13,13 +13,14 @@ class GameplayManager {
     this._bindEvent();
   }
   _bindEvent() {
-    this.map.generateMap();
-    this.player.top();
-
+    this.map.on('scrolled', () => this.player.updateMoving());
     this.history.on('hidden', () => this.hideHistory());
     this.player.on('deaded', () => this.restart());
     this.player.on('collidedBlock', (block) => this.checkCollide(block));
     this.player.on('actionTop', () => this.passedBlocks++);
+
+    this.map.generateMap();
+    this.map.scrollDown(1);
   }
 
   // функция активации блока при удержании мышки на блоке
@@ -47,7 +48,6 @@ class GameplayManager {
   // Если блок имеет свойство historyID, то показать фрагмент сюжета с таким идентификатором. (content/history.json)
   showHistory(block) {
     if(block.historyID) {
-      console.log('history');
       this.history.show(block.historyID);
       block.historyID = null;
     }
