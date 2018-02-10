@@ -10,20 +10,10 @@
     actionRight
 */
 
-const RUN_TOP = [];
-const RUN_LEFT = [];
-for(let i = 0; i < 8; i++) {
-  let texture = PIXI.Texture.fromImage('player_run_top_' + (i+1));
-  RUN_TOP.push({texture, time: 70});
-}
-for(let i = 0; i < 5; i++) {
-  let texture = PIXI.Texture.fromImage('player_run_left_' + (i+1));
-  RUN_LEFT.push({texture, time: 70});
-}
 
-class Player extends PIXI.extras.AnimatedSprite {
+class Player extends PIXI.Sprite {
   constructor(scene) {
-    super(RUN_TOP);
+    super(PIXI.Texture.fromImage('player.png'));
     scene.addChild(this);
 
     this.game = scene.game;
@@ -31,7 +21,6 @@ class Player extends PIXI.extras.AnimatedSprite {
     this.scene = scene;
 
     this.SCALE = .7;
-
     this.loop = true;
     this.anchor.set(.5, 1);
     this.scale.set(this.SCALE);
@@ -44,7 +33,6 @@ class Player extends PIXI.extras.AnimatedSprite {
     this.walking.time = 800;
     this.walking.loop = true;
     this.walking.pingPong = true;
-    this.walking.start();
 
     this.lastMove = null;
     this.speed = this.map.speed || 500;
@@ -85,53 +73,23 @@ class Player extends PIXI.extras.AnimatedSprite {
     this.stopMove();
     this.emit('deaded');
   }
-  live() {
-    this.isDead = false;
-    this.visible = true;
-    this.startMove();
-
-    this.y = this.game.h-this.map.tileSize*2;
-    this.collisionPoint = new PIXI.Point(this.game.w/2, this.game.h-this.map.tileSize*2);
-
-    this.emit('lived');
-  }
   startMove() {
     this.game.audio.playSound('run', {loop: true});
-    this.gotoAndPlay(0);
     this.walking.start();
     this.top();
-
     this.isStop = false;
-    this.textures = RUN_TOP;
-    this.scale.x = this.SCALE;
   }
   stopMove() {
     this.game.audio.stopSound('run');
-    this.gotoAndStop(0);
     this.walking.stop();
-
-    this.scale.x = this.SCALE;
-    this.textures = RUN_TOP;
     this.isStop = true;
   }
   top() {
-    if(this.lastMove !== 'top') {
-      this.textures = RUN_TOP;
-      this.scale.x = this.SCALE;
-      this.gotoAndPlay(0);
-    }
-
     this.lastMove = 'top';
     this.map.scrollDown(1);
     this.emit('actionTop');
   }
   left() {
-    if(this.lastMove !== 'left') {
-      this.scale.x = this.SCALE;
-      this.textures = RUN_LEFT;
-      this.gotoAndPlay(0);
-    }
-
     this.lastMove = 'left';
     let move = PIXI.tweenManager.createTween(this);
     move.from({x: this.x}).to({x: this.x-this.map.tileSize-this.OFFSET_X});
@@ -144,12 +102,6 @@ class Player extends PIXI.extras.AnimatedSprite {
     this.emit('actionLeft');
   }
   right() {
-    if(this.lastMove !== 'right') {
-      this.scale.x = -this.SCALE;
-      this.textures = RUN_LEFT;
-      this.gotoAndPlay(0);
-    }
-
     this.lastMove = 'right';
     let move = PIXI.tweenManager.createTween(this);
     move.from({x: this.x}).to({x: this.x+this.map.tileSize+this.OFFSET_X});

@@ -3,7 +3,6 @@ require('pixi-tween');
 require('pixi-projection');
 require('pixi-particles');
 require('pixi-filters');
-require('./filters');
 
 const Settings = require('./core/Settings');
 const Music = require('./core/Music');
@@ -12,7 +11,6 @@ const Scenes = require('./core/Scenes');
 const Splash = require('./core/Splash');
 const Mouse = require('./core/Mouse');
 const Debugger = require('./core/Debugger');
-const ParticlesManager = require('./managers/ParticlesManager');
 
 class Game extends PIXI.Container {
   constructor() {
@@ -27,18 +25,16 @@ class Game extends PIXI.Container {
     this.h = 880;
     this.resolution = null;
 
+    this.bg = new PIXI.Sprite.fromImage('bg');
+    this.addChild(this.bg);
+
     this.store = new Store(this);
     this.settings = new Settings(this);
     this.scenes = new Scenes(this);
     this.audio = new Music(this);
     this.mouse = new Mouse(this);
-    this.bgParticles = new ParticlesManager(this);
-
     this.splash = new Splash(this);
     this.debug = new Debugger(this);
-
-    this.noiseBlur = new PIXI.filters.NoiseBlurFilter();
-    this.filters = [this.noiseBlur];
 
     this.ticker.add((dt) => {
       PIXI.tweenManager.update();

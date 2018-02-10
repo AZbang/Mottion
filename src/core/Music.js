@@ -3,7 +3,7 @@ class Music {
     this.game = game;
 
     this.sounds = ['sound_fire', 'sound_noise', 'sound_run'];
-    this.musics = ['music_november', 'music_slowmotion', 'music_sadday'];
+    this.musics = ['music_memories'];
   }
   playSound(id, params) {
     PIXI.sound.play('sound_' + id, params);

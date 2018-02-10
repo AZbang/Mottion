@@ -19,10 +19,10 @@ class HistoryManager extends PIXI.Container {
     // this.addChild(this.image);
 
     this.text = new PIXI.Text('Text', {
-      font: 'normal 50px Opificio Bold',
+      font: 'normal 50px Milton Grotesque',
       wordWrap: true,
       wordWrapWidth: this.game.w*3/4,
-      fill: '#ff408c',
+      fill: '#fff',
       padding: 10,
       align: 'center'
     });

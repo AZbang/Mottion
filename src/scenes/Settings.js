@@ -17,12 +17,12 @@ class Settings extends PIXI.Container {
     this.ui.addCheckBoxInput('Music', 850, this.top+1*this.inputPadding, this.settings.music, () => this.settings.toggleMusic());
     this.ui.addCheckBoxInput('Sounds', 850, this.top+2*this.inputPadding, this.settings.sounds, () => this.settings.toggleSounds());
     this.ui.addListInput('Lang: ', this.game.w/2, this.top+3*this.inputPadding, this.settings.LANGS, this.settings.langIndex, (i) => this.settings.setLang(i));
-    this.ui.addButton('close.png', this.game.w-100, 100, () => this.game.scenes.toScene('menu', 0xF9E4FF));
-
-    this._setFilters();
-  }
-  _setFilters() {
-    this.game.noiseBlur.blurRadius = 0.0005;
+    this.ui.addButton({
+      image: 'close.png',
+      x: this.game.w-100,
+      y: this.game.h-100,
+      click: () => this.game.scenes.toScene('menu', 0xFFFFFF)
+    });
   }
 }
 

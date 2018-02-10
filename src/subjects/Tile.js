@@ -19,6 +19,8 @@ class Tile extends PIXI.projection.Sprite2d {
     Object.assign(this, {
       score: 0,
       active: false,
+      type: 'white',
+      tint: 0xFFFFFF,
       activation: null,
       playerDir: null,
       checkpoint: false,
@@ -27,8 +29,8 @@ class Tile extends PIXI.projection.Sprite2d {
     }, data);
 
 
-    this.activatedTexture = data.activatedTexture ? PIXI.Texture.fromFrame(data.activatedTexture) : PIXI.Texture.WHITE;
-    this.deactivatedTexture = data.deactivatedTexture ? PIXI.Texture.fromFrame(data.deactivatedTexture) : PIXI.Texture.WHITE;
+    this.activatedTexture = PIXI.Texture.fromFrame('block-fill.png');
+    this.deactivatedTexture = PIXI.Texture.fromFrame('block.png');
     this.texture = data.active ? this.activatedTexture : this.deactivatedTexture;
 
     this.anchor.set(.5);

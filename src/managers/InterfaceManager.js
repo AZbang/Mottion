@@ -4,37 +4,36 @@ class InterfaceManager extends PIXI.Container {
     scene.addChild(this);
     this.game = scene.game;
   }
-  addLabel(txt, x, y, click) {
-    let label = new PIXI.Text(txt, {
-      font: 'normal 200px Opificio Bold',
-      fill: '#5774f6',
-      align: 'center'
+  addText(opt) {
+    let label = new PIXI.Text(opt.text, {
+      font: opt.font,
+      fill: opt.color,
+      align: opt.align || 'center'
     });
     label.anchor.set(.5);
-    label.y = x;
-    label.x = y;
+    label.y = opt.y;
+    label.x = opt.x;
     label.interactive = true;
-    label.on('pointerdown', () => click && click());
+    label.on('pointerdown', () => opt.click && opt.click());
     this.addChild(label);
   }
-  addCitaty(txt, x, y, click) {
-    let citaty = new PIXI.Text(txt, {
-      font: 'normal 60px Opificio Bold',
-      fill: '#5774f6',
-      wordWrap: true,
-      wordWrapWidth: this.game.w/2,
-      align: 'center'
-    });
-    citaty.anchor.set(.5);
-    citaty.y = x;
-    citaty.x = y;
-    citaty.interactive = true;
-    citaty.on('pointerdown', () => click && click());
-    this.addChild(citaty);
+  addButton(opt, x, y, click) {
+    let btn = new PIXI.Sprite.fromImage(opt.image);
+    this.addChild(btn);
+
+    btn.x = opt.x;
+    btn.y = opt.y;
+    btn.anchor.set(.5);
+    btn.interactive = true;
+    btn.on('pointerdown', () => opt.click && opt.click());
+    return btn;
   }
+
+
+
   addListInput(val, x, y, list, current, set) {
     let txt = new PIXI.Text(val + list[current], {
-      font: 'normal 120px Opificio Bold',
+      font: 'normal 120px Milton Grotesque',
       fill: '#ff408c',
       align: 'center'
     });
@@ -55,7 +54,7 @@ class InterfaceManager extends PIXI.Container {
   }
   addCheckBoxInput(val, x, y, active, toggle) {
     let txt = new PIXI.Text(val, {
-      font: 'normal 100px Opificio Bold',
+      font: 'normal 100px Milton Grotesque',
       fill: '#ff408c',
       align: 'center'
     });
@@ -64,8 +63,8 @@ class InterfaceManager extends PIXI.Container {
     txt.y = y;
     this.addChild(txt);
 
-    let check = PIXI.Sprite.fromImage('check.png');
-    check.texture = PIXI.Texture.fromImage(active ? 'check_active.png' : 'check.png');
+    let check = PIXI.Sprite.fromImage('checkbox.png');
+    check.texture = PIXI.Texture.fromImage(active ? 'checkbox_active.png' : 'checkbox.png');
     check.y = y;
     check.x = x-100;
     check.anchor.set(.5);
@@ -73,22 +72,11 @@ class InterfaceManager extends PIXI.Container {
 
     check.interactive = true;
     check.on('pointerdown', () => {
-      check.texture = PIXI.Texture.fromImage(!active ? 'check_active.png' : 'check.png');
+      check.texture = PIXI.Texture.fromImage(!active ? 'checkbox_active.png' : 'checkbox.png');
       toggle && toggle(!active);
       active = !active;
     });
     return {checkbox: check, text: txt};
-  }
-  addButton(id, x, y, click) {
-    let btn = new PIXI.Sprite.fromImage(id);
-    this.addChild(btn);
-
-    btn.x = x;
-    btn.y = y;
-    btn.anchor.set(.5);
-    btn.interactive = true;
-    btn.on('pointerdown', () => click && click());
-    return btn;
   }
 }
 

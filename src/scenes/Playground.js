@@ -26,7 +26,6 @@ class Playground extends PIXI.Container {
     this.ui = new InterfaceManager(this);
     this.ui.addButton('settings.png', this.game.w-100, 100, () => this.game.scenes.toScene('settings', 0xF9E4FF));
 
-    this.game.noiseBlur.blurRadius = 0.0003;
     this.game.splash.show(0xFFFFFF, 0, 1000);
   }
 }

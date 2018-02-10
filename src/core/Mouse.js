@@ -1,15 +1,16 @@
-const Sphere = require('../subjects/Sphere');
-
-class Mouse extends Sphere {
+class Mouse extends PIXI.Sprite {
   constructor(game) {
-    super(game);
+    super(PIXI.Texture.fromImage('cursor.png'));
     game.addChild(this);
 
     game.interactive = true;
     game.cursor = 'none';
     game.on('pointermove', (e) => {
-      this.setPos({x: e.data.global.x/game.resolution, y: e.data.global.y/game.resolution});
+      this.x = e.data.global.x/game.resolution;
+      this.y = e.data.global.y/game.resolution;
     });
+
+    this.anchor.set(.5);
   }
 }
 

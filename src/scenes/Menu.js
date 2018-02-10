@@ -9,20 +9,28 @@ class Menu extends PIXI.Container {
     this.background = new BackgroundManager(this);
     this.ui = new InterfaceManager(this);
 
-    this.ui.addLabel('Mottion', 330, this.game.w/2, () => {
-      this.game.scenes.toScene('playground', 0xF9E4FF)
+    this.ui.addText({
+      text: 'MOTTION. Do the way',
+      font: 'normal 100px Milton Grotesque',
+      color: 0xFFFFFF,
+      x: this.game.w/2,
+      y: 330,
+      click: () => this.game.scenes.toScene('playground', 0xFFFFFF)
     });
-    this.ui.addCitaty('He played with his dreams, and dreams played to them.', 500, this.game.w/2, () => {
-      this.game.scenes.toScene('playground', 0xF9E4FF)
+    this.ui.addText({
+      text: 'If you want to live_',
+      font: 'normal 100px Milton Grotesque',
+      color: 0xFFFFFF,
+      x: this.game.w/2,
+      y: 500,
+      click: () => this.game.scenes.toScene('playground', 0xFFFFFF)
     });
-    this.ui.addButton('settings.png', this.game.w-100, this.game.h-100, () => {
-      this.game.scenes.toScene('settings', 0xF9E4FF)
+    this.ui.addButton({
+      image: 'settings.png',
+      x: this.game.w-100,
+      y: this.game.h-100,
+      click: () => this.game.scenes.toScene('settings', 0xFFFFFF)
     });
-
-    this._setFilters();
-  }
-  _setFilters() {
-    this.game.noiseBlur.blurRadius = 0.0005;
   }
 }
 
