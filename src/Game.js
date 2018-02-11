@@ -1,8 +1,5 @@
-require('pixi-sound');
 require('pixi-tween');
 require('pixi-projection');
-require('pixi-particles');
-require('pixi-filters');
 
 const Settings = require('./core/Settings');
 const Music = require('./core/Music');

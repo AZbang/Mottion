@@ -2,6 +2,7 @@ const WebFont = require('webfontloader');
 
 class Loader {
   constructor() {
+
   }
   showBanner() {
     document.body.style.background = '#fff';

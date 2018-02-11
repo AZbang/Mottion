@@ -4,3 +4,6 @@ node_modules
 dev_assets
 build.json
 azbang.jks
+dist/app.js.map
+dist/app.js
+dist/vendors

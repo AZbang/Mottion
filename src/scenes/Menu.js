@@ -1,5 +1,6 @@
 const ParalaxManager = require('../managers/ParalaxManager');
 const InterfaceManager = require('../managers/InterfaceManager');
+const FilterManager = require('../managers/FilterManager');
 
 class Menu extends PIXI.Container {
   constructor(game) {
@@ -8,6 +9,7 @@ class Menu extends PIXI.Container {
 
     this.background = new ParalaxManager(this);
     this.ui = new InterfaceManager(this);
+    this.fx = new FilterManager(this);
 
     this.ui.addText({
       text: 'MOTTION. Do the way',

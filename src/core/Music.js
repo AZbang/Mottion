@@ -1,3 +1,5 @@
+require('pixi-sound');
+
 class Music {
   constructor(game) {
     this.game = game;
