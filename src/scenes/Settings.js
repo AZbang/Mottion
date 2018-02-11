@@ -1,4 +1,4 @@
-const BackgroundManager = require('../managers/BackgroundManager');
+const ParalaxManager = require('../managers/ParalaxManager');
 const InterfaceManager = require('../managers/InterfaceManager');
 
 class Settings extends PIXI.Container {
@@ -11,12 +11,37 @@ class Settings extends PIXI.Container {
     this.top = 90;
     this.inputPadding = 130;
 
-    this.background = new BackgroundManager(this);
+    this.background = new ParalaxManager(this);
     this.ui = new InterfaceManager(this);
 
-    this.ui.addCheckBoxInput('Music', 850, this.top+1*this.inputPadding, this.settings.music, () => this.settings.toggleMusic());
-    this.ui.addCheckBoxInput('Sounds', 850, this.top+2*this.inputPadding, this.settings.sounds, () => this.settings.toggleSounds());
-    this.ui.addListInput('Lang: ', this.game.w/2, this.top+3*this.inputPadding, this.settings.LANGS, this.settings.langIndex, (i) => this.settings.setLang(i));
+    this.ui.addCheckBoxInput({
+      text: 'Music',
+      font: 'normal 72px Milton Grotesque',
+      color: 0xFFFFFF,
+      x: 850,
+      y: this.top+1*this.inputPadding,
+      value: this.settings.music,
+      set: () => this.settings.toggleMusic()
+    });
+    this.ui.addCheckBoxInput({
+      text: 'Sounds',
+      font: 'normal 72px Milton Grotesque',
+      color: 0xFFFFFF,
+      x: 850,
+      y: this.top+2*this.inputPadding,
+      value: this.settings.sounds,
+      toggle: (i) => this.settings.toggleSounds(i)
+    });
+    this.ui.addListInput({
+      value: 'Lang: ',
+      font: 'normal 72px Milton Grotesque',
+      color: 0xFFFFFF,
+      x: this.game.w/2,
+      y: this.top+3*this.inputPadding,
+      list: this.settings.LANGS,
+      current: this.settings.langIndex,
+      toggle: (i) => this.settings.setLang(i)
+    });
     this.ui.addButton({
       image: 'close.png',
       x: this.game.w-100,

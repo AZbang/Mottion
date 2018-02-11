@@ -1,7 +1,7 @@
 // managers
 const MapManager = require('../managers/MapManager');
 const HistoryManager = require('../managers/HistoryManager');
-const BackgroundManager = require('../managers/BackgroundManager');
+const ParalaxManager = require('../managers/ParalaxManager');
 const GameplayManager = require('../managers/GameplayManager');
 const InterfaceManager = require('../managers/InterfaceManager');
 const Player = require('../subjects/Player');
@@ -16,7 +16,7 @@ class Playground extends PIXI.Container {
       checkpoint: 0
     }, this.game.store.getGameplay());
 
-    this.background = new BackgroundManager(this);
+    this.background = new ParalaxManager(this);
 
     this.map = new MapManager(this, this.checkpoint);
     this.history = new HistoryManager(this);

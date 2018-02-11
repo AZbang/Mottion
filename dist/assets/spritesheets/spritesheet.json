@@ -1,65 +1,65 @@
 {
 "frames": {
 	"block.png": {
-		"frame": {"x":299, "y":301, "w":169, "h":169},
+		"frame": {"x":170, "y":457, "w":169, "h":169},
 		"spriteSourceSize": {"x":0,"y":0,"w":169,"h":169},
 		"sourceSize": {"w":169,"h":169}
 	},
 	"block_fill.png": {
-		"frame": {"x":423, "y":0, "w":169, "h":169},
+		"frame": {"x":0, "y":457, "w":169, "h":169},
 		"spriteSourceSize": {"x":0,"y":0,"w":169,"h":169},
 		"sourceSize": {"w":169,"h":169}
 	},
 	"checkbox.png": {
-		"frame": {"x":186, "y":525, "w":82, "h":82},
-		"spriteSourceSize": {"x":0,"y":0,"w":82,"h":82},
-		"sourceSize": {"w":82,"h":82}
+		"frame": {"x":406, "y":0, "w":128, "h":128},
+		"spriteSourceSize": {"x":0,"y":0,"w":128,"h":128},
+		"sourceSize": {"w":128,"h":128}
 	},
 	"checkbox_active.png": {
-		"frame": {"x":0, "y":525, "w":92, "h":94},
-		"spriteSourceSize": {"x":0,"y":0,"w":92,"h":94},
-		"sourceSize": {"w":92,"h":94}
+		"frame": {"x":470, "y":258, "w":128, "h":128},
+		"spriteSourceSize": {"x":0,"y":0,"w":128,"h":128},
+		"sourceSize": {"w":128,"h":128}
 	},
 	"close.png": {
-		"frame": {"x":417, "y":492, "w":79, "h":79},
-		"spriteSourceSize": {"x":0,"y":0,"w":79,"h":79},
-		"sourceSize": {"w":79,"h":79}
+		"frame": {"x":406, "y":129, "w":128, "h":128},
+		"spriteSourceSize": {"x":0,"y":0,"w":128,"h":128},
+		"sourceSize": {"w":128,"h":128}
 	},
 	"cursor.png": {
-		"frame": {"x":497, "y":492, "w":77, "h":77},
-		"spriteSourceSize": {"x":0,"y":0,"w":77,"h":77},
-		"sourceSize": {"w":77,"h":77}
+		"frame": {"x":535, "y":0, "w":62, "h":62},
+		"spriteSourceSize": {"x":0,"y":0,"w":62,"h":62},
+		"sourceSize": {"w":62,"h":62}
 	},
 	"object_circle.png": {
-		"frame": {"x":0, "y":301, "w":298, "h":223},
-		"spriteSourceSize": {"x":0,"y":0,"w":298,"h":223},
-		"sourceSize": {"w":298,"h":223}
+		"frame": {"x":0, "y":291, "w":295, "h":165},
+		"spriteSourceSize": {"x":0,"y":0,"w":295,"h":165},
+		"sourceSize": {"w":295,"h":165}
 	},
 	"object_rect.png": {
-		"frame": {"x":469, "y":170, "w":160, "h":321},
-		"spriteSourceSize": {"x":0,"y":0,"w":160,"h":321},
-		"sourceSize": {"w":160,"h":321}
+		"frame": {"x":340, "y":291, "w":129, "h":317},
+		"spriteSourceSize": {"x":0,"y":0,"w":129,"h":317},
+		"sourceSize": {"w":129,"h":317}
 	},
 	"object_shape.png": {
-		"frame": {"x":0, "y":0, "w":422, "h":300},
-		"spriteSourceSize": {"x":0,"y":0,"w":422,"h":300},
-		"sourceSize": {"w":422,"h":300}
+		"frame": {"x":0, "y":0, "w":405, "h":290},
+		"spriteSourceSize": {"x":0,"y":0,"w":405,"h":290},
+		"sourceSize": {"w":405,"h":290}
 	},
 	"player.png": {
-		"frame": {"x":299, "y":471, "w":117, "h":117},
+		"frame": {"x":470, "y":516, "w":117, "h":117},
 		"spriteSourceSize": {"x":0,"y":0,"w":117,"h":117},
 		"sourceSize": {"w":117,"h":117}
 	},
 	"settings.png": {
-		"frame": {"x":93, "y":525, "w":92, "h":93},
-		"spriteSourceSize": {"x":0,"y":0,"w":92,"h":93},
-		"sourceSize": {"w":92,"h":93}
+		"frame": {"x":470, "y":387, "w":128, "h":128},
+		"spriteSourceSize": {"x":0,"y":0,"w":128,"h":128},
+		"sourceSize": {"w":128,"h":128}
 	}
 
 },
 "meta": {
 	"image": "spritesheet.png",
-	"size": {"w": 630, "h": 620},
+	"size": {"w": 599, "h": 634},
 	"scale": "1"
 }
 }

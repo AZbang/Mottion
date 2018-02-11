@@ -3488,6 +3488,9 @@ class Mouse extends PIXI.Sprite {
     });
 
     this.anchor.set(.5);
+    this.scale.set(.6);
+    this.tint = 0xffeb3b;
+    game.ticker.add(() => this.rotation += .01);
   }
 }
 
@@ -3706,24 +3709,6 @@ new Loader().loadResources(() => {
 });
 
 },{"./Game":31,"./core/Loader":37}],45:[function(require,module,exports){
-class BackgroundManager extends PIXI.Container {
-  constructor(scene) {
-    super();
-    scene.addChild(this);
-
-    this.game = game;
-    this.scene = scene.game;
-
-    this.game.ticker.add(() => this.update());
-  }
-  update() {
-
-  }
-}
-
-module.exports = BackgroundManager;
-
-},{}],46:[function(require,module,exports){
 class GameplayManager {
   constructor(scene) {
     this.game = game;
@@ -3796,7 +3781,7 @@ class GameplayManager {
 
 module.exports = GameplayManager;
 
-},{}],47:[function(require,module,exports){
+},{}],46:[function(require,module,exports){
 const history = require('../content/history');
 
 class HistoryManager extends PIXI.Container {
@@ -3853,7 +3838,7 @@ class HistoryManager extends PIXI.Container {
 
 module.exports = HistoryManager;
 
-},{"../content/history":33}],48:[function(require,module,exports){
+},{"../content/history":33}],47:[function(require,module,exports){
 class InterfaceManager extends PIXI.Container {
   constructor(scene) {
     super();
@@ -3861,19 +3846,21 @@ class InterfaceManager extends PIXI.Container {
     this.game = scene.game;
   }
   addText(opt) {
-    let label = new PIXI.Text(opt.text, {
+    let text = new PIXI.Text(opt.text, {
       font: opt.font,
       fill: opt.color,
       align: opt.align || 'center'
     });
-    label.anchor.set(.5);
-    label.y = opt.y;
-    label.x = opt.x;
-    label.interactive = true;
-    label.on('pointerdown', () => opt.click && opt.click());
-    this.addChild(label);
+    text.anchor.set(.5);
+    text.y = opt.y;
+    text.x = opt.x;
+    text.interactive = true;
+    text.on('pointerdown', () => opt.click && opt.click(text));
+    this.addChild(text);
+
+    return text;
   }
-  addButton(opt, x, y, click) {
+  addButton(opt) {
     let btn = new PIXI.Sprite.fromImage(opt.image);
     this.addChild(btn);
 
@@ -3881,56 +3868,36 @@ class InterfaceManager extends PIXI.Container {
     btn.y = opt.y;
     btn.anchor.set(.5);
     btn.interactive = true;
-    btn.on('pointerdown', () => opt.click && opt.click());
+    btn.on('pointerdown', () => opt.click && opt.click(btn));
+
     return btn;
   }
 
-
-
-  addListInput(val, x, y, list, current, set) {
-    let txt = new PIXI.Text(val + list[current], {
-      font: 'normal 120px Milton Grotesque',
-      fill: '#ff408c',
-      align: 'center'
-    });
-    txt.anchor.set(.5);
-    txt.x = x;
-    txt.y = y;
-    this.addChild(txt);
-
-    txt.interactive = true;
-    txt.on('pointerdown', () => {
-      if(current >= list.length-1) current = 0;
-      else current++;
-
-      txt.text = val + list[current];
-      set && set(current);
+  addListInput(opt) {
+    let txt = this.addText({
+      text: opt.value + opt.list[opt.current],
+      ...opt,
+      click: (el) => {
+        if(opt.current >= opt.list.length-1) opt.current = 0;
+        else opt.current++;
+        el.text = opt.value + opt.list[opt.current];
+        opt.set && opt.set(opt.current);
+      }
     });
     return txt;
   }
-  addCheckBoxInput(val, x, y, active, toggle) {
-    let txt = new PIXI.Text(val, {
-      font: 'normal 100px Milton Grotesque',
-      fill: '#ff408c',
-      align: 'center'
-    });
+  addCheckBoxInput(opt) {
+    let txt = this.addText(opt);
     txt.anchor.set(0, .5);
-    txt.x = x;
-    txt.y = y;
-    this.addChild(txt);
 
-    let check = PIXI.Sprite.fromImage('checkbox.png');
-    check.texture = PIXI.Texture.fromImage(active ? 'checkbox_active.png' : 'checkbox.png');
-    check.y = y;
-    check.x = x-100;
-    check.anchor.set(.5);
-    this.addChild(check);
-
-    check.interactive = true;
-    check.on('pointerdown', () => {
-      check.texture = PIXI.Texture.fromImage(!active ? 'checkbox_active.png' : 'checkbox.png');
-      toggle && toggle(!active);
-      active = !active;
+    let check = this.addButton({
+      image: opt.value ? 'checkbox_active.png' : 'checkbox.png',
+      x: opt.x-100, y: opt.y,
+      click: (el) => {
+        el.texture = PIXI.Texture.fromImage(!opt.value ? 'checkbox_active.png' : 'checkbox.png');
+        opt.toggle && opt.toggle(!opt.value);
+        opt.value = !opt.value;
+      }
     });
     return {checkbox: check, text: txt};
   }
@@ -3938,7 +3905,7 @@ class InterfaceManager extends PIXI.Container {
 
 module.exports = InterfaceManager;
 
-},{}],49:[function(require,module,exports){
+},{}],48:[function(require,module,exports){
 /*
   Движок тайловой карты
   События:
@@ -4040,7 +4007,50 @@ class MapManager extends PIXI.projection.Container2d {
 
 module.exports = MapManager;
 
-},{"../content/blocks":32,"../content/map":34,"../content/triggers":35,"../subjects/Block":56,"./TiledManager":50}],50:[function(require,module,exports){
+},{"../content/blocks":32,"../content/map":34,"../content/triggers":35,"../subjects/Block":56,"./TiledManager":50}],49:[function(require,module,exports){
+class ParalaxManager extends PIXI.Container {
+  constructor(scene) {
+    super();
+
+    this.scene = scene;
+    this.game = scene.game || game;
+    this.game.ticker.add(() => this.update());
+    this.scene.addChild(this);
+
+    this.images = ['object_rect.png', 'object_shape.png', 'object_circle.png'];
+    this.padding = 150;
+    this.speed = 4;
+    this.timer = 100;
+    this._spawnToLeft = true;
+    this._time = 0;
+  }
+  spawnObject() {
+    let img = this.images[Math.floor(Math.random()*this.images.length)];
+    let obj = new PIXI.Sprite.fromImage(img);
+    this._spawnToLeft = !this._spawnToLeft;
+    obj.y = -obj.height;
+    obj.x = this._spawnToLeft ? Math.random()*this.padding : this.game.w-obj.width-Math.random()*this.padding;
+    obj.rotation = this._spawnToLeft ? -.1 : .1;
+    this.addChild(obj);
+  }
+  update() {
+    this._time++;
+    if(this._time >= this.timer) {
+      this._time = 0;
+      this.spawnObject();
+    }
+
+    for(let i = 0; i < this.children.length; i++) {
+      let obj = this.children[i];
+      obj.y += this.speed;
+      if(obj.y > this.game.h) this.removeChild(obj);
+    }
+  }
+}
+
+module.exports = ParalaxManager;
+
+},{}],50:[function(require,module,exports){
 class TiledManager {
   constructor(map, blocks, triggers) {
 
@@ -4096,7 +4106,7 @@ class Final extends PIXI.Container {
 module.exports = Final;
 
 },{}],52:[function(require,module,exports){
-const BackgroundManager = require('../managers/BackgroundManager');
+const ParalaxManager = require('../managers/ParalaxManager');
 const InterfaceManager = require('../managers/InterfaceManager');
 
 class Menu extends PIXI.Container {
@@ -4104,12 +4114,12 @@ class Menu extends PIXI.Container {
     super();
     this.game = game;
 
-    this.background = new BackgroundManager(this);
+    this.background = new ParalaxManager(this);
     this.ui = new InterfaceManager(this);
 
     this.ui.addText({
       text: 'MOTTION. Do the way',
-      font: 'normal 100px Milton Grotesque',
+      font: 'normal 120px Milton Grotesque',
       color: 0xFFFFFF,
       x: this.game.w/2,
       y: 330,
@@ -4117,10 +4127,10 @@ class Menu extends PIXI.Container {
     });
     this.ui.addText({
       text: 'If you want to live_',
-      font: 'normal 100px Milton Grotesque',
+      font: 'normal 82px Milton Grotesque',
       color: 0xFFFFFF,
       x: this.game.w/2,
-      y: 500,
+      y: 460,
       click: () => this.game.scenes.toScene('playground', 0xFFFFFF)
     });
     this.ui.addButton({
@@ -4134,11 +4144,11 @@ class Menu extends PIXI.Container {
 
 module.exports = Menu;
 
-},{"../managers/BackgroundManager":45,"../managers/InterfaceManager":48}],53:[function(require,module,exports){
+},{"../managers/InterfaceManager":47,"../managers/ParalaxManager":49}],53:[function(require,module,exports){
 // managers
 const MapManager = require('../managers/MapManager');
 const HistoryManager = require('../managers/HistoryManager');
-const BackgroundManager = require('../managers/BackgroundManager');
+const ParalaxManager = require('../managers/ParalaxManager');
 const GameplayManager = require('../managers/GameplayManager');
 const InterfaceManager = require('../managers/InterfaceManager');
 const Player = require('../subjects/Player');
@@ -4153,7 +4163,7 @@ class Playground extends PIXI.Container {
       checkpoint: 0
     }, this.game.store.getGameplay());
 
-    this.background = new BackgroundManager(this);
+    this.background = new ParalaxManager(this);
 
     this.map = new MapManager(this, this.checkpoint);
     this.history = new HistoryManager(this);
@@ -4169,8 +4179,8 @@ class Playground extends PIXI.Container {
 
 module.exports = Playground;
 
-},{"../managers/BackgroundManager":45,"../managers/GameplayManager":46,"../managers/HistoryManager":47,"../managers/InterfaceManager":48,"../managers/MapManager":49,"../subjects/Player":57}],54:[function(require,module,exports){
-const BackgroundManager = require('../managers/BackgroundManager');
+},{"../managers/GameplayManager":45,"../managers/HistoryManager":46,"../managers/InterfaceManager":47,"../managers/MapManager":48,"../managers/ParalaxManager":49,"../subjects/Player":57}],54:[function(require,module,exports){
+const ParalaxManager = require('../managers/ParalaxManager');
 const InterfaceManager = require('../managers/InterfaceManager');
 
 class Settings extends PIXI.Container {
@@ -4183,12 +4193,37 @@ class Settings extends PIXI.Container {
     this.top = 90;
     this.inputPadding = 130;
 
-    this.background = new BackgroundManager(this);
+    this.background = new ParalaxManager(this);
     this.ui = new InterfaceManager(this);
 
-    this.ui.addCheckBoxInput('Music', 850, this.top+1*this.inputPadding, this.settings.music, () => this.settings.toggleMusic());
-    this.ui.addCheckBoxInput('Sounds', 850, this.top+2*this.inputPadding, this.settings.sounds, () => this.settings.toggleSounds());
-    this.ui.addListInput('Lang: ', this.game.w/2, this.top+3*this.inputPadding, this.settings.LANGS, this.settings.langIndex, (i) => this.settings.setLang(i));
+    this.ui.addCheckBoxInput({
+      text: 'Music',
+      font: 'normal 72px Milton Grotesque',
+      color: 0xFFFFFF,
+      x: 850,
+      y: this.top+1*this.inputPadding,
+      value: this.settings.music,
+      set: () => this.settings.toggleMusic()
+    });
+    this.ui.addCheckBoxInput({
+      text: 'Sounds',
+      font: 'normal 72px Milton Grotesque',
+      color: 0xFFFFFF,
+      x: 850,
+      y: this.top+2*this.inputPadding,
+      value: this.settings.sounds,
+      toggle: (i) => this.settings.toggleSounds(i)
+    });
+    this.ui.addListInput({
+      value: 'Lang: ',
+      font: 'normal 72px Milton Grotesque',
+      color: 0xFFFFFF,
+      x: this.game.w/2,
+      y: this.top+3*this.inputPadding,
+      list: this.settings.LANGS,
+      current: this.settings.langIndex,
+      toggle: (i) => this.settings.setLang(i)
+    });
     this.ui.addButton({
       image: 'close.png',
       x: this.game.w-100,
@@ -4200,7 +4235,7 @@ class Settings extends PIXI.Container {
 
 module.exports = Settings;
 
-},{"../managers/BackgroundManager":45,"../managers/InterfaceManager":48}],55:[function(require,module,exports){
+},{"../managers/InterfaceManager":47,"../managers/ParalaxManager":49}],55:[function(require,module,exports){
 module.exports = {
   'menu': require('./Menu'),
   'playground': require('./Playground'),

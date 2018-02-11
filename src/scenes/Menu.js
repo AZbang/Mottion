@@ -1,4 +1,4 @@
-const BackgroundManager = require('../managers/BackgroundManager');
+const ParalaxManager = require('../managers/ParalaxManager');
 const InterfaceManager = require('../managers/InterfaceManager');
 
 class Menu extends PIXI.Container {
@@ -6,12 +6,12 @@ class Menu extends PIXI.Container {
     super();
     this.game = game;
 
-    this.background = new BackgroundManager(this);
+    this.background = new ParalaxManager(this);
     this.ui = new InterfaceManager(this);
 
     this.ui.addText({
       text: 'MOTTION. Do the way',
-      font: 'normal 100px Milton Grotesque',
+      font: 'normal 120px Milton Grotesque',
       color: 0xFFFFFF,
       x: this.game.w/2,
       y: 330,
@@ -19,10 +19,10 @@ class Menu extends PIXI.Container {
     });
     this.ui.addText({
       text: 'If you want to live_',
-      font: 'normal 100px Milton Grotesque',
+      font: 'normal 82px Milton Grotesque',
       color: 0xFFFFFF,
       x: this.game.w/2,
-      y: 500,
+      y: 460,
       click: () => this.game.scenes.toScene('playground', 0xFFFFFF)
     });
     this.ui.addButton({
