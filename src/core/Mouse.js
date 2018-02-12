@@ -13,7 +13,7 @@ class Mouse extends PIXI.Sprite {
     this.anchor.set(.5);
     this.scale.set(.6);
     this.tint = 0xffeb3b;
-    game.ticker.add(() => this.rotation += .01);
+    game.ticker.add(() => this.rotation += .1);
   }
 }
 

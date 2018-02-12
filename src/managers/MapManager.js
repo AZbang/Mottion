@@ -19,7 +19,7 @@ class MapManager extends PIXI.projection.Container2d {
 
     this.tiled = new TiledManager(map, blocks, triggers);
     this.tileSize = 120;
-    this.speed = 500;
+    this.speed = 400;
     this.showDelay = 5000;
 
     this.PROJECTION_PADDING_BOTTOM = 240;
@@ -37,7 +37,7 @@ class MapManager extends PIXI.projection.Container2d {
   }
   generateMap() {
     this.tiled.data.forEach((tile) => {
-      this.addBlock(tile.x*this.tileSize, tile.y*this.tileSize, tile.data);
+      this.addBlock(tile.x, tile.y, tile.data);
     });
     this.emit('generatedMap');
   }

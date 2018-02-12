@@ -10,7 +10,6 @@
     actionRight
 */
 
-
 class Player extends PIXI.Sprite {
   constructor(scene) {
     super(PIXI.Texture.fromImage('player.png'));
@@ -22,9 +21,10 @@ class Player extends PIXI.Sprite {
 
     this.SCALE = .7;
     this.loop = true;
+    this.tint = 0xfef52e;
     this.anchor.set(.5, 1);
     this.scale.set(this.SCALE);
-    this.x = this.game.w/2+5;
+    this.x = this.game.w/2;
     this.y = this.game.h-this.map.tileSize*2;
     this.collisionPoint = new PIXI.Point(this.game.w/2, this.game.h-this.map.tileSize*2);
 
@@ -40,8 +40,6 @@ class Player extends PIXI.Sprite {
     this.isStop = false;
 
     this.OFFSET_X = 20;
-    this.IMMUNITY_BLOCKS = 1;
-    this.immunityCount = 5;
   }
   updateMoving() {
     if(this.isDead || this.isStop) return;

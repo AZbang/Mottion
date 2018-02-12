@@ -5,6 +5,7 @@ const ParalaxManager = require('../managers/ParalaxManager');
 const GameplayManager = require('../managers/GameplayManager');
 const InterfaceManager = require('../managers/InterfaceManager');
 const Player = require('../subjects/Player');
+const FilterManager = require('../managers/FilterManager');
 
 class Playground extends PIXI.Container {
   constructor(game) {
@@ -17,14 +18,20 @@ class Playground extends PIXI.Container {
     }, this.game.store.getGameplay());
 
     this.background = new ParalaxManager(this);
-
+    this.fx = new FilterManager(this);
+    
     this.map = new MapManager(this, this.checkpoint);
     this.history = new HistoryManager(this);
     this.player = new Player(this);
     this.gameplay = new GameplayManager(this);
 
     this.ui = new InterfaceManager(this);
-    this.ui.addButton('settings.png', this.game.w-100, 100, () => this.game.scenes.toScene('settings', 0xF9E4FF));
+    this.ui.addButton({
+      image: 'settings.png',
+      x: this.game.w-100,
+      y: this.game.h-100,
+      click: () => this.game.scenes.toScene('settings', 0xFFFFFF)
+    });
 
     this.game.splash.show(0xFFFFFF, 0, 1000);
   }

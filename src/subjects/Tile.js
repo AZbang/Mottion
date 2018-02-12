@@ -16,6 +16,7 @@ class Tile extends PIXI.projection.Sprite2d {
     this.scene = scene;
     this.map = map;
 
+    data.tint = parseInt(data.tint);
     Object.assign(this, {
       score: 0,
       active: false,
@@ -29,7 +30,7 @@ class Tile extends PIXI.projection.Sprite2d {
     }, data);
 
 
-    this.activatedTexture = PIXI.Texture.fromFrame('block-fill.png');
+    this.activatedTexture = PIXI.Texture.fromFrame('block_fill.png');
     this.deactivatedTexture = PIXI.Texture.fromFrame('block.png');
     this.texture = data.active ? this.activatedTexture : this.deactivatedTexture;
 
@@ -37,8 +38,9 @@ class Tile extends PIXI.projection.Sprite2d {
     this.renderable = false;
     this.width = map.tileSize-10;
     this.height = map.tileSize-10;
-    this.x = x+map.tileSize/2-5;
-    this.y = y+map.tileSize/2-5;
+    this.x = x*map.tileSize+map.tileSize/2-5;
+    this.y = y*map.tileSize+map.tileSize/2-5;
+    this.index = 1000-y-2;
   }
 }
 

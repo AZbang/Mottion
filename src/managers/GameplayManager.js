@@ -1,13 +1,13 @@
 class GameplayManager {
   constructor(scene) {
-    this.game = game;
+    this.game = scene.game || scene;
     this.scene = scene;
 
     this.map = scene.map;
     this.player = scene.player;
     this.history = scene.history;
 
-    this.passedBlocks = 0;
+    this.immunityType = 'white';
 
     this.game.ticker.add(() => this.update());
     this._bindEvent();
@@ -17,7 +17,6 @@ class GameplayManager {
     this.history.on('hidden', () => this.hideHistory());
     this.player.on('deaded', () => this.restart());
     this.player.on('collidedBlock', (block) => this.checkCollide(block));
-    this.player.on('actionTop', () => this.passedBlocks++);
 
     this.map.generateMap();
     this.map.scrollDown(1);
@@ -27,6 +26,7 @@ class GameplayManager {
   activateBlock(pos) {
     for(let i = 0; i < this.map.children.length; i++) {
       let block = this.map.children[i];
+      if(block.type !== this.immunityType) return;
       if(block.containsPoint({x: pos.x*this.game.resolution, y: pos.y*this.game.resolution})) return block.hit();
       else block.unhit();
     }
@@ -41,7 +41,7 @@ class GameplayManager {
   // Проверить на чекпоинт
   saveCheckpoint(block) {
     if(block.checkpoint) this.game.store.saveGameplay({
-      checkpoint: this.passedBlocks,
+      checkpoint: block.index,
       score: this.scene.score
     });
   }
@@ -64,7 +64,7 @@ class GameplayManager {
 
   // Обновляем проверку на активацию блока
   update() {
-    this.activateBlock(this.game.mouse.getPos());
+    this.activateBlock(this.game.mouse.position);
   }
 }
 

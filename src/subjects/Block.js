@@ -31,7 +31,7 @@ class Block extends Tile {
     show.to({width: this.map.tileSize-10, height: this.map.tileSize-10, y: this.y, alpha: 1});
     if(this.showDelay) setTimeout(() => show.start(), delay+Math.random()*this.map.speed);
     else show.start();
-    
+
     this.emit('showen');
   }
   hide(delay) {

@@ -6,6 +6,7 @@ class FilterManager {
     this.crtFx = new PIXI.filters.CRTFilter();
     this.glitchFx = new PIXI.filters.GlitchFilter({
       fillMode: 3,
+      slices: 0,
       red: [-2, 0],
       blue: [-1, 2],
       green: [3, 1]

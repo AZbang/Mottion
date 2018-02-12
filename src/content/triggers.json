@@ -1,4 +1,6 @@
-{ "columns":10,
+{
+ "columns":10,
+ "firstgid":1,
  "image":"..\/..\/dist\/assets\/sprites\/triggers.png",
  "imageheight":1500,
  "imagewidth":1500,
@@ -371,6 +373,5 @@
          "checkpoint":"bool"
         }
     },
- "tilewidth":150,
- "type":"tileset"
+ "tilewidth":150
 }
