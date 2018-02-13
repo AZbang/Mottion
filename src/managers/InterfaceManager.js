@@ -27,6 +27,8 @@ class InterfaceManager extends PIXI.Container {
     btn.y = opt.y;
     btn.anchor.set(.5);
     btn.interactive = true;
+    btn.scale.set(opt.scale || 1);
+    btn.tint = opt.tint || 0xFFFFFF;
     btn.on('pointerdown', () => opt.click && opt.click(btn));
 
     return btn;
@@ -53,9 +55,9 @@ class InterfaceManager extends PIXI.Container {
       image: opt.value ? 'checkbox_active.png' : 'checkbox.png',
       x: opt.x-100, y: opt.y,
       click: (el) => {
-        el.texture = PIXI.Texture.fromImage(!opt.value ? 'checkbox_active.png' : 'checkbox.png');
-        opt.toggle && opt.toggle(!opt.value);
         opt.value = !opt.value;
+        opt.toggle && opt.toggle(opt.value);
+        el.texture = PIXI.Texture.fromImage(opt.value ? 'checkbox_active.png' : 'checkbox.png');
       }
     });
     return {checkbox: check, text: txt};

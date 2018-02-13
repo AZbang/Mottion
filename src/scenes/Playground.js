@@ -14,7 +14,8 @@ class Playground extends PIXI.Container {
 
     Object.assign(this, {
       score: 0,
-      checkpoint: 0
+      checkpoint: 0,
+      activateType: 'white'
     }, this.game.store.getGameplay());
 
     this.paralax = new ParalaxManager(this);
@@ -27,13 +28,12 @@ class Playground extends PIXI.Container {
 
     this.ui = new InterfaceManager(this);
     this.ui.addButton({
-      image: 'settings.png',
+      image: 'close.png',
       x: this.game.w-100,
-      y: this.game.h-100,
-      click: () => this.game.scenes.toScene('settings', 0xFFFFFF)
+      y: 100,
+      click: () => this.game.scenes.toScene('menu', 0xFFFFFF)
     });
-
-    this.game.splash.show(0xFFFFFF, 0, 1000);
+    this.game.splash.show(0xFFFFFF, 0, 500);
   }
 }
 

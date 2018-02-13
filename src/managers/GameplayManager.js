@@ -9,8 +9,6 @@ class GameplayManager {
     this.player = scene.player;
     this.history = scene.history;
 
-    this.immunityType = 'white';
-
     this.game.ticker.add(() => this.update());
     this._bindEvent();
   }
@@ -28,7 +26,7 @@ class GameplayManager {
   activateBlock(pos) {
     for(let i = 0; i < this.map.children.length; i++) {
       let block = this.map.children[i];
-      if(block.type !== this.immunityType) continue;
+      if(block.type !== this.scene.activateType) continue;
       if(block.containsPoint({x: pos.x*this.game.resolution, y: pos.y*this.game.resolution})) return block.hit();
       else block.unhit();
     }
@@ -36,7 +34,7 @@ class GameplayManager {
 
   // Проверяем коллизию блока на различные триггеры
   checkCollide(block) {
-    this.immunityType = block.type;
+    this.scene.activateType = block.type;
     this.scene.paralax.tint = types[block.type];
     this.showHistory(block);
     this.saveCheckpoint(block);
@@ -46,7 +44,8 @@ class GameplayManager {
   saveCheckpoint(block) {
     if(block.checkpoint) this.game.store.saveGameplay({
       checkpoint: block.index,
-      score: this.scene.score
+      score: this.scene.score,
+      activateType: this.scene.activateType
     });
   }
   // Если блок имеет свойство historyID, то показать фрагмент сюжета с таким идентификатором. (content/history.json)

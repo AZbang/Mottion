@@ -37,8 +37,10 @@ class Menu extends PIXI.Container {
     });
     this.ui.addButton({
       image: 'settings.png',
-      x: this.game.w-100,
-      y: this.game.h-100,
+      x: this.game.w-110,
+      y: 110,
+      scale: 1.5,
+      tint: 0x86ff4a,
       click: () => this.game.scenes.toScene('settings', 0xFFFFFF)
     });
   }

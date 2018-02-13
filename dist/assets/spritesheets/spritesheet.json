@@ -1,32 +1,22 @@
 {
 "frames": {
 	"block.png": {
-		"frame": {"x":170, "y":457, "w":169, "h":169},
+		"frame": {"x":296, "y":291, "w":169, "h":169},
 		"spriteSourceSize": {"x":0,"y":0,"w":169,"h":169},
 		"sourceSize": {"w":169,"h":169}
 	},
 	"block_fill.png": {
-		"frame": {"x":0, "y":457, "w":169, "h":169},
+		"frame": {"x":406, "y":0, "w":169, "h":169},
 		"spriteSourceSize": {"x":0,"y":0,"w":169,"h":169},
 		"sourceSize": {"w":169,"h":169}
 	},
-	"checkbox.png": {
-		"frame": {"x":406, "y":0, "w":128, "h":128},
-		"spriteSourceSize": {"x":0,"y":0,"w":128,"h":128},
-		"sourceSize": {"w":128,"h":128}
-	},
-	"checkbox_active.png": {
-		"frame": {"x":470, "y":258, "w":128, "h":128},
-		"spriteSourceSize": {"x":0,"y":0,"w":128,"h":128},
-		"sourceSize": {"w":128,"h":128}
-	},
 	"close.png": {
-		"frame": {"x":406, "y":129, "w":128, "h":128},
-		"spriteSourceSize": {"x":0,"y":0,"w":128,"h":128},
-		"sourceSize": {"w":128,"h":128}
+		"frame": {"x":118, "y":461, "w":64, "h":64},
+		"spriteSourceSize": {"x":0,"y":0,"w":64,"h":64},
+		"sourceSize": {"w":64,"h":64}
 	},
 	"cursor.png": {
-		"frame": {"x":535, "y":0, "w":62, "h":62},
+		"frame": {"x":183, "y":461, "w":62, "h":62},
 		"spriteSourceSize": {"x":0,"y":0,"w":62,"h":62},
 		"sourceSize": {"w":62,"h":62}
 	},
@@ -36,7 +26,7 @@
 		"sourceSize": {"w":295,"h":165}
 	},
 	"object_rect.png": {
-		"frame": {"x":340, "y":291, "w":129, "h":317},
+		"frame": {"x":466, "y":170, "w":129, "h":317},
 		"spriteSourceSize": {"x":0,"y":0,"w":129,"h":317},
 		"sourceSize": {"w":129,"h":317}
 	},
@@ -46,20 +36,20 @@
 		"sourceSize": {"w":405,"h":290}
 	},
 	"player.png": {
-		"frame": {"x":470, "y":516, "w":117, "h":117},
+		"frame": {"x":0, "y":461, "w":117, "h":117},
 		"spriteSourceSize": {"x":0,"y":0,"w":117,"h":117},
 		"sourceSize": {"w":117,"h":117}
 	},
 	"settings.png": {
-		"frame": {"x":470, "y":387, "w":128, "h":128},
-		"spriteSourceSize": {"x":0,"y":0,"w":128,"h":128},
-		"sourceSize": {"w":128,"h":128}
+		"frame": {"x":118, "y":526, "w":64, "h":64},
+		"spriteSourceSize": {"x":0,"y":0,"w":64,"h":64},
+		"sourceSize": {"w":64,"h":64}
 	}
 
 },
 "meta": {
 	"image": "spritesheet.png",
-	"size": {"w": 599, "h": 634},
+	"size": {"w": 596, "h": 591},
 	"scale": "1"
 }
 }
