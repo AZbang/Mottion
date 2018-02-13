@@ -3309,13 +3309,20 @@ const WebFont = require('webfontloader');
 
 class Loader {
   constructor() {
-
+    this.banner = document.createElement('img');
+    this.banner.src = 'assets/icon.png';
+    this.banner.style.position = 'absolute';
+    this.banner.style.top = (window.innerHeight/2-100) + 'px';
+    this.banner.style.left = (window.innerWidth/2-100) + 'px';
+    document.body.appendChild(this.banner);
   }
   showBanner() {
-    document.body.style.background = '#fff';
+    document.body.style.background = '#1a1a1e';
+    this.banner.style.display = 'block';
   }
   hideBanner() {
     document.body.style.background = '#000';
+    this.banner.style.display = 'none';
   }
   loadResources(loaded) {
     this.showBanner();
