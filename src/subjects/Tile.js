@@ -7,6 +7,7 @@
     deactivated
     hited
 */
+const types = require('../content/types');
 
 class Tile extends PIXI.projection.Sprite2d {
   constructor(scene, map, x, y, data={}) {
@@ -16,12 +17,10 @@ class Tile extends PIXI.projection.Sprite2d {
     this.scene = scene;
     this.map = map;
 
-    data.tint = parseInt(data.tint);
     Object.assign(this, {
       score: 0,
       active: false,
       type: 'white',
-      tint: 0xFFFFFF,
       activation: null,
       playerDir: null,
       checkpoint: false,
@@ -34,6 +33,7 @@ class Tile extends PIXI.projection.Sprite2d {
     this.deactivatedTexture = PIXI.Texture.fromFrame('block.png');
     this.texture = data.active ? this.activatedTexture : this.deactivatedTexture;
 
+    this.tint = types[this.type] || 0xFFFFFF;
     this.anchor.set(.5);
     this.renderable = false;
     this.width = map.tileSize-10;

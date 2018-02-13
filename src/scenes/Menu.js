@@ -27,6 +27,14 @@ class Menu extends PIXI.Container {
       y: 460,
       click: () => this.game.scenes.toScene('playground', 0xFFFFFF)
     });
+    this.ui.addText({
+      text: 'press to start...',
+      font: 'normal 42px Milton Grotesque',
+      color: 0xfffd4d,
+      x: this.game.w/2,
+      y: 700,
+      click: () => this.game.scenes.toScene('playground', 0xFFFFFF)
+    });
     this.ui.addButton({
       image: 'settings.png',
       x: this.game.w-100,

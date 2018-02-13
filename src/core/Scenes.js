@@ -53,7 +53,7 @@ class Scenes extends PIXI.Container {
 
     this.emit('enabledScene', this.activeScene);
   }
-  toScene(scene, color, show=1000, hide=1000) {
+  toScene(scene, color, show=500, hide=500) {
     this.game.splash.show(color, show, hide, () => {
       this.enableScene(scene);
     });

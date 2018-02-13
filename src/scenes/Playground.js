@@ -17,9 +17,9 @@ class Playground extends PIXI.Container {
       checkpoint: 0
     }, this.game.store.getGameplay());
 
-    this.background = new ParalaxManager(this);
+    this.paralax = new ParalaxManager(this);
     this.fx = new FilterManager(this);
-    
+
     this.map = new MapManager(this, this.checkpoint);
     this.history = new HistoryManager(this);
     this.player = new Player(this);

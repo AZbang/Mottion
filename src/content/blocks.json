@@ -15,7 +15,7 @@
          "active":false,
          "score":10,
          "tint":"0xff3939",
-         "type":"white"
+         "type":"red"
         },
      "1":
         {
@@ -23,7 +23,7 @@
          "active":false,
          "score":10,
          "tint":"0x86ff4a",
-         "type":"white"
+         "type":"green"
         },
      "2":
         {
@@ -31,7 +31,7 @@
          "active":false,
          "score":10,
          "tint":"0x4ab4ff",
-         "type":"white"
+         "type":"blue"
         },
      "3":
         {
@@ -47,7 +47,7 @@
          "active":true,
          "score":10,
          "tint":"0xff3939",
-         "type":"white"
+         "type":"red"
         },
      "5":
         {
@@ -55,7 +55,7 @@
          "active":true,
          "score":10,
          "tint":"0x86ff4a",
-         "type":"white"
+         "type":"green"
         },
      "6":
         {
@@ -63,7 +63,7 @@
          "active":true,
          "score":10,
          "tint":"0x4ab4ff",
-         "type":"white"
+         "type":"blue"
         },
      "7":
         {

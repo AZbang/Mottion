@@ -1,3 +1,5 @@
+const types = require('../content/types');
+
 class GameplayManager {
   constructor(scene) {
     this.game = scene.game || scene;
@@ -26,7 +28,7 @@ class GameplayManager {
   activateBlock(pos) {
     for(let i = 0; i < this.map.children.length; i++) {
       let block = this.map.children[i];
-      if(block.type !== this.immunityType) return;
+      if(block.type !== this.immunityType) continue;
       if(block.containsPoint({x: pos.x*this.game.resolution, y: pos.y*this.game.resolution})) return block.hit();
       else block.unhit();
     }
@@ -34,6 +36,8 @@ class GameplayManager {
 
   // Проверяем коллизию блока на различные триггеры
   checkCollide(block) {
+    this.immunityType = block.type;
+    this.scene.paralax.tint = types[block.type];
     this.showHistory(block);
     this.saveCheckpoint(block);
   }

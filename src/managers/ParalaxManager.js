@@ -13,11 +13,13 @@ class ParalaxManager extends PIXI.Container {
     this.timer = 100;
     this._spawnToLeft = true;
     this._time = 0;
+    this.tint = 0xFFFFFF;
   }
   spawnObject() {
     let img = this.images[Math.floor(Math.random()*this.images.length)];
     let obj = new PIXI.Sprite.fromImage(img);
     this._spawnToLeft = !this._spawnToLeft;
+    obj.tint = this.tint;
     obj.y = -obj.height;
     obj.x = this._spawnToLeft ? Math.random()*this.padding : this.game.w-obj.width-Math.random()*this.padding;
     obj.rotation = this._spawnToLeft ? -.1 : .1;

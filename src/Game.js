@@ -19,7 +19,7 @@ class Game extends PIXI.Container {
     document.body.appendChild(this.view);
 
     this.w = 1920;
-    this.h = 880;
+    this.h = 980;
     this.resolution = null;
 
     this.bg = new PIXI.Sprite.fromImage('bg');

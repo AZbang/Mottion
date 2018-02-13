@@ -30,5 +30,21 @@
     },
     "time": 6000,
     "image": "history_family"
+  },
+  "5": {
+    "text": {
+      "ru": "Продолжение следует...",
+      "en": "Comming soon..."
+    },
+    "time": 6000,
+    "image": "history_family"
+  },
+  "6": {
+    "text": {
+      "ru": "Продолжение следует...",
+      "en": "Comming soon..."
+    },
+    "time": 6000,
+    "image": "history_family"
   }
 }
