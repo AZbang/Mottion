@@ -34,12 +34,18 @@ class Player extends PIXI.Sprite {
     this.walking.loop = true;
     this.walking.pingPong = true;
 
+    this.deadSprite = new PIXI.Sprite(PIXI.Texture.WHITE);
+    this.deadSprite.anchor.set(.5, 1);
+    this.deadSprite.height = 0;
+    this.deadSprite.width = this.map.tileSize;
+    this.scene.addChild(this.deadSprite);
+
     this.lastMove = null;
     this.speed = this.map.speed || 500;
     this.isDead = false;
     this.isStop = false;
 
-    this.OFFSET_X = 20;
+    this.OFFSET_X = 22;
   }
   updateMoving() {
     if(this.isDead || this.isStop) return;
@@ -54,7 +60,7 @@ class Player extends PIXI.Sprite {
       if(blocks.center.playerDir === 'right') return this.right();
 
       // check dead
-      if(!blocks.center.active) return this.dead();
+      if(!blocks.center.active) return this.dead(blocks.center);
       //check top
       if(blocks.left && blocks.top.active) return this.top();
       // check left
@@ -65,11 +71,19 @@ class Player extends PIXI.Sprite {
       this.top();
     }
   }
-  dead() {
-    this.isDead = true;
-    this.visible = false;
+  dead(block) {
+    this.deadSprite.tint = block.tint;
+    this.deadSprite.x = this.collisionPoint.x+5;
+    this.deadSprite.y = this.collisionPoint.y+this.map.tileSize;
+    let dead = PIXI.tweenManager.createTween(this.deadSprite);
+    dead.from({alpha: 0, height: 0}).to({alpha: 1, height: this.game.h});
+    dead.time = this.speed/2;
+    dead.start();
+    dead.on('end', () => {
+      this.isDead = true;
+      setTimeout(() => this.emit('deaded'), 500);
+    });
     this.stopMove();
-    this.emit('deaded');
   }
   startMove() {
     this.game.audio.playSound('run', {loop: true});
@@ -95,6 +109,7 @@ class Player extends PIXI.Sprite {
     move.start();
 
     this.collisionPoint.x -= this.map.tileSize;
+    this.collisionPoint.x -= 15;
 
     move.on('end', () => this.updateMoving());
     this.emit('actionLeft');
@@ -107,6 +122,7 @@ class Player extends PIXI.Sprite {
     move.start();
 
     this.collisionPoint.x += this.map.tileSize;
+    this.collisionPoint.x += 15;
 
     move.on('end', () => this.updateMoving());
     this.emit('actionRight');

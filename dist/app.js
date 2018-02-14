@@ -3346,8 +3346,10 @@ class Loader {
         families: ['Milton Grotesque'],
         urls: ['assets/fonts/fonts.css']
       },
-      timeout: 1000,
-      active: cb
+      google: {
+        families: ['Montserrat']
+      },
+      active: () => setTimeout(cb, 1000)
     });
   }
 }
@@ -3613,12 +3615,12 @@ class FilterManager {
     this.glitchFx.time += dt;
 
     let pos = this.game.mouse.position;
-    this.glitchFx.red[0] = 1000/pos.x;
-    this.glitchFx.red[1] = pos.y/1000;
-    this.glitchFx.blue[0] = 1000/pos.x;
-    this.glitchFx.blue[1] = -pos.y/1000;
-    this.glitchFx.green[0] = -pos.x/1000;
-    this.glitchFx.green[1] = 1000/-pos.y;
+    this.glitchFx.red[0] = 0.7*pos.x/1920*2;
+    this.glitchFx.red[1] = 0.9*pos.y/1080*2;
+    this.glitchFx.blue[0] = 0.5*pos.x/1920*2;
+    this.glitchFx.blue[1] = -0.9*pos.y/1080*2;
+    this.glitchFx.green[0] = -2*pos.x/1920*2;
+    this.glitchFx.green[1] = -1.2*pos.y/1080*2;
   }
 }
 
@@ -3722,8 +3724,9 @@ class HistoryManager extends PIXI.Container {
     // this.addChild(this.image);
 
     this.text = new PIXI.Text('Text', {
-      font: 'normal 50px Milton Grotesque',
+      font: 'normal 50px Montserrat',
       wordWrap: true,
+      weight: 'bold',
       wordWrapWidth: this.game.w*3/4,
       fill: '#fff',
       padding: 10,
@@ -3736,7 +3739,10 @@ class HistoryManager extends PIXI.Container {
   }
   show(id) {
     this.currentHistory = this.history[id];
-    this.text.setText(this.currentHistory.text[this.game.settings.lang]);
+    this.text.text = this.currentHistory.text[this.game.settings.lang].toUpperCase();
+
+    if(this.game.settings.lang == 'ru') this.text.style.fontFamily = 'Montserrat';
+    else this.text.style.fontFamily = 'Milton Grotesque';
 
     let show = PIXI.tweenManager.createTween(this);
     show.from({alpha: 0}).to({alpha: 1});
@@ -3793,7 +3799,6 @@ class InterfaceManager extends PIXI.Container {
 
     return btn;
   }
-
   addListInput(opt) {
     let txt = this.addText({
       text: opt.value + opt.list[opt.current],
@@ -3806,21 +3811,6 @@ class InterfaceManager extends PIXI.Container {
       }
     });
     return txt;
-  }
-  addCheckBoxInput(opt) {
-    let txt = this.addText(opt);
-    txt.anchor.set(0, .5);
-
-    let check = this.addButton({
-      image: opt.value ? 'checkbox_active.png' : 'checkbox.png',
-      x: opt.x-100, y: opt.y,
-      click: (el) => {
-        opt.value = !opt.value;
-        opt.toggle && opt.toggle(opt.value);
-        el.texture = PIXI.Texture.fromImage(opt.value ? 'checkbox_active.png' : 'checkbox.png');
-      }
-    });
-    return {checkbox: check, text: txt};
   }
 }
 
@@ -4219,8 +4209,10 @@ class Block extends Tile {
     let show = PIXI.tweenManager.createTween(this);
 
     show.time = this.map.speed;
-    show.from({width: 0, height: 0, y: this.y+this.height, alpha: 0});
-    show.to({width: this.map.tileSize-10, height: this.map.tileSize-10, y: this.y, alpha: 1});
+    // show.from({width: 0, height: 0, y: this.y+this.height, alpha: 0});
+    // show.to({width: this.map.tileSize-10, height: this.map.tileSize-10, y: this.y, alpha: 1});
+    show.from({alpha: 0});
+    show.to({alpha: 1});
     if(this.showDelay) setTimeout(() => show.start(), delay+Math.random()*this.map.speed);
     else show.start();
 
@@ -4314,12 +4306,18 @@ class Player extends PIXI.Sprite {
     this.walking.loop = true;
     this.walking.pingPong = true;
 
+    this.deadSprite = new PIXI.Sprite(PIXI.Texture.WHITE);
+    this.deadSprite.anchor.set(.5, 1);
+    this.deadSprite.height = 0;
+    this.deadSprite.width = this.map.tileSize;
+    this.scene.addChild(this.deadSprite);
+
     this.lastMove = null;
     this.speed = this.map.speed || 500;
     this.isDead = false;
     this.isStop = false;
 
-    this.OFFSET_X = 20;
+    this.OFFSET_X = 22;
   }
   updateMoving() {
     if(this.isDead || this.isStop) return;
@@ -4334,7 +4332,7 @@ class Player extends PIXI.Sprite {
       if(blocks.center.playerDir === 'right') return this.right();
 
       // check dead
-      if(!blocks.center.active) return this.dead();
+      if(!blocks.center.active) return this.dead(blocks.center);
       //check top
       if(blocks.left && blocks.top.active) return this.top();
       // check left
@@ -4345,11 +4343,19 @@ class Player extends PIXI.Sprite {
       this.top();
     }
   }
-  dead() {
-    this.isDead = true;
-    this.visible = false;
+  dead(block) {
+    this.deadSprite.tint = block.tint;
+    this.deadSprite.x = this.collisionPoint.x+5;
+    this.deadSprite.y = this.collisionPoint.y+this.map.tileSize;
+    let dead = PIXI.tweenManager.createTween(this.deadSprite);
+    dead.from({alpha: 0, height: 0}).to({alpha: 1, height: this.game.h});
+    dead.time = this.speed/2;
+    dead.start();
+    dead.on('end', () => {
+      this.isDead = true;
+      setTimeout(() => this.emit('deaded'), 500);
+    });
     this.stopMove();
-    this.emit('deaded');
   }
   startMove() {
     this.game.audio.playSound('run', {loop: true});
@@ -4375,6 +4381,7 @@ class Player extends PIXI.Sprite {
     move.start();
 
     this.collisionPoint.x -= this.map.tileSize;
+    this.collisionPoint.x -= 15;
 
     move.on('end', () => this.updateMoving());
     this.emit('actionLeft');
@@ -4387,6 +4394,7 @@ class Player extends PIXI.Sprite {
     move.start();
 
     this.collisionPoint.x += this.map.tileSize;
+    this.collisionPoint.x += 15;
 
     move.on('end', () => this.updateMoving());
     this.emit('actionRight');

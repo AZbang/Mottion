@@ -33,7 +33,6 @@ class InterfaceManager extends PIXI.Container {
 
     return btn;
   }
-
   addListInput(opt) {
     let txt = this.addText({
       text: opt.value + opt.list[opt.current],
@@ -46,21 +45,6 @@ class InterfaceManager extends PIXI.Container {
       }
     });
     return txt;
-  }
-  addCheckBoxInput(opt) {
-    let txt = this.addText(opt);
-    txt.anchor.set(0, .5);
-
-    let check = this.addButton({
-      image: opt.value ? 'checkbox_active.png' : 'checkbox.png',
-      x: opt.x-100, y: opt.y,
-      click: (el) => {
-        opt.value = !opt.value;
-        opt.toggle && opt.toggle(opt.value);
-        el.texture = PIXI.Texture.fromImage(opt.value ? 'checkbox_active.png' : 'checkbox.png');
-      }
-    });
-    return {checkbox: check, text: txt};
   }
 }
 

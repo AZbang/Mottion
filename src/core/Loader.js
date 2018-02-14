@@ -39,8 +39,10 @@ class Loader {
         families: ['Milton Grotesque'],
         urls: ['assets/fonts/fonts.css']
       },
-      timeout: 1000,
-      active: cb
+      google: {
+        families: ['Montserrat']
+      },
+      active: () => setTimeout(cb, 1000)
     });
   }
 }

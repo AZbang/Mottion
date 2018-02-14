@@ -19,8 +19,9 @@ class HistoryManager extends PIXI.Container {
     // this.addChild(this.image);
 
     this.text = new PIXI.Text('Text', {
-      font: 'normal 50px Milton Grotesque',
+      font: 'normal 50px Montserrat',
       wordWrap: true,
+      weight: 'bold',
       wordWrapWidth: this.game.w*3/4,
       fill: '#fff',
       padding: 10,
@@ -33,7 +34,10 @@ class HistoryManager extends PIXI.Container {
   }
   show(id) {
     this.currentHistory = this.history[id];
-    this.text.setText(this.currentHistory.text[this.game.settings.lang]);
+    this.text.text = this.currentHistory.text[this.game.settings.lang].toUpperCase();
+
+    if(this.game.settings.lang == 'ru') this.text.style.fontFamily = 'Montserrat';
+    else this.text.style.fontFamily = 'Milton Grotesque';
 
     let show = PIXI.tweenManager.createTween(this);
     show.from({alpha: 0}).to({alpha: 1});

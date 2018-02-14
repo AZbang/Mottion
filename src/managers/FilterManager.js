@@ -19,12 +19,12 @@ class FilterManager {
     this.glitchFx.time += dt;
 
     let pos = this.game.mouse.position;
-    this.glitchFx.red[0] = 1000/pos.x;
-    this.glitchFx.red[1] = pos.y/1000;
-    this.glitchFx.blue[0] = 1000/pos.x;
-    this.glitchFx.blue[1] = -pos.y/1000;
-    this.glitchFx.green[0] = -pos.x/1000;
-    this.glitchFx.green[1] = 1000/-pos.y;
+    this.glitchFx.red[0] = 0.7*pos.x/1920*2;
+    this.glitchFx.red[1] = 0.9*pos.y/1080*2;
+    this.glitchFx.blue[0] = 0.5*pos.x/1920*2;
+    this.glitchFx.blue[1] = -0.9*pos.y/1080*2;
+    this.glitchFx.green[0] = -2*pos.x/1920*2;
+    this.glitchFx.green[1] = -1.2*pos.y/1080*2;
   }
 }
 

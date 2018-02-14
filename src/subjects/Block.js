@@ -27,8 +27,10 @@ class Block extends Tile {
     let show = PIXI.tweenManager.createTween(this);
 
     show.time = this.map.speed;
-    show.from({width: 0, height: 0, y: this.y+this.height, alpha: 0});
-    show.to({width: this.map.tileSize-10, height: this.map.tileSize-10, y: this.y, alpha: 1});
+    // show.from({width: 0, height: 0, y: this.y+this.height, alpha: 0});
+    // show.to({width: this.map.tileSize-10, height: this.map.tileSize-10, y: this.y, alpha: 1});
+    show.from({alpha: 0});
+    show.to({alpha: 1});
     if(this.showDelay) setTimeout(() => show.start(), delay+Math.random()*this.map.speed);
     else show.start();
 
