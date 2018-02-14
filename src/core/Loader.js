@@ -23,10 +23,10 @@ class Loader {
     PIXI.loader
       .add('bg', 'assets/spritesheets/bg.png')
       .add('spritesheet', 'assets/spritesheets/spritesheet.json')
-      .add('music_memories', 'assets/sounds/bensound-memories.mp3')
-      .add('sound_fire', 'assets/sounds/fire.mp3')
-      .add('sound_noise', 'assets/sounds/noise.mp3')
-      .add('sound_run', 'assets/sounds/run.mp3')
+
+      .add('music_mantra', 'assets/sounds/mantra.ogg')
+      // .add('music_morale', 'assets/sounds/morale.mp3')
+      // .add('music_spirit', 'assets/sounds/spirit.mp3')
 
       .load(() => this.loadFonts(() => {
         this.hideBanner();

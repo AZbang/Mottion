@@ -36,8 +36,10 @@ class HistoryManager extends PIXI.Container {
     this.currentHistory = this.history[id];
     this.text.text = this.currentHistory.text[this.game.settings.lang].toUpperCase();
 
-    if(this.game.settings.lang == 'ru') this.text.style.fontFamily = 'Montserrat';
-    else this.text.style.fontFamily = 'Milton Grotesque';
+    if(this.game.settings.lang == 'ru') {
+      this.text.style.fontFamily = 'Montserrat';
+      this.text.style.fontWeight = 'bold';
+    } else this.text.style.fontFamily = 'Milton Grotesque';
 
     let show = PIXI.tweenManager.createTween(this);
     show.from({alpha: 0}).to({alpha: 1});

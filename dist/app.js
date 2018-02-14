@@ -2185,6 +2185,176 @@ var pixi_projection;
 !function(t){function e(i){if(n[i])return n[i].exports;var r=n[i]={exports:{},id:i,loaded:!1};return t[i].call(r.exports,r,r.exports,e),r.loaded=!0,r.exports}var n={};return e.m=t,e.c=n,e.p="",e(0)}([function(t,e,n){t.exports=n(6)},function(t,e){t.exports=PIXI},function(t,e){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var n={linear:function(){return function(t){return t}},inQuad:function(){return function(t){return t*t}},outQuad:function(){return function(t){return t*(2-t)}},inOutQuad:function(){return function(t){return t*=2,1>t?.5*t*t:-.5*(--t*(t-2)-1)}},inCubic:function(){return function(t){return t*t*t}},outCubic:function(){return function(t){return--t*t*t+1}},inOutCubic:function(){return function(t){return t*=2,1>t?.5*t*t*t:(t-=2,.5*(t*t*t+2))}},inQuart:function(){return function(t){return t*t*t*t}},outQuart:function(){return function(t){return 1- --t*t*t*t}},inOutQuart:function(){return function(t){return t*=2,1>t?.5*t*t*t*t:(t-=2,-.5*(t*t*t*t-2))}},inQuint:function(){return function(t){return t*t*t*t*t}},outQuint:function(){return function(t){return--t*t*t*t*t+1}},inOutQuint:function(){return function(t){return t*=2,1>t?.5*t*t*t*t*t:(t-=2,.5*(t*t*t*t*t+2))}},inSine:function(){return function(t){return 1-Math.cos(t*Math.PI/2)}},outSine:function(){return function(t){return Math.sin(t*Math.PI/2)}},inOutSine:function(){return function(t){return.5*(1-Math.cos(Math.PI*t))}},inExpo:function(){return function(t){return 0===t?0:Math.pow(1024,t-1)}},outExpo:function(){return function(t){return 1===t?1:1-Math.pow(2,-10*t)}},inOutExpo:function(){return function(t){return 0===t?0:1===t?1:(t*=2,1>t?.5*Math.pow(1024,t-1):.5*(-Math.pow(2,-10*(t-1))+2))}},inCirc:function(){return function(t){return 1-Math.sqrt(1-t*t)}},outCirc:function(){return function(t){return Math.sqrt(1- --t*t)}},inOutCirc:function(){return function(t){return t*=2,1>t?-.5*(Math.sqrt(1-t*t)-1):.5*(Math.sqrt(1-(t-2)*(t-2))+1)}},inElastic:function(){var t=arguments.length<=0||void 0===arguments[0]?.1:arguments[0],e=arguments.length<=1||void 0===arguments[1]?.4:arguments[1];return function(n){var i=void 0;return 0===n?0:1===n?1:(!t||1>t?(t=1,i=e/4):i=e*Math.asin(1/t)/(2*Math.PI),-(t*Math.pow(2,10*(n-1))*Math.sin((n-1-i)*(2*Math.PI)/e)))}},outElastic:function(){var t=arguments.length<=0||void 0===arguments[0]?.1:arguments[0],e=arguments.length<=1||void 0===arguments[1]?.4:arguments[1];return function(n){var i=void 0;return 0===n?0:1===n?1:(!t||1>t?(t=1,i=e/4):i=e*Math.asin(1/t)/(2*Math.PI),t*Math.pow(2,-10*n)*Math.sin((n-i)*(2*Math.PI)/e)+1)}},inOutElastic:function(){var t=arguments.length<=0||void 0===arguments[0]?.1:arguments[0],e=arguments.length<=1||void 0===arguments[1]?.4:arguments[1];return function(n){var i=void 0;return 0===n?0:1===n?1:(!t||1>t?(t=1,i=e/4):i=e*Math.asin(1/t)/(2*Math.PI),n*=2,1>n?-.5*(t*Math.pow(2,10*(n-1))*Math.sin((n-1-i)*(2*Math.PI)/e)):t*Math.pow(2,-10*(n-1))*Math.sin((n-1-i)*(2*Math.PI)/e)*.5+1)}},inBack:function(t){return function(e){var n=t||1.70158;return e*e*((n+1)*e-n)}},outBack:function(t){return function(e){var n=t||1.70158;return--e*e*((n+1)*e+n)+1}},inOutBack:function(t){return function(e){var n=1.525*(t||1.70158);return e*=2,1>e?.5*(e*e*((n+1)*e-n)):.5*((e-2)*(e-2)*((n+1)*(e-2)+n)+2)}},inBounce:function(){return function(t){return 1-n.outBounce()(1-t)}},outBounce:function(){return function(t){return 1/2.75>t?7.5625*t*t:2/2.75>t?(t-=1.5/2.75,7.5625*t*t+.75):2.5/2.75>t?(t-=2.25/2.75,7.5625*t*t+.9375):(t-=2.625/2.75,7.5625*t*t+.984375)}},inOutBounce:function(){return function(t){return.5>t?.5*n.inBounce()(2*t):.5*n.outBounce()(2*t-1)+.5}},customArray:function(t){return t?function(t){return t}:n.linear()}};e["default"]=n},function(t,e,n){"use strict";function i(t){return t&&t.__esModule?t:{"default":t}}function r(t){if(t&&t.__esModule)return t;var e={};if(null!=t)for(var n in t)Object.prototype.hasOwnProperty.call(t,n)&&(e[n]=t[n]);return e["default"]=t,e}function s(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}function o(t,e){if(!t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!e||"object"!=typeof e&&"function"!=typeof e?t:e}function a(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function, not "+typeof e);t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,enumerable:!1,writable:!0,configurable:!0}}),e&&(Object.setPrototypeOf?Object.setPrototypeOf(t,e):t.__proto__=e)}function u(t,e,n,i,r,s){for(var o in t)if(c(t[o]))u(t[o],e[o],n[o],i,r,s);else{var a=e[o],h=t[o]-e[o],l=i,f=r/l;n[o]=a+h*s(f)}}function h(t,e,n){for(var i in t)0===e[i]||e[i]||(c(n[i])?(e[i]=JSON.parse(JSON.stringify(n[i])),h(t[i],e[i],n[i])):e[i]=n[i])}function c(t){return"[object Object]"===Object.prototype.toString.call(t)}var l=function(){function t(t,e){for(var n=0;n<e.length;n++){var i=e[n];i.enumerable=i.enumerable||!1,i.configurable=!0,"value"in i&&(i.writable=!0),Object.defineProperty(t,i.key,i)}}return function(e,n,i){return n&&t(e.prototype,n),i&&t(e,i),e}}();Object.defineProperty(e,"__esModule",{value:!0});var f=n(1),p=r(f),d=n(2),g=i(d),v=function(t){function e(t,n){s(this,e);var i=o(this,Object.getPrototypeOf(e).call(this));return i.target=t,n&&i.addTo(n),i.clear(),i}return a(e,t),l(e,[{key:"addTo",value:function(t){return this.manager=t,this.manager.addTween(this),this}},{key:"chain",value:function(t){return t||(t=new e(this.target)),this._chainTween=t,t}},{key:"start",value:function(){return this.active=!0,this}},{key:"stop",value:function(){return this.active=!1,this.emit("stop"),this}},{key:"to",value:function(t){return this._to=t,this}},{key:"from",value:function(t){return this._from=t,this}},{key:"remove",value:function(){return this.manager?(this.manager.removeTween(this),this):this}},{key:"clear",value:function(){this.time=0,this.active=!1,this.easing=g["default"].linear(),this.expire=!1,this.repeat=0,this.loop=!1,this.delay=0,this.pingPong=!1,this.isStarted=!1,this.isEnded=!1,this._to=null,this._from=null,this._delayTime=0,this._elapsedTime=0,this._repeat=0,this._pingPong=!1,this._chainTween=null,this.path=null,this.pathReverse=!1,this.pathFrom=0,this.pathTo=0}},{key:"reset",value:function(){if(this._elapsedTime=0,this._repeat=0,this._delayTime=0,this.isStarted=!1,this.isEnded=!1,this.pingPong&&this._pingPong){var t=this._to,e=this._from;this._to=e,this._from=t,this._pingPong=!1}return this}},{key:"update",value:function(t,e){if(this._canUpdate()||!this._to&&!this.path){var n=void 0,i=void 0;if(this.delay>this._delayTime)return void(this._delayTime+=e);this.isStarted||(this._parseData(),this.isStarted=!0,this.emit("start"));var r=this.pingPong?this.time/2:this.time;if(r>this._elapsedTime){var s=this._elapsedTime+e,o=s>=r;this._elapsedTime=o?r:s,this._apply(r);var a=this._pingPong?r+this._elapsedTime:this._elapsedTime;if(this.emit("update",a),o){if(this.pingPong&&!this._pingPong)return this._pingPong=!0,n=this._to,i=this._from,this._from=n,this._to=i,this.path&&(n=this.pathTo,i=this.pathFrom,this.pathTo=i,this.pathFrom=n),this.emit("pingpong"),void(this._elapsedTime=0);if(this.loop||this.repeat>this._repeat)return this._repeat++,this.emit("repeat",this._repeat),this._elapsedTime=0,void(this.pingPong&&this._pingPong&&(n=this._to,i=this._from,this._to=i,this._from=n,this.path&&(n=this.pathTo,i=this.pathFrom,this.pathTo=i,this.pathFrom=n),this._pingPong=!1));this.isEnded=!0,this.active=!1,this.emit("end"),this._chainTween&&(this._chainTween.addTo(this.manager),this._chainTween.start())}}}}},{key:"_parseData",value:function(){if(!this.isStarted&&(this._from||(this._from={}),h(this._to,this._from,this.target),this.path)){var t=this.path.totalDistance();this.pathReverse?(this.pathFrom=t,this.pathTo=0):(this.pathFrom=0,this.pathTo=t)}}},{key:"_apply",value:function(t){if(u(this._to,this._from,this.target,t,this._elapsedTime,this.easing),this.path){var e=this.pingPong?this.time/2:this.time,n=this.pathFrom,i=this.pathTo-this.pathFrom,r=e,s=this._elapsedTime/r,o=n+i*this.easing(s),a=this.path.getPointAtDistance(o);this.target.position.set(a.x,a.y)}}},{key:"_canUpdate",value:function(){return this.time&&this.active&&this.target}}]),e}(p.utils.EventEmitter);e["default"]=v},function(t,e,n){"use strict";function i(t){return t&&t.__esModule?t:{"default":t}}function r(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}var s=function(){function t(t,e){for(var n=0;n<e.length;n++){var i=e[n];i.enumerable=i.enumerable||!1,i.configurable=!0,"value"in i&&(i.writable=!0),Object.defineProperty(t,i.key,i)}}return function(e,n,i){return n&&t(e.prototype,n),i&&t(e,i),e}}();Object.defineProperty(e,"__esModule",{value:!0});var o=n(3),a=i(o),u=function(){function t(){r(this,t),this.tweens=[],this._tweensToDelete=[],this._last=0}return s(t,[{key:"update",value:function(t){var e=void 0;t||0===t?e=1e3*t:(e=this._getDeltaMS(),t=e/1e3);for(var n=0;n<this.tweens.length;n++){var i=this.tweens[n];i.active&&(i.update(t,e),i.isEnded&&i.expire&&i.remove())}if(this._tweensToDelete.length){for(var n=0;n<this._tweensToDelete.length;n++)this._remove(this._tweensToDelete[n]);this._tweensToDelete.length=0}}},{key:"getTweensForTarget",value:function(t){for(var e=[],n=0;n<this.tweens.length;n++)this.tweens[n].target===t&&e.push(this.tweens[n]);return e}},{key:"createTween",value:function(t){return new a["default"](t,this)}},{key:"addTween",value:function(t){t.manager=this,this.tweens.push(t)}},{key:"removeTween",value:function(t){this._tweensToDelete.push(t)}},{key:"_remove",value:function(t){var e=this.tweens.indexOf(t);-1!==e&&this.tweens.splice(e,1)}},{key:"_getDeltaMS",value:function(){0===this._last&&(this._last=Date.now());var t=Date.now(),e=t-this._last;return this._last=t,e}}]),t}();e["default"]=u},function(t,e,n){"use strict";function i(t){if(t&&t.__esModule)return t;var e={};if(null!=t)for(var n in t)Object.prototype.hasOwnProperty.call(t,n)&&(e[n]=t[n]);return e["default"]=t,e}function r(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}var s=function(){function t(t,e){for(var n=0;n<e.length;n++){var i=e[n];i.enumerable=i.enumerable||!1,i.configurable=!0,"value"in i&&(i.writable=!0),Object.defineProperty(t,i.key,i)}}return function(e,n,i){return n&&t(e.prototype,n),i&&t(e,i),e}}();Object.defineProperty(e,"__esModule",{value:!0});var o=n(1),a=i(o),u=function(){function t(){r(this,t),this._colsed=!1,this.polygon=new a.Polygon,this.polygon.closed=!1,this._tmpPoint=new a.Point,this._tmpPoint2=new a.Point,this._tmpDistance=[],this.currentPath=null,this.graphicsData=[],this.dirty=!0}return s(t,[{key:"moveTo",value:function(t,e){return a.Graphics.prototype.moveTo.call(this,t,e),this.dirty=!0,this}},{key:"lineTo",value:function(t,e){return a.Graphics.prototype.lineTo.call(this,t,e),this.dirty=!0,this}},{key:"bezierCurveTo",value:function(t,e,n,i,r,s){return a.Graphics.prototype.bezierCurveTo.call(this,t,e,n,i,r,s),this.dirty=!0,this}},{key:"quadraticCurveTo",value:function(t,e,n,i){return a.Graphics.prototype.quadraticCurveTo.call(this,t,e,n,i),this.dirty=!0,this}},{key:"arcTo",value:function(t,e,n,i,r){return a.Graphics.prototype.arcTo.call(this,t,e,n,i,r),this.dirty=!0,this}},{key:"arc",value:function(t,e,n,i,r,s){return a.Graphics.prototype.arc.call(this,t,e,n,i,r,s),this.dirty=!0,this}},{key:"drawShape",value:function(t){return a.Graphics.prototype.drawShape.call(this,t),this.dirty=!0,this}},{key:"getPoint",value:function(t){this.parsePoints();var e=this.closed&&t>=this.length-1?0:2*t;return this._tmpPoint.set(this.polygon.points[e],this.polygon.points[e+1]),this._tmpPoint}},{key:"distanceBetween",value:function(t,e){this.parsePoints();var n=this.getPoint(t),i=n.x,r=n.y,s=this.getPoint(e),o=s.x,a=s.y,u=o-i,h=a-r;return Math.sqrt(u*u+h*h)}},{key:"totalDistance",value:function(){this.parsePoints(),this._tmpDistance.length=0,this._tmpDistance.push(0);for(var t=this.length,e=0,n=0;t-1>n;n++)e+=this.distanceBetween(n,n+1),this._tmpDistance.push(e);return e}},{key:"getPointAt",value:function(t){if(this.parsePoints(),t>this.length)return this.getPoint(this.length-1);if(t%1===0)return this.getPoint(t);this._tmpPoint2.set(0,0);var e=t%1,n=this.getPoint(Math.ceil(t)),i=n.x,r=n.y,s=this.getPoint(Math.floor(t)),o=s.x,a=s.y,u=-((o-i)*e),h=-((a-r)*e);return this._tmpPoint2.set(o+u,a+h),this._tmpPoint2}},{key:"getPointAtDistance",value:function(t){this.parsePoints(),this._tmpDistance||this.totalDistance();var e=this._tmpDistance.length,n=0,i=this._tmpDistance[this._tmpDistance.length-1];0>t?t=i+t:t>i&&(t-=i);for(var r=0;e>r&&(t>=this._tmpDistance[r]&&(n=r),!(t<this._tmpDistance[r]));r++);if(n===this.length-1)return this.getPointAt(n);var s=t-this._tmpDistance[n],o=this._tmpDistance[n+1]-this._tmpDistance[n];return this.getPointAt(n+s/o)}},{key:"parsePoints",value:function(){if(!this.dirty)return this;this.dirty=!1,this.polygon.points.length=0;for(var t=0;t<this.graphicsData.length;t++){var e=this.graphicsData[t].shape;e&&e.points&&(this.polygon.points=this.polygon.points.concat(e.points))}return this}},{key:"clear",value:function(){return this.graphicsData.length=0,this.currentPath=null,this.polygon.points.length=0,this._closed=!1,this.dirty=!1,this}},{key:"closed",get:function(){return this._closed},set:function(t){this._closed!==t&&(this.polygon.closed=t,this._closed=t,this.dirty=!0)}},{key:"length",get:function(){return this.polygon.points.length?this.polygon.points.length/2+(this._closed?1:0):0}}]),t}();e["default"]=u},function(t,e,n){"use strict";function i(t){return t&&t.__esModule?t:{"default":t}}function r(t){if(t&&t.__esModule)return t;var e={};if(null!=t)for(var n in t)Object.prototype.hasOwnProperty.call(t,n)&&(e[n]=t[n]);return e["default"]=t,e}Object.defineProperty(e,"__esModule",{value:!0});var s=n(1),o=r(s),a=n(4),u=i(a),h=n(3),c=i(h),l=n(5),f=i(l),p=n(2),d=i(p);o.Graphics.prototype.drawPath=function(t){return t.parsePoints(),this.drawShape(t.polygon),this};var g={TweenManager:u["default"],Tween:c["default"],Easing:d["default"],TweenPath:f["default"]};o.tweenManager||(o.tweenManager=new u["default"],o.tween=g),e["default"]=g}]);
 
 },{}],4:[function(require,module,exports){
+/*!
+* screenfull
+* v3.3.2 - 2017-10-27
+* (c) Sindre Sorhus; MIT License
+*/
+(function () {
+	'use strict';
+
+	var document = typeof window !== 'undefined' && typeof window.document !== 'undefined' ? window.document : {};
+	var isCommonjs = typeof module !== 'undefined' && module.exports;
+	var keyboardAllowed = typeof Element !== 'undefined' && 'ALLOW_KEYBOARD_INPUT' in Element;
+
+	var fn = (function () {
+		var val;
+
+		var fnMap = [
+			[
+				'requestFullscreen',
+				'exitFullscreen',
+				'fullscreenElement',
+				'fullscreenEnabled',
+				'fullscreenchange',
+				'fullscreenerror'
+			],
+			// New WebKit
+			[
+				'webkitRequestFullscreen',
+				'webkitExitFullscreen',
+				'webkitFullscreenElement',
+				'webkitFullscreenEnabled',
+				'webkitfullscreenchange',
+				'webkitfullscreenerror'
+
+			],
+			// Old WebKit (Safari 5.1)
+			[
+				'webkitRequestFullScreen',
+				'webkitCancelFullScreen',
+				'webkitCurrentFullScreenElement',
+				'webkitCancelFullScreen',
+				'webkitfullscreenchange',
+				'webkitfullscreenerror'
+
+			],
+			[
+				'mozRequestFullScreen',
+				'mozCancelFullScreen',
+				'mozFullScreenElement',
+				'mozFullScreenEnabled',
+				'mozfullscreenchange',
+				'mozfullscreenerror'
+			],
+			[
+				'msRequestFullscreen',
+				'msExitFullscreen',
+				'msFullscreenElement',
+				'msFullscreenEnabled',
+				'MSFullscreenChange',
+				'MSFullscreenError'
+			]
+		];
+
+		var i = 0;
+		var l = fnMap.length;
+		var ret = {};
+
+		for (; i < l; i++) {
+			val = fnMap[i];
+			if (val && val[1] in document) {
+				for (i = 0; i < val.length; i++) {
+					ret[fnMap[0][i]] = val[i];
+				}
+				return ret;
+			}
+		}
+
+		return false;
+	})();
+
+	var eventNameMap = {
+		change: fn.fullscreenchange,
+		error: fn.fullscreenerror
+	};
+
+	var screenfull = {
+		request: function (elem) {
+			var request = fn.requestFullscreen;
+
+			elem = elem || document.documentElement;
+
+			// Work around Safari 5.1 bug: reports support for
+			// keyboard in fullscreen even though it doesn't.
+			// Browser sniffing, since the alternative with
+			// setTimeout is even worse.
+			if (/ Version\/5\.1(?:\.\d+)? Safari\//.test(navigator.userAgent)) {
+				elem[request]();
+			} else {
+				elem[request](keyboardAllowed && Element.ALLOW_KEYBOARD_INPUT);
+			}
+		},
+		exit: function () {
+			document[fn.exitFullscreen]();
+		},
+		toggle: function (elem) {
+			if (this.isFullscreen) {
+				this.exit();
+			} else {
+				this.request(elem);
+			}
+		},
+		onchange: function (callback) {
+			this.on('change', callback);
+		},
+		onerror: function (callback) {
+			this.on('error', callback);
+		},
+		on: function (event, callback) {
+			var eventName = eventNameMap[event];
+			if (eventName) {
+				document.addEventListener(eventName, callback, false);
+			}
+		},
+		off: function (event, callback) {
+			var eventName = eventNameMap[event];
+			if (eventName) {
+				document.removeEventListener(eventName, callback, false);
+			}
+		},
+		raw: fn
+	};
+
+	if (!fn) {
+		if (isCommonjs) {
+			module.exports = false;
+		} else {
+			window.screenfull = false;
+		}
+
+		return;
+	}
+
+	Object.defineProperties(screenfull, {
+		isFullscreen: {
+			get: function () {
+				return Boolean(document[fn.fullscreenElement]);
+			}
+		},
+		element: {
+			enumerable: true,
+			get: function () {
+				return document[fn.fullscreenElement];
+			}
+		},
+		enabled: {
+			enumerable: true,
+			get: function () {
+				// Coerce to boolean in case of old WebKit
+				return Boolean(document[fn.fullscreenEnabled]);
+			}
+		}
+	});
+
+	if (isCommonjs) {
+		module.exports = screenfull;
+	} else {
+		window.screenfull = screenfull;
+	}
+})();
+
+},{}],5:[function(require,module,exports){
 /* Web Font Loader v1.6.28 - (c) Adobe Systems, Google. License: Apache 2.0 */(function(){function aa(a,b,c){return a.call.apply(a.bind,arguments)}function ba(a,b,c){if(!a)throw Error();if(2<arguments.length){var d=Array.prototype.slice.call(arguments,2);return function(){var c=Array.prototype.slice.call(arguments);Array.prototype.unshift.apply(c,d);return a.apply(b,c)}}return function(){return a.apply(b,arguments)}}function p(a,b,c){p=Function.prototype.bind&&-1!=Function.prototype.bind.toString().indexOf("native code")?aa:ba;return p.apply(null,arguments)}var q=Date.now||function(){return+new Date};function ca(a,b){this.a=a;this.o=b||a;this.c=this.o.document}var da=!!window.FontFace;function t(a,b,c,d){b=a.c.createElement(b);if(c)for(var e in c)c.hasOwnProperty(e)&&("style"==e?b.style.cssText=c[e]:b.setAttribute(e,c[e]));d&&b.appendChild(a.c.createTextNode(d));return b}function u(a,b,c){a=a.c.getElementsByTagName(b)[0];a||(a=document.documentElement);a.insertBefore(c,a.lastChild)}function v(a){a.parentNode&&a.parentNode.removeChild(a)}
 function w(a,b,c){b=b||[];c=c||[];for(var d=a.className.split(/\s+/),e=0;e<b.length;e+=1){for(var f=!1,g=0;g<d.length;g+=1)if(b[e]===d[g]){f=!0;break}f||d.push(b[e])}b=[];for(e=0;e<d.length;e+=1){f=!1;for(g=0;g<c.length;g+=1)if(d[e]===c[g]){f=!0;break}f||b.push(d[e])}a.className=b.join(" ").replace(/\s+/g," ").replace(/^\s+|\s+$/,"")}function y(a,b){for(var c=a.className.split(/\s+/),d=0,e=c.length;d<e;d++)if(c[d]==b)return!0;return!1}
 function ea(a){return a.o.location.hostname||a.a.location.hostname}function z(a,b,c){function d(){m&&e&&f&&(m(g),m=null)}b=t(a,"link",{rel:"stylesheet",href:b,media:"all"});var e=!1,f=!0,g=null,m=c||null;da?(b.onload=function(){e=!0;d()},b.onerror=function(){e=!0;g=Error("Stylesheet failed to load");d()}):setTimeout(function(){e=!0;d()},0);u(a,"head",b)}
@@ -2203,7 +2373,7 @@ Ca=/^(thin|(?:(?:extra|ultra)-?)?light|regular|book|medium|(?:(?:semi|demi|extra
 function Da(a){for(var b=a.f.length,c=0;c<b;c++){var d=a.f[c].split(":"),e=d[0].replace(/\+/g," "),f=["n4"];if(2<=d.length){var g;var m=d[1];g=[];if(m)for(var m=m.split(","),h=m.length,l=0;l<h;l++){var k;k=m[l];if(k.match(/^[\w-]+$/)){var n=Ca.exec(k.toLowerCase());if(null==n)k="";else{k=n[2];k=null==k||""==k?"n":Ba[k];n=n[1];if(null==n||""==n)n="4";else var r=Aa[n],n=r?r:isNaN(n)?"4":n.substr(0,1);k=[k,n].join("")}}else k="";k&&g.push(k)}0<g.length&&(f=g);3==d.length&&(d=d[2],g=[],d=d?d.split(","):
 g,0<d.length&&(d=za[d[0]])&&(a.c[e]=d))}a.c[e]||(d=za[e])&&(a.c[e]=d);for(d=0;d<f.length;d+=1)a.a.push(new G(e,f[d]))}};function Ea(a,b){this.c=a;this.a=b}var Fa={Arimo:!0,Cousine:!0,Tinos:!0};Ea.prototype.load=function(a){var b=new B,c=this.c,d=new ta(this.a.api,this.a.text),e=this.a.families;va(d,e);var f=new ya(e);Da(f);z(c,wa(d),C(b));E(b,function(){a(f.a,f.c,Fa)})};function Ga(a,b){this.c=a;this.a=b}Ga.prototype.load=function(a){var b=this.a.id,c=this.c.o;b?A(this.c,(this.a.api||"https://use.typekit.net")+"/"+b+".js",function(b){if(b)a([]);else if(c.Typekit&&c.Typekit.config&&c.Typekit.config.fn){b=c.Typekit.config.fn;for(var e=[],f=0;f<b.length;f+=2)for(var g=b[f],m=b[f+1],h=0;h<m.length;h++)e.push(new G(g,m[h]));try{c.Typekit.load({events:!1,classes:!1,async:!0})}catch(l){}a(e)}},2E3):a([])};function Ha(a,b){this.c=a;this.f=b;this.a=[]}Ha.prototype.load=function(a){var b=this.f.id,c=this.c.o,d=this;b?(c.__webfontfontdeckmodule__||(c.__webfontfontdeckmodule__={}),c.__webfontfontdeckmodule__[b]=function(b,c){for(var g=0,m=c.fonts.length;g<m;++g){var h=c.fonts[g];d.a.push(new G(h.name,ga("font-weight:"+h.weight+";font-style:"+h.style)))}a(d.a)},A(this.c,(this.f.api||"https://f.fontdeck.com/s/css/js/")+ea(this.c)+"/"+b+".js",function(b){b&&a([])})):a([])};var Y=new oa(window);Y.a.c.custom=function(a,b){return new sa(b,a)};Y.a.c.fontdeck=function(a,b){return new Ha(b,a)};Y.a.c.monotype=function(a,b){return new ra(b,a)};Y.a.c.typekit=function(a,b){return new Ga(b,a)};Y.a.c.google=function(a,b){return new Ea(b,a)};var Z={load:p(Y.load,Y)};"function"===typeof define&&define.amd?define(function(){return Z}):"undefined"!==typeof module&&module.exports?module.exports=Z:(window.WebFont=Z,window.WebFontConfig&&Y.load(window.WebFontConfig));}());
 
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 require('pixi-tween');
 require('pixi-projection');
 
@@ -2260,7 +2430,7 @@ class Game extends PIXI.Container {
 
 module.exports = Game;
 
-},{"./core/Debugger":11,"./core/Mouse":13,"./core/Music":14,"./core/Scenes":15,"./core/Settings":16,"./core/Splash":17,"./core/Store":18,"pixi-projection":1,"pixi-tween":3}],6:[function(require,module,exports){
+},{"./core/Debugger":12,"./core/Mouse":14,"./core/Music":15,"./core/Scenes":16,"./core/Settings":17,"./core/Splash":18,"./core/Store":19,"pixi-projection":1,"pixi-tween":3}],7:[function(require,module,exports){
 module.exports={ "columns":4,
  "image":"..\/..\/dist\/assets\/sprites\/blocks.png",
  "imageheight":338,
@@ -2407,7 +2577,7 @@ module.exports={ "columns":4,
  "tilewidth":169,
  "type":"tileset"
 }
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 module.exports={
   "1": {
     "text": {
@@ -2459,7 +2629,7 @@ module.exports={
   }
 }
 
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 module.exports={ "backgroundcolor":"#16162f",
  "height":1000,
  "layers":[
@@ -2881,7 +3051,7 @@ module.exports={ "backgroundcolor":"#16162f",
  "version":1,
  "width":11
 }
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 module.exports={
  "columns":10,
  "firstgid":1,
@@ -3260,7 +3430,7 @@ module.exports={
  "tilewidth":150
 }
 
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 module.exports={
   "white": 0xFFFFFF,
   "red": 0xff3939,
@@ -3268,7 +3438,7 @@ module.exports={
   "green": 0x86ff4a
 }
 
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 class Debugger extends PIXI.Graphics {
   constructor(game) {
     super();
@@ -3304,7 +3474,7 @@ class Debugger extends PIXI.Graphics {
 
 module.exports = Debugger;
 
-},{}],12:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 const WebFont = require('webfontloader');
 
 class Loader {
@@ -3330,10 +3500,10 @@ class Loader {
     PIXI.loader
       .add('bg', 'assets/spritesheets/bg.png')
       .add('spritesheet', 'assets/spritesheets/spritesheet.json')
-      .add('music_memories', 'assets/sounds/bensound-memories.mp3')
-      .add('sound_fire', 'assets/sounds/fire.mp3')
-      .add('sound_noise', 'assets/sounds/noise.mp3')
-      .add('sound_run', 'assets/sounds/run.mp3')
+
+      .add('music_mantra', 'assets/sounds/mantra.ogg')
+      // .add('music_morale', 'assets/sounds/morale.mp3')
+      // .add('music_spirit', 'assets/sounds/spirit.mp3')
 
       .load(() => this.loadFonts(() => {
         this.hideBanner();
@@ -3356,7 +3526,7 @@ class Loader {
 
 module.exports = Loader;
 
-},{"webfontloader":4}],13:[function(require,module,exports){
+},{"webfontloader":5}],14:[function(require,module,exports){
 class Mouse extends PIXI.Sprite {
   constructor(game) {
     super(PIXI.Texture.fromImage('cursor.png'));
@@ -3378,7 +3548,7 @@ class Mouse extends PIXI.Sprite {
 
 module.exports = Mouse;
 
-},{}],14:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 require('pixi-sound');
 
 class Music {
@@ -3386,13 +3556,26 @@ class Music {
     this.game = game;
 
     this.sounds = ['sound_fire', 'sound_noise', 'sound_run'];
-    this.musics = ['music_memories'];
+    this.musics = ['music_mantra', 'music_spirit', 'music_morale'];
   }
   playSound(id, params) {
     PIXI.sound.play('sound_' + id, params);
   }
   stopSound(id) {
     PIXI.sound.stop('sound_' + id);
+  }
+  playAllMusicsLoop(i=0) {
+    PIXI.sound.play(this.musics[i], {
+      complete: () => {
+        if(i < this.musics.length-2) this.allMusicsLoop(i+1);
+        else this.allMusicsLoop(0);
+      }
+    })
+  }
+  stopAllMusicsLoop() {
+    this.musics.forEach((id) => {
+      PIXI.sound.stop(id);
+    });
   }
   playMusic(id, params) {
     PIXI.sound.play('music_' + id, params);
@@ -3414,7 +3597,7 @@ class Music {
 
 module.exports = Music;
 
-},{"pixi-sound":2}],15:[function(require,module,exports){
+},{"pixi-sound":2}],16:[function(require,module,exports){
 /*
   Класс для переключения видимого контейнера (рабочих сцен)
   События:
@@ -3479,7 +3662,9 @@ class Scenes extends PIXI.Container {
 
 module.exports = Scenes;
 
-},{"../scenes":31}],16:[function(require,module,exports){
+},{"../scenes":32}],17:[function(require,module,exports){
+const screenfull = require('screenfull');
+
 class Settings {
   constructor(game) {
     this.game = game;
@@ -3494,6 +3679,9 @@ class Settings {
   }
   get lang() {
     return this.LANGS[this.langIndex];
+  }
+  toggleFullscreen() {
+    screenfull.toggle();
   }
   toggleSounds() {
     this.sounds = !this.sounds;
@@ -3513,7 +3701,7 @@ class Settings {
 
 module.exports = Settings;
 
-},{}],17:[function(require,module,exports){
+},{"screenfull":4}],18:[function(require,module,exports){
 class Splash extends PIXI.Graphics {
   constructor(game) {
     super();
@@ -3549,7 +3737,7 @@ class Splash extends PIXI.Graphics {
 
 module.exports = Splash;
 
-},{}],18:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 class Store {
   constructor(game) {
     this.game = game;
@@ -3583,17 +3771,17 @@ class Store {
 
 module.exports = Store;
 
-},{}],19:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 const Loader = require('./core/Loader');
 const Game = require('./Game');
 
 new Loader().loadResources(() => {
   window.game = new Game();
-  game.audio.playMusic('memories');
+  game.audio.playMusic('mantra');
   game.scenes.toScene('menu', 0xFFFFFF, 0, 1000);
 });
 
-},{"./Game":5,"./core/Loader":12}],20:[function(require,module,exports){
+},{"./Game":6,"./core/Loader":13}],21:[function(require,module,exports){
 class FilterManager {
   constructor(scene) {
     this.scene = scene;
@@ -3626,7 +3814,7 @@ class FilterManager {
 
 module.exports = FilterManager;
 
-},{}],21:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 const types = require('../content/types');
 
 class GameplayManager {
@@ -3702,7 +3890,7 @@ class GameplayManager {
 
 module.exports = GameplayManager;
 
-},{"../content/types":10}],22:[function(require,module,exports){
+},{"../content/types":11}],23:[function(require,module,exports){
 const history = require('../content/history');
 
 class HistoryManager extends PIXI.Container {
@@ -3741,8 +3929,10 @@ class HistoryManager extends PIXI.Container {
     this.currentHistory = this.history[id];
     this.text.text = this.currentHistory.text[this.game.settings.lang].toUpperCase();
 
-    if(this.game.settings.lang == 'ru') this.text.style.fontFamily = 'Montserrat';
-    else this.text.style.fontFamily = 'Milton Grotesque';
+    if(this.game.settings.lang == 'ru') {
+      this.text.style.fontFamily = 'Montserrat';
+      this.text.style.fontWeight = 'bold';
+    } else this.text.style.fontFamily = 'Milton Grotesque';
 
     let show = PIXI.tweenManager.createTween(this);
     show.from({alpha: 0}).to({alpha: 1});
@@ -3763,7 +3953,7 @@ class HistoryManager extends PIXI.Container {
 
 module.exports = HistoryManager;
 
-},{"../content/history":7}],23:[function(require,module,exports){
+},{"../content/history":8}],24:[function(require,module,exports){
 class InterfaceManager extends PIXI.Container {
   constructor(scene) {
     super();
@@ -3816,7 +4006,7 @@ class InterfaceManager extends PIXI.Container {
 
 module.exports = InterfaceManager;
 
-},{}],24:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 /*
   Движок тайловой карты
   События:
@@ -3918,7 +4108,7 @@ class MapManager extends PIXI.projection.Container2d {
 
 module.exports = MapManager;
 
-},{"../content/blocks":6,"../content/map":8,"../content/triggers":9,"../subjects/Block":32,"./TiledManager":26}],25:[function(require,module,exports){
+},{"../content/blocks":7,"../content/map":9,"../content/triggers":10,"../subjects/Block":33,"./TiledManager":27}],26:[function(require,module,exports){
 class ParalaxManager extends PIXI.Container {
   constructor(scene) {
     super();
@@ -3963,7 +4153,7 @@ class ParalaxManager extends PIXI.Container {
 
 module.exports = ParalaxManager;
 
-},{}],26:[function(require,module,exports){
+},{}],27:[function(require,module,exports){
 class TiledManager {
   constructor(map, blocks, triggers) {
 
@@ -4008,7 +4198,7 @@ class TiledManager {
 
 module.exports = TiledManager;
 
-},{}],27:[function(require,module,exports){
+},{}],28:[function(require,module,exports){
 class Final extends PIXI.Container {
   constructor(game) {
     super();
@@ -4018,7 +4208,7 @@ class Final extends PIXI.Container {
 
 module.exports = Final;
 
-},{}],28:[function(require,module,exports){
+},{}],29:[function(require,module,exports){
 const ParalaxManager = require('../managers/ParalaxManager');
 const InterfaceManager = require('../managers/InterfaceManager');
 const FilterManager = require('../managers/FilterManager');
@@ -4069,7 +4259,7 @@ class Menu extends PIXI.Container {
 
 module.exports = Menu;
 
-},{"../managers/FilterManager":20,"../managers/InterfaceManager":23,"../managers/ParalaxManager":25}],29:[function(require,module,exports){
+},{"../managers/FilterManager":21,"../managers/InterfaceManager":24,"../managers/ParalaxManager":26}],30:[function(require,module,exports){
 // managers
 const MapManager = require('../managers/MapManager');
 const HistoryManager = require('../managers/HistoryManager');
@@ -4111,7 +4301,7 @@ class Playground extends PIXI.Container {
 
 module.exports = Playground;
 
-},{"../managers/FilterManager":20,"../managers/GameplayManager":21,"../managers/HistoryManager":22,"../managers/InterfaceManager":23,"../managers/MapManager":24,"../managers/ParalaxManager":25,"../subjects/Player":33}],30:[function(require,module,exports){
+},{"../managers/FilterManager":21,"../managers/GameplayManager":22,"../managers/HistoryManager":23,"../managers/InterfaceManager":24,"../managers/MapManager":25,"../managers/ParalaxManager":26,"../subjects/Player":34}],31:[function(require,module,exports){
 const ParalaxManager = require('../managers/ParalaxManager');
 const InterfaceManager = require('../managers/InterfaceManager');
 const FilterManager = require('../managers/FilterManager');
@@ -4129,13 +4319,23 @@ class Settings extends PIXI.Container {
     this.fx = new FilterManager(this);
 
     let top = 200;
-    let inputPadding = 130;
+    let inputPadding = 90;
+    this.ui.addListInput({
+      value: 'Fullscreen: ',
+      font: 'normal 72px Milton Grotesque',
+      color: 0xFFFFFF,
+      x: this.game.w/2,
+      y: top+inputPadding,
+      list: ['OFF', 'ON'],
+      current: 0,
+      set: (i) => this.settings.toggleFullscreen(i)
+    });
     this.ui.addListInput({
       value: 'Music: ',
       font: 'normal 72px Milton Grotesque',
       color: 0xFFFFFF,
       x: this.game.w/2,
-      y: top+inputPadding,
+      y: top+2*inputPadding,
       list: ['OFF', 'ON'],
       current: +this.settings.music,
       set: () => this.settings.toggleMusic()
@@ -4145,7 +4345,7 @@ class Settings extends PIXI.Container {
       font: 'normal 72px Milton Grotesque',
       color: 0xFFFFFF,
       x: this.game.w/2,
-      y: top+2*inputPadding,
+      y: top+3*inputPadding,
       list: ['OFF', 'ON'],
       current: +this.settings.sounds,
       set: () => this.settings.toggleSounds()
@@ -4155,7 +4355,7 @@ class Settings extends PIXI.Container {
       font: 'normal 72px Milton Grotesque',
       color: 0xFFFFFF,
       x: this.game.w/2,
-      y: top+3*inputPadding,
+      y: top+4*inputPadding,
       list: this.settings.LANGS,
       current: this.settings.langIndex,
       set: (i) => this.settings.setLang(i)
@@ -4171,7 +4371,7 @@ class Settings extends PIXI.Container {
 
 module.exports = Settings;
 
-},{"../managers/FilterManager":20,"../managers/InterfaceManager":23,"../managers/ParalaxManager":25}],31:[function(require,module,exports){
+},{"../managers/FilterManager":21,"../managers/InterfaceManager":24,"../managers/ParalaxManager":26}],32:[function(require,module,exports){
 module.exports = {
   'menu': require('./Menu'),
   'playground': require('./Playground'),
@@ -4179,7 +4379,7 @@ module.exports = {
   'final': require('./Final')
 }
 
-},{"./Final":27,"./Menu":28,"./Playground":29,"./Settings":30}],32:[function(require,module,exports){
+},{"./Final":28,"./Menu":29,"./Playground":30,"./Settings":31}],33:[function(require,module,exports){
 /*
   Класс Блока, используется для тайлового движка
   События:
@@ -4269,7 +4469,7 @@ class Block extends Tile {
 
 module.exports = Block;
 
-},{"./Tile":34}],33:[function(require,module,exports){
+},{"./Tile":35}],34:[function(require,module,exports){
 /*
   Класс Player, взаимодействует с MapManager
   События
@@ -4317,7 +4517,7 @@ class Player extends PIXI.Sprite {
     this.isDead = false;
     this.isStop = false;
 
-    this.OFFSET_X = 22;
+    this.OFFSET_X = 25;
   }
   updateMoving() {
     if(this.isDead || this.isStop) return;
@@ -4358,13 +4558,11 @@ class Player extends PIXI.Sprite {
     this.stopMove();
   }
   startMove() {
-    this.game.audio.playSound('run', {loop: true});
     this.walking.start();
     this.top();
     this.isStop = false;
   }
   stopMove() {
-    this.game.audio.stopSound('run');
     this.walking.stop();
     this.isStop = true;
   }
@@ -4381,7 +4579,7 @@ class Player extends PIXI.Sprite {
     move.start();
 
     this.collisionPoint.x -= this.map.tileSize;
-    this.collisionPoint.x -= 15;
+    this.collisionPoint.x -= this.OFFSET_X;
 
     move.on('end', () => this.updateMoving());
     this.emit('actionLeft');
@@ -4394,7 +4592,7 @@ class Player extends PIXI.Sprite {
     move.start();
 
     this.collisionPoint.x += this.map.tileSize;
-    this.collisionPoint.x += 15;
+    this.collisionPoint.x += this.OFFSET_X;
 
     move.on('end', () => this.updateMoving());
     this.emit('actionRight');
@@ -4403,7 +4601,7 @@ class Player extends PIXI.Sprite {
 
 module.exports = Player;
 
-},{}],34:[function(require,module,exports){
+},{}],35:[function(require,module,exports){
 /*
   Класс Блока, используется для тайлового движка
   События:
@@ -4452,6 +4650,6 @@ class Tile extends PIXI.projection.Sprite2d {
 
 module.exports = Tile;
 
-},{"../content/types":10}]},{},[19])
+},{"../content/types":11}]},{},[20])
 
 //# sourceMappingURL=app.js.map

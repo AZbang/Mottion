@@ -45,7 +45,7 @@ class Player extends PIXI.Sprite {
     this.isDead = false;
     this.isStop = false;
 
-    this.OFFSET_X = 22;
+    this.OFFSET_X = 25;
   }
   updateMoving() {
     if(this.isDead || this.isStop) return;
@@ -86,13 +86,11 @@ class Player extends PIXI.Sprite {
     this.stopMove();
   }
   startMove() {
-    this.game.audio.playSound('run', {loop: true});
     this.walking.start();
     this.top();
     this.isStop = false;
   }
   stopMove() {
-    this.game.audio.stopSound('run');
     this.walking.stop();
     this.isStop = true;
   }
@@ -109,7 +107,7 @@ class Player extends PIXI.Sprite {
     move.start();
 
     this.collisionPoint.x -= this.map.tileSize;
-    this.collisionPoint.x -= 15;
+    this.collisionPoint.x -= this.OFFSET_X;
 
     move.on('end', () => this.updateMoving());
     this.emit('actionLeft');
@@ -122,7 +120,7 @@ class Player extends PIXI.Sprite {
     move.start();
 
     this.collisionPoint.x += this.map.tileSize;
-    this.collisionPoint.x += 15;
+    this.collisionPoint.x += this.OFFSET_X;
 
     move.on('end', () => this.updateMoving());
     this.emit('actionRight');

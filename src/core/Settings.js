@@ -1,3 +1,5 @@
+const screenfull = require('screenfull');
+
 class Settings {
   constructor(game) {
     this.game = game;
@@ -12,6 +14,9 @@ class Settings {
   }
   get lang() {
     return this.LANGS[this.langIndex];
+  }
+  toggleFullscreen() {
+    screenfull.toggle();
   }
   toggleSounds() {
     this.sounds = !this.sounds;
