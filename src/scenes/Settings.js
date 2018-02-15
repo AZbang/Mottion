@@ -13,8 +13,8 @@ class Settings extends PIXI.Container {
     this.ui = new InterfaceManager(this);
     this.fx = new FxManager(this);
 
-    let top = 200;
-    let inputPadding = 90;
+    let top = 250;
+    let inputPadding = 110;
     this.ui.addListInput({
       value: 'Fullscreen: ',
       font: 'normal 72px Milton Grotesque',

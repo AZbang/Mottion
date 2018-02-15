@@ -40,7 +40,7 @@ class Menu extends PIXI.Container {
       x: this.game.w-110,
       y: 110,
       scale: 1.5,
-      tint: 0x86ff4a,
+      tint: 0xfffd4d,
       click: () => this.game.scenes.toScene('settings', 0xFFFFFF)
     });
   }

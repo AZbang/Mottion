@@ -3522,8 +3522,8 @@ class Loader {
 
     PIXI.loader
       .add('bg', 'assets/spritesheets/bg.png')
+      .add('vignette', 'assets/spritesheets/vignette.png')
       .add('spritesheet', 'assets/spritesheets/spritesheet.json')
-
       .add('music_mantra', 'assets/sounds/mantra.ogg')
       // .add('music_morale', 'assets/sounds/morale.mp3')
       // .add('music_spirit', 'assets/sounds/spirit.mp3')
@@ -3813,6 +3813,12 @@ class FxManager {
     this.scene = scene;
     this.game = scene.game || scene;
 
+    this.vignette = new PIXI.Sprite.fromImage('vignette');
+    this.vignette.width = this.game.w;
+    this.vignette.height = this.game.h;
+    this.vignette.alpha = .2;
+    this.scene.addChild(this.vignette);
+
     this.crtFx = new PIXI.filters.CRTFilter();
     this.glitchFx = new PIXI.filters.GlitchFilter({
       fillMode: 3,
@@ -3824,6 +3830,18 @@ class FxManager {
     });
     this.scene.filters = [this.crtFx, this.glitchFx];
     this.game.ticker.add((dt) => this.update(dt));
+  }
+  blinkVignette(time=2000) {
+    let show = PIXI.tweenManager.createTween(this.vignette);
+    show.from({alpha: .2}).to({alpha: 1});
+    show.time = time*1/4;
+    show.on('end', () => {
+      let end = PIXI.tweenManager.createTween(this.vignette);
+      end.from({alpha: 1}).to({alpha: .2});
+      end.time = time*3/4;
+      end.start();
+    });
+    show.start();
   }
   update(dt) {
     this.crtFx.time += dt;
@@ -3879,19 +3897,26 @@ class GameplayManager {
 
   // Проверяем коллизию блока на различные триггеры
   checkCollide(block) {
-    this.scene.activateType = block.type;
-    this.scene.paralax.tint = types[block.type];
+    this.setBlockType(block);
     this.showHistory(block);
     this.saveCheckpoint(block);
   }
-
+  setBlockType(block) {
+    if(this.scene.activateType !== block.type) this.scene.fx.blinkVignette();
+    this.scene.activateType = block.type;
+    this.scene.fx.vignette.tint = block.tint;
+    this.scene.paralax.tint = block.tint;
+  }
   // Проверить на чекпоинт
   saveCheckpoint(block) {
-    if(block.checkpoint) this.game.store.saveGameplay({
-      checkpoint: block.index,
-      score: this.scene.score,
-      activateType: this.scene.activateType
-    });
+    if(block.checkpoint) {
+      this.game.store.saveGameplay({
+        checkpoint: block.index,
+        score: this.scene.score,
+        activateType: this.scene.activateType
+      });
+      this.scene.fx.blinkVignette();
+    }
   }
   // Если блок имеет свойство historyID, то показать фрагмент сюжета с таким идентификатором. (content/history.json)
   showHistory(block) {
@@ -4140,7 +4165,7 @@ class ParalaxManager extends PIXI.Container {
     this.scene.addChild(this);
 
     this.images = ['object_rect.png', 'object_shape.png', 'object_circle.png'];
-    this.padding = 150;
+    this.padding = 100;
     this.speed = 4;
     this.timer = 100;
     this._spawnToLeft = true;
@@ -4153,7 +4178,7 @@ class ParalaxManager extends PIXI.Container {
     this._spawnToLeft = !this._spawnToLeft;
     obj.tint = this.tint;
     obj.y = -obj.height;
-    obj.x = this._spawnToLeft ? Math.random()*this.padding : this.game.w-obj.width-Math.random()*this.padding;
+    obj.x = this._spawnToLeft ? Math.random()*this.padding+100 : this.game.w-obj.width-Math.random()*this.padding-100;
     obj.rotation = this._spawnToLeft ? -.1 : .1;
     this.addChild(obj);
   }
@@ -4272,7 +4297,7 @@ class Menu extends PIXI.Container {
       x: this.game.w-110,
       y: 110,
       scale: 1.5,
-      tint: 0x86ff4a,
+      tint: 0xfffd4d,
       click: () => this.game.scenes.toScene('settings', 0xFFFFFF)
     });
   }
@@ -4340,8 +4365,8 @@ class Settings extends PIXI.Container {
     this.ui = new InterfaceManager(this);
     this.fx = new FxManager(this);
 
-    let top = 200;
-    let inputPadding = 90;
+    let top = 250;
+    let inputPadding = 110;
     this.ui.addListInput({
       value: 'Fullscreen: ',
       font: 'normal 72px Milton Grotesque',

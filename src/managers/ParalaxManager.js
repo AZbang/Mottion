@@ -8,7 +8,7 @@ class ParalaxManager extends PIXI.Container {
     this.scene.addChild(this);
 
     this.images = ['object_rect.png', 'object_shape.png', 'object_circle.png'];
-    this.padding = 150;
+    this.padding = 100;
     this.speed = 4;
     this.timer = 100;
     this._spawnToLeft = true;
@@ -21,7 +21,7 @@ class ParalaxManager extends PIXI.Container {
     this._spawnToLeft = !this._spawnToLeft;
     obj.tint = this.tint;
     obj.y = -obj.height;
-    obj.x = this._spawnToLeft ? Math.random()*this.padding : this.game.w-obj.width-Math.random()*this.padding;
+    obj.x = this._spawnToLeft ? Math.random()*this.padding+100 : this.game.w-obj.width-Math.random()*this.padding-100;
     obj.rotation = this._spawnToLeft ? -.1 : .1;
     this.addChild(obj);
   }

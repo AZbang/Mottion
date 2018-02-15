@@ -34,19 +34,26 @@ class GameplayManager {
 
   // Проверяем коллизию блока на различные триггеры
   checkCollide(block) {
-    this.scene.activateType = block.type;
-    this.scene.paralax.tint = types[block.type];
+    this.setBlockType(block);
     this.showHistory(block);
     this.saveCheckpoint(block);
   }
-
+  setBlockType(block) {
+    if(this.scene.activateType !== block.type) this.scene.fx.blinkVignette();
+    this.scene.activateType = block.type;
+    this.scene.fx.vignette.tint = block.tint;
+    this.scene.paralax.tint = block.tint;
+  }
   // Проверить на чекпоинт
   saveCheckpoint(block) {
-    if(block.checkpoint) this.game.store.saveGameplay({
-      checkpoint: block.index,
-      score: this.scene.score,
-      activateType: this.scene.activateType
-    });
+    if(block.checkpoint) {
+      this.game.store.saveGameplay({
+        checkpoint: block.index,
+        score: this.scene.score,
+        activateType: this.scene.activateType
+      });
+      this.scene.fx.blinkVignette();
+    }
   }
   // Если блок имеет свойство historyID, то показать фрагмент сюжета с таким идентификатором. (content/history.json)
   showHistory(block) {
