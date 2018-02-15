@@ -60,9 +60,9 @@ class Player extends PIXI.Sprite {
       if(blocks.center.playerDir === 'right') return this.right();
 
       // check dead
-      if(!blocks.center.active) return this.dead(blocks.center);
+      if(!blocks.center.active) return this.dead(blocks.center.tint);
       //check top
-      if(blocks.left && blocks.top.active) return this.top();
+      if(blocks.top && blocks.top.active) return this.top();
       // check left
       if(blocks.left && blocks.left.active && this.lastMove !== 'right') return this.left();
       // check rigth
@@ -71,8 +71,8 @@ class Player extends PIXI.Sprite {
       this.top();
     }
   }
-  dead(block) {
-    this.deadSprite.tint = block.tint;
+  dead(tint) {
+    this.deadSprite.tint = tint;
     this.deadSprite.x = this.collisionPoint.x+5;
     this.deadSprite.y = this.collisionPoint.y+this.map.tileSize;
     let dead = PIXI.tweenManager.createTween(this.deadSprite);

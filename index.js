@@ -11,11 +11,12 @@ app.on('window-all-closed', () => {
 app.on('ready', () => {
   mainWindow = new BrowserWindow({
     frame: true,
-    height: 320*3,
-    width: 460*3,
+    height: 320*2,
+    width: 460*2,
   });
 
-  mainWindow.loadURL('http://localhost:1338');
+  mainWindow.loadURL('http://localhost:3338');
+  // mainWindow.setMenu(null);
   mainWindow.on('closed', () => {
     mainWindow = null;
   });

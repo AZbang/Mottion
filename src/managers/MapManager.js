@@ -20,7 +20,7 @@ class MapManager extends PIXI.projection.Container2d {
     this.tiled = new TiledManager(map, blocks, triggers);
     this.tileSize = 120;
     this.speed = 400;
-    this.showDelay = 5000;
+    this.showDelay = 1;
 
     this.PROJECTION_PADDING_BOTTOM = 240;
     this.x = this.game.w/2-this.tiled.mapWidth*this.tileSize/2;
@@ -87,7 +87,7 @@ class MapManager extends PIXI.projection.Container2d {
     move.start();
   }
 
-  checkOutRangeBlocks(isDown) {
+  checkOutRangeBlocks() {
     for(let i = 0; i < this.children.length; i++) {
       let block = this.children[i];
       let y = block.transform.worldTransform.ty/this.game.resolution-this.tileSize/2;

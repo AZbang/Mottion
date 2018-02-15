@@ -24,6 +24,8 @@
     "pixi-projection": "^0.1.8",
     "pixi-sound": "^2.0.0",
     "pixi-tween": "^0.2.0",
+    "screenfull": "^3.3.2",
+    "stats.js": "^0.17.0",
     "webfontloader": "^1.6.28"
   }
 }

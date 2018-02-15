@@ -17,7 +17,10 @@ gulp.task('server', () => {
 });
 
 function compile(watch) {
-  var bundler = watchify(browserify('./src/index.js', { debug: true }).transform(browserifyShader));
+  var bundler = watchify(
+		browserify('./src/index.js', { debug: true })
+		.transform(browserifyShader)
+	);
 
   function rebundle() {
     bundler.bundle()

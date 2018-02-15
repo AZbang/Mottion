@@ -11,14 +11,7 @@ class HistoryManager extends PIXI.Container {
     this.history = history;
     this.alpha = 0;
 
-    // this.image = new PIXI.Sprite();
-    // this.image.anchor.set(.5, 0);
-    // this.image.x = this.game.w/2;
-    // this.image.y = 75;
-    // this.image.scale.set(.5);
-    // this.addChild(this.image);
-
-    this.text = new PIXI.Text('Text', {
+    this.text = new PIXI.Text('Текст', {
       font: 'normal 50px Montserrat',
       wordWrap: true,
       weight: 'bold',
@@ -29,7 +22,7 @@ class HistoryManager extends PIXI.Container {
     });
     this.text.anchor.set(.5, 0);
     this.text.x = this.game.w/2;
-    this.text.y = 100;
+    this.text.y = 150;
     this.addChild(this.text);
   }
   show(id) {

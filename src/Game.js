@@ -31,7 +31,7 @@ class Game extends PIXI.Container {
     this.audio = new Music(this);
     this.mouse = new Mouse(this);
     this.splash = new Splash(this);
-    this.debug = new Debugger(this);
+    this.debug = new Debugger(this, true);
 
     this.ticker.add((dt) => {
       PIXI.tweenManager.update();

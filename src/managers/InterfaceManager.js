@@ -34,16 +34,15 @@ class InterfaceManager extends PIXI.Container {
     return btn;
   }
   addListInput(opt) {
-    let txt = this.addText({
+    let txt = this.addText(Object.assign({
       text: opt.value + opt.list[opt.current],
-      ...opt,
       click: (el) => {
         if(opt.current >= opt.list.length-1) opt.current = 0;
         else opt.current++;
         el.text = opt.value + opt.list[opt.current];
         opt.set && opt.set(opt.current);
       }
-    });
+    }, opt));
     return txt;
   }
 }

@@ -35,20 +35,17 @@ class Scenes extends PIXI.Container {
   }
 
   // Controls
-  restartScene() {
-    this.enableScene(this.activeScene._idScene);
-    this.emit('restartedScene', this.activeScene);
-  }
   disableScene() {
     let scene = this.removeChild(this.activeScene);
+    scene.destroy();
     this.activeScene = null;
     this.emit('disabledScene', scene);
   }
-  enableScene(id) {
+  enableScene(id, restart) {
     this.activeScene && this.disableScene();
 
     let Scene = this.getScene(id);
-    this.activeScene = this.addChild(new Scene(this.game, this));
+    this.activeScene = this.addChild(new Scene(this.game, restart));
     this.activeScene._idScene = id;
 
     this.emit('enabledScene', this.activeScene);
@@ -57,6 +54,12 @@ class Scenes extends PIXI.Container {
     this.game.splash.show(color, show, hide, () => {
       this.enableScene(scene);
     });
+  }
+  restartScene(color, show=500, hide=500) {
+    this.game.splash.show(color, show, hide, () => {
+      this.enableScene(this.activeScene._idScene, true);
+    });
+    this.emit('restartedScene', this.activeScene);
   }
 }
 

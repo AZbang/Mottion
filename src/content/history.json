@@ -4,47 +4,62 @@
       "ru": "Тлен идет за тобой по пятам. \n Отступись и он тебя поглатит... \n Но не стоит отчаиваться, ведь музыка всегда с тобой.",
       "en": "Thlen follows you. \n Digress and he will swallow you ... \n But do not despair, because music is always with you."
     },
-    "time": 6000,
-    "image": "history_family"
+    "time": 6000
   },
   "2": {
     "text": {
       "ru": "Тлен не щадит никого. Летучие змеи падут на землю и погрузятся в рутину бытия...",
       "en": "Tlen does not spare anyone. The flying kites will fall to the ground and plunge into the routine of being ..."
     },
-    "time": 6000,
-    "image": "history_family"
+    "time": 6000
   },
   "3": {
     "text": {
       "ru": "И тогда он понес свечу через чужие земли освобождая летучих змей и свой народ...",
       "en": "And then he carried a candle through foreign lands freeing the flying snakes and his people ..."
     },
-    "time": 6000,
-    "image": "history_family"
+    "time": 6000
   },
   "4": {
     "text": {
       "ru": "Продолжение следует...",
       "en": "Comming soon..."
     },
-    "time": 6000,
-    "image": "history_family"
+    "time": 6000
   },
   "5": {
     "text": {
       "ru": "Продолжение следует...",
       "en": "Comming soon..."
     },
-    "time": 6000,
-    "image": "history_family"
+    "time": 6000
   },
   "6": {
     "text": {
       "ru": "Продолжение следует...",
       "en": "Comming soon..."
     },
-    "time": 6000,
-    "image": "history_family"
+    "time": 6000
+  },
+  "7": {
+    "text": {
+      "ru": "Продолжение следует...",
+      "en": "Comming soon..."
+    },
+    "time": 6000
+  },
+  "8": {
+    "text": {
+      "ru": "Продолжение следует...",
+      "en": "Comming soon..."
+    },
+    "time": 6000
+  },
+  "9": {
+    "text": {
+      "ru": "Продолжение следует...",
+      "en": "Comming soon..."
+    },
+    "time": 6000
   }
 }

@@ -1,11 +1,17 @@
 class Debugger extends PIXI.Graphics {
-  constructor(game) {
+  constructor(game, dev=false) {
     super();
     game.addChild(this);
     this.game = game;
 
     this.points = [];
     this.rects = [];
+
+    this.fps = new PIXI.Text('FPS: ', {fill: '#fff'});
+    this.fps.x = 20;
+    this.fps.y = 20;
+    this.fps.visible = dev;
+    this.addChild(this.fps);
 
     this.game.ticker.add(() => this.update());
   }
@@ -28,6 +34,8 @@ class Debugger extends PIXI.Graphics {
       this.lineStyle(2, 0x44a73f);
       this.drawRect(this.rects[i].x, this.rects[i].y, this.rects[i].width, this.rects[i].height);
     }
+
+    this.fps.text = 'FPS: ' + Math.round(this.game.ticker.FPS);
   }
 }
 

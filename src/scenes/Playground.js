@@ -5,10 +5,10 @@ const ParalaxManager = require('../managers/ParalaxManager');
 const GameplayManager = require('../managers/GameplayManager');
 const InterfaceManager = require('../managers/InterfaceManager');
 const Player = require('../subjects/Player');
-const FilterManager = require('../managers/FilterManager');
+const FxManager = require('../managers/FxManager');
 
 class Playground extends PIXI.Container {
-  constructor(game) {
+  constructor(game, isRestart=false) {
     super();
     this.game = game;
 
@@ -18,8 +18,10 @@ class Playground extends PIXI.Container {
       activateType: 'white'
     }, this.game.store.getGameplay());
 
+    this.isRestarted = isRestart;
+
     this.paralax = new ParalaxManager(this);
-    this.fx = new FilterManager(this);
+    this.fx = new FxManager(this);
 
     this.map = new MapManager(this, this.checkpoint);
     this.history = new HistoryManager(this);

@@ -1,4 +1,4 @@
-class FilterManager {
+class FxManager {
   constructor(scene) {
     this.scene = scene;
     this.game = scene.game || scene;
@@ -7,6 +7,7 @@ class FilterManager {
     this.glitchFx = new PIXI.filters.GlitchFilter({
       fillMode: 3,
       slices: 0,
+      offset: 10,
       red: [-2, 0],
       blue: [-1, 2],
       green: [3, 1]
@@ -25,7 +26,8 @@ class FilterManager {
     this.glitchFx.blue[1] = -0.9*pos.y/1080*2;
     this.glitchFx.green[0] = -2*pos.x/1920*2;
     this.glitchFx.green[1] = -1.2*pos.y/1080*2;
+    this.glitchFx.seed = Math.random();
   }
 }
 
-module.exports = FilterManager;
+module.exports = FxManager;

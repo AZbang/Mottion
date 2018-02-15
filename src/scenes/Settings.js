@@ -1,7 +1,6 @@
 const ParalaxManager = require('../managers/ParalaxManager');
 const InterfaceManager = require('../managers/InterfaceManager');
-const FilterManager = require('../managers/FilterManager');
-
+const FxManager = require('../managers/FxManager');
 
 class Settings extends PIXI.Container {
   constructor(game) {
@@ -12,7 +11,7 @@ class Settings extends PIXI.Container {
 
     this.background = new ParalaxManager(this);
     this.ui = new InterfaceManager(this);
-    this.fx = new FilterManager(this);
+    this.fx = new FxManager(this);
 
     let top = 200;
     let inputPadding = 90;
