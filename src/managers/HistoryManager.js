@@ -1,17 +1,13 @@
 const history = require('../content/history');
 
-class HistoryManager extends PIXI.Container {
+class HistoryManager extends PIXI.Text {
   constructor(scene) {
     super();
     scene.addChild(this);
-
     this.game = game;
     this.scene = scene;
 
-    this.history = history;
-    this.alpha = 0;
-
-    this.text = new PIXI.Text('Текст', {
+    this.style = {
       font: 'normal 50px Montserrat',
       wordWrap: true,
       weight: 'bold',
@@ -19,28 +15,31 @@ class HistoryManager extends PIXI.Container {
       fill: '#fff',
       padding: 10,
       align: 'center'
-    });
-    this.text.anchor.set(.5, 0);
-    this.text.x = this.game.w/2;
-    this.text.y = 150;
-    this.addChild(this.text);
+    };
+    this.anchor.set(.5, 0);
+    this.alpha = 0;
+    this.x = this.game.w/2;
+    this.y = 150;
   }
   show(id) {
-    this.currentHistory = this.history[id];
-    this.text.text = this.currentHistory.text[this.game.settings.lang].toUpperCase();
-
+    this.currentHistory = history[id];
     if(this.game.settings.lang == 'ru') {
-      this.text.style.fontFamily = 'Montserrat';
-      this.text.style.fontWeight = 'bold';
-    } else this.text.style.fontFamily = 'Milton Grotesque';
+      this.style.fontFamily = 'Montserrat';
+      this.style.fontWeight = 'bold';
+    } else this.style.fontFamily = 'Milton Grotesque';
+    this.alpha = 1;
 
-    let show = PIXI.tweenManager.createTween(this);
-    show.from({alpha: 0}).to({alpha: 1});
-    show.time = 1000;
+    const text = this.currentHistory.text[this.game.settings.lang].toUpperCase();
+    let data = {i: 0};
+    let show = PIXI.tweenManager.createTween(data);
+    show.from({i: 0}).to({i: text.length});
+    show.time = this.currentHistory.time/2;
+    show.on('update', () => {
+      this.text = text.slice(0, data.i) + '_';
+    })
     show.start();
-    this.emit('showen');
-
     setTimeout(() => this._hide(), this.currentHistory.time);
+    this.emit('showen');
   }
   _hide() {
     let hide = PIXI.tweenManager.createTween(this);
