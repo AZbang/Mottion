@@ -2583,67 +2583,77 @@ module.exports={ "columns":4,
 },{}],8:[function(require,module,exports){
 module.exports={
   "1": {
-    "text": {
-      "ru": "Тлен идет за тобой по пятам. \n Отступись и он тебя поглатит... \n Но не стоит отчаиваться, ведь музыка всегда с тобой.",
-      "en": "Thlen follows you. \n Digress and he will swallow you ... \n But do not despair, because music is always with you."
-    },
-    "time": 6000
+    "ru": [
+      "Тлен идет за тобой по пятам. \n Отступись и он тебя поглатит... \n Но не стоит отчаиваться, ведь музыка всегда с тобой."
+    ],
+    "en": [
+      "Thlen follows you. \n Digress and he will swallow you ... \n But do not despair, because music is always with you.",
+      "More text! More reflection!"
+    ]
   },
   "2": {
-    "text": {
-      "ru": "Тлен не щадит никого. Летучие змеи падут на землю и погрузятся в рутину бытия...",
-      "en": "Tlen does not spare anyone. The flying kites will fall to the ground and plunge into the routine of being ..."
-    },
-    "time": 6000
+    "ru": [
+      "Тлен идет за тобой по пятам. \n Отступись и он тебя поглатит... \n Но не стоит отчаиваться, ведь музыка всегда с тобой."
+    ],
+    "en": [
+      "Thlen follows you. \n Digress and he will swallow you ... \n But do not despair, because music is always with you."
+    ]
   },
   "3": {
-    "text": {
-      "ru": "И тогда он понес свечу через чужие земли освобождая летучих змей и свой народ...",
-      "en": "And then he carried a candle through foreign lands freeing the flying snakes and his people ..."
-    },
-    "time": 6000
+    "ru": [
+      "Тлен идет за тобой по пятам. \n Отступись и он тебя поглатит... \n Но не стоит отчаиваться, ведь музыка всегда с тобой."
+    ],
+    "en": [
+      "Thlen follows you. \n Digress and he will swallow you ... \n But do not despair, because music is always with you."
+    ]
   },
   "4": {
-    "text": {
-      "ru": "Продолжение следует...",
-      "en": "Comming soon..."
-    },
-    "time": 6000
+    "ru": [
+      "Тлен идет за тобой по пятам. \n Отступись и он тебя поглатит... \n Но не стоит отчаиваться, ведь музыка всегда с тобой."
+    ],
+    "en": [
+      "Thlen follows you. \n Digress and he will swallow you ... \n But do not despair, because music is always with you."
+    ]
   },
   "5": {
-    "text": {
-      "ru": "Продолжение следует...",
-      "en": "Comming soon..."
-    },
-    "time": 6000
+    "ru": [
+      "Тлен идет за тобой по пятам. \n Отступись и он тебя поглатит... \n Но не стоит отчаиваться, ведь музыка всегда с тобой."
+    ],
+    "en": [
+      "Thlen follows you. \n Digress and he will swallow you ... \n But do not despair, because music is always with you."
+    ]
   },
   "6": {
-    "text": {
-      "ru": "Продолжение следует...",
-      "en": "Comming soon..."
-    },
-    "time": 6000
+    "ru": [
+      "Тлен идет за тобой по пятам. \n Отступись и он тебя поглатит... \n Но не стоит отчаиваться, ведь музыка всегда с тобой."
+    ],
+    "en": [
+      "Thlen follows you. \n Digress and he will swallow you ... \n But do not despair, because music is always with you."
+    ]
   },
   "7": {
-    "text": {
-      "ru": "Продолжение следует...",
-      "en": "Comming soon..."
-    },
-    "time": 6000
+    "ru": [
+      "Тлен идет за тобой по пятам. \n Отступись и он тебя поглатит... \n Но не стоит отчаиваться, ведь музыка всегда с тобой."
+    ],
+    "en": [
+      "Thlen follows you. \n Digress and he will swallow you ... \n But do not despair, because music is always with you."
+    ]
   },
   "8": {
-    "text": {
-      "ru": "Продолжение следует...",
-      "en": "Comming soon..."
-    },
-    "time": 6000
+    "ru": [
+      "Тлен идет за тобой по пятам. \n Отступись и он тебя поглатит... \n Но не стоит отчаиваться, ведь музыка всегда с тобой."
+    ],
+    "en": [
+      "Thlen follows you. \n Digress and he will swallow you ... \n But do not despair, because music is always with you."
+    ]
   },
   "9": {
-    "text": {
-      "ru": "Продолжение следует...",
-      "en": "Comming soon..."
-    },
-    "time": 6000
+    "ru": [
+      "Тлен идет за тобой по пятам. \n Отступись и он тебя поглатит... \n Но не стоит отчаиваться, ведь музыка всегда с тобой."
+    ],
+    "en": [
+      "Thlen follows you. \n Digress and he will swallow you ... \n But do not despair, because music is always with you."
+    ]
   }
 }
 
@@ -4033,31 +4043,37 @@ class HistoryManager extends PIXI.Text {
       this.style.fontWeight = 'bold';
     } else this.style.fontFamily = 'Milton Grotesque';
   }
-  show(history) {
+  show(history, i=0) {
     this.emit('showen');
-    if(this.scene.isRestarted) return this.emit('hidden');
+    let text = history[this.game.settings.lang][i];
+    if(this.scene.isRestarted || !text) return this.emit('hidden');
 
-    this.lastHistory = history;
     this.setLangStyle();
     this.alpha = 1;
 
-    const text = this.lastHistory.text[this.game.settings.lang].toUpperCase();
+    this._show(text.toUpperCase(), () => {
+      this.show(history, i+1);
+    });
+  }
+  _show(text, cb) {
     let data = {i: 0};
+    let len = text.length;
+    let per = 60;
     let show = PIXI.tweenManager.createTween(data);
-    show.from({i: 0}).to({i: text.length});
-    show.time = this.lastHistory.time/2;
+
+    show.from({i: 0}).to({i: len});
+    show.time = len*per/2;
     show.on('update', () => {
       this.text = text.slice(0, data.i) + '_';
     })
     show.start();
-    setTimeout(() => this._hide(), this.lastHistory.time);
-  }
-  _hide() {
-    let hide = PIXI.tweenManager.createTween(this);
-    hide.from({alpha: 1}).to({alpha: 0});
-    hide.time = 1000;
-    hide.start();
-    this.emit('hidden');
+    setTimeout(() => {
+      let hide = PIXI.tweenManager.createTween(this);
+      hide.from({alpha: 1}).to({alpha: 0});
+      hide.time = 1000;
+      hide.start();
+      hide.on('end', cb);
+    }, len*per);
   }
 }
 
