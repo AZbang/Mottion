@@ -10,6 +10,7 @@ class Settings {
     this.toggleMusic(s.music != null ? +s.music : 1);
     this.toggleSounds(s.sounds != null ? +s.sounds : 1);
     this.setLang(s.langIndex != null ? +s.langIndex : 0);
+    this.isFullscreen = false;
   }
   get lang() {
     return this.LANGS[this.langIndex];

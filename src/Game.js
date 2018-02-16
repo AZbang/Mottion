@@ -30,7 +30,7 @@ class Game extends PIXI.Container {
     this.audio = new Music(this);
     this.store = new Store(this);
     this.settings = new Settings(this);
-    this.debug = new Debugger(this, true);
+    this.debug = new Debugger(this);
 
     this.scenes = new Scenes(this);
     this.mouse = new Mouse(this);
