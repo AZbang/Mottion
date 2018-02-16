@@ -53,122 +53,122 @@
      "70":
         {
          "checkpoint":true,
-         "historyID":1,
-         "playerDir":"stop"
+         "playerDir":"stop",
+         "scriptID":1
         },
      "71":
         {
          "checkpoint":true,
-         "historyID":2,
-         "playerDir":"stop"
+         "playerDir":"stop",
+         "scriptID":2
         },
      "72":
         {
          "checkpoint":true,
-         "historyID":3,
-         "playerDir":"stop"
+         "playerDir":"stop",
+         "scriptID":3
         },
      "73":
         {
          "checkpoint":true,
-         "historyID":4,
-         "playerDir":"stop"
+         "playerDir":"stop",
+         "scriptID":4
         },
      "74":
         {
          "checkpoint":true,
-         "historyID":5,
-         "playerDir":"stop"
+         "playerDir":"stop",
+         "scriptID":5
         },
      "75":
         {
          "checkpoint":true,
-         "historyID":6,
-         "playerDir":"stop"
+         "playerDir":"stop",
+         "scriptID":6
         },
      "76":
         {
          "checkpoint":true,
-         "historyID":7,
-         "playerDir":"stop"
+         "playerDir":"stop",
+         "scriptID":7
         },
      "77":
         {
          "checkpoint":true,
-         "historyID":8,
-         "playerDir":"stop"
+         "playerDir":"stop",
+         "scriptID":8
         },
      "78":
         {
          "checkpoint":true,
-         "historyID":9,
-         "playerDir":"stop"
+         "playerDir":"stop",
+         "scriptID":9
         },
      "79":
         {
          "checkpoint":true,
-         "historyID":10,
-         "playerDir":"stop"
+         "playerDir":"stop",
+         "scriptID":10
         },
      "80":
         {
          "checkpoint":true,
-         "historyID":11,
-         "playerDir":"stop"
+         "playerDir":"stop",
+         "scriptID":11
         },
      "81":
         {
          "checkpoint":true,
-         "historyID":12,
-         "playerDir":"stop"
+         "playerDir":"stop",
+         "scriptID":12
         },
      "82":
         {
          "checkpoint":true,
-         "historyID":13,
-         "playerDir":"stop"
+         "playerDir":"stop",
+         "scriptID":13
         },
      "83":
         {
          "checkpoint":true,
-         "historyID":14,
-         "playerDir":"stop"
+         "playerDir":"stop",
+         "scriptID":14
         },
      "84":
         {
          "checkpoint":true,
-         "historyID":15,
-         "playerDir":"stop"
+         "playerDir":"stop",
+         "scriptID":15
         },
      "85":
         {
          "checkpoint":true,
-         "historyID":16,
-         "playerDir":"stop"
+         "playerDir":"stop",
+         "scriptID":16
         },
      "86":
         {
          "checkpoint":true,
-         "historyID":17,
-         "playerDir":"stop"
+         "playerDir":"stop",
+         "scriptID":17
         },
      "87":
         {
          "checkpoint":true,
-         "historyID":18,
-         "playerDir":"stop"
+         "playerDir":"stop",
+         "scriptID":18
         },
      "88":
         {
          "checkpoint":true,
-         "historyID":19,
-         "playerDir":"stop"
+         "playerDir":"stop",
+         "scriptID":19
         },
      "89":
         {
          "checkpoint":true,
-         "historyID":0,
-         "playerDir":"stop"
+         "playerDir":"stop",
+         "scriptID":0
         },
      "90":
         {
@@ -235,122 +235,122 @@
      "70":
         {
          "checkpoint":"bool",
-         "historyID":"int",
-         "playerDir":"string"
+         "playerDir":"string",
+         "scriptID":"int"
         },
      "71":
         {
          "checkpoint":"bool",
-         "historyID":"int",
-         "playerDir":"string"
+         "playerDir":"string",
+         "scriptID":"int"
         },
      "72":
         {
          "checkpoint":"bool",
-         "historyID":"int",
-         "playerDir":"string"
+         "playerDir":"string",
+         "scriptID":"int"
         },
      "73":
         {
          "checkpoint":"bool",
-         "historyID":"int",
-         "playerDir":"string"
+         "playerDir":"string",
+         "scriptID":"int"
         },
      "74":
         {
          "checkpoint":"bool",
-         "historyID":"int",
-         "playerDir":"string"
+         "playerDir":"string",
+         "scriptID":"int"
         },
      "75":
         {
          "checkpoint":"bool",
-         "historyID":"int",
-         "playerDir":"string"
+         "playerDir":"string",
+         "scriptID":"int"
         },
      "76":
         {
          "checkpoint":"bool",
-         "historyID":"int",
-         "playerDir":"string"
+         "playerDir":"string",
+         "scriptID":"int"
         },
      "77":
         {
          "checkpoint":"bool",
-         "historyID":"int",
-         "playerDir":"string"
+         "playerDir":"string",
+         "scriptID":"int"
         },
      "78":
         {
          "checkpoint":"bool",
-         "historyID":"int",
-         "playerDir":"string"
+         "playerDir":"string",
+         "scriptID":"int"
         },
      "79":
         {
          "checkpoint":"bool",
-         "historyID":"int",
-         "playerDir":"string"
+         "playerDir":"string",
+         "scriptID":"int"
         },
      "80":
         {
          "checkpoint":"bool",
-         "historyID":"int",
-         "playerDir":"string"
+         "playerDir":"string",
+         "scriptID":"int"
         },
      "81":
         {
          "checkpoint":"bool",
-         "historyID":"int",
-         "playerDir":"string"
+         "playerDir":"string",
+         "scriptID":"int"
         },
      "82":
         {
          "checkpoint":"bool",
-         "historyID":"int",
-         "playerDir":"string"
+         "playerDir":"string",
+         "scriptID":"int"
         },
      "83":
         {
          "checkpoint":"bool",
-         "historyID":"int",
-         "playerDir":"string"
+         "playerDir":"string",
+         "scriptID":"int"
         },
      "84":
         {
          "checkpoint":"bool",
-         "historyID":"int",
-         "playerDir":"string"
+         "playerDir":"string",
+         "scriptID":"int"
         },
      "85":
         {
          "checkpoint":"bool",
-         "historyID":"int",
-         "playerDir":"string"
+         "playerDir":"string",
+         "scriptID":"int"
         },
      "86":
         {
          "checkpoint":"bool",
-         "historyID":"int",
-         "playerDir":"string"
+         "playerDir":"string",
+         "scriptID":"int"
         },
      "87":
         {
          "checkpoint":"bool",
-         "historyID":"int",
-         "playerDir":"string"
+         "playerDir":"string",
+         "scriptID":"int"
         },
      "88":
         {
          "checkpoint":"bool",
-         "historyID":"int",
-         "playerDir":"string"
+         "playerDir":"string",
+         "scriptID":"int"
         },
      "89":
         {
          "checkpoint":"bool",
-         "historyID":"int",
-         "playerDir":"string"
+         "playerDir":"string",
+         "scriptID":"int"
         },
      "90":
         {

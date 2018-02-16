@@ -41,7 +41,6 @@ class Player extends PIXI.Sprite {
     this.scene.addChild(this.deadSprite);
 
     this.lastMove = null;
-    this.speed = this.map.speed || 500;
     this.isDead = false;
     this.isStop = false;
 
@@ -77,7 +76,7 @@ class Player extends PIXI.Sprite {
     this.deadSprite.y = this.collisionPoint.y+this.map.tileSize;
     let dead = PIXI.tweenManager.createTween(this.deadSprite);
     dead.from({alpha: 0, height: 0}).to({alpha: 1, height: this.game.h});
-    dead.time = this.speed/2;
+    dead.time = this.map.speed/2;
     dead.start();
     dead.on('end', () => {
       this.isDead = true;
@@ -103,7 +102,7 @@ class Player extends PIXI.Sprite {
     this.lastMove = 'left';
     let move = PIXI.tweenManager.createTween(this);
     move.from({x: this.x}).to({x: this.x-this.map.tileSize-this.OFFSET_X});
-    move.time = this.speed/2;
+    move.time = this.map.speed/2;
     move.start();
 
     this.collisionPoint.x -= this.map.tileSize;
@@ -116,7 +115,7 @@ class Player extends PIXI.Sprite {
     this.lastMove = 'right';
     let move = PIXI.tweenManager.createTween(this);
     move.from({x: this.x}).to({x: this.x+this.map.tileSize+this.OFFSET_X});
-    move.time = this.speed/2;
+    move.time = this.map.speed/2;
     move.start();
 
     this.collisionPoint.x += this.map.tileSize;

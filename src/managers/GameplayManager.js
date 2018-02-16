@@ -57,17 +57,13 @@ class GameplayManager {
   }
   // Если блок имеет свойство historyID, то показать фрагмент сюжета с таким идентификатором. (content/history.json)
   showHistory(block) {
-    if(block.historyID) {
-      if(!this.scene.isRestarted) {
-        this.history.show(block.historyID);
-        this.map.showDelay = this.history.currentHistory.time;
-        this.scene.isRestarted = false;
-        block.historyID = null;
-      } else this.hideHistory();
+    if(block.scriptID) {
+      this.game.scripts.run(block.scriptID);
+      this.scene.isRestarted = false;
     }
   }
   hideHistory() {
-    this.map.showDelay = 500;
+    this.map.showHiddenBlocks();
     setTimeout(() => this.player.startMove(), 500);
   }
   // При проигрыше отправлять карту к последнему чекпоинту

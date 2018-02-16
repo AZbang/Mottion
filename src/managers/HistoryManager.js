@@ -1,5 +1,3 @@
-const history = require('../content/history');
-
 class HistoryManager extends PIXI.Text {
   constructor(scene) {
     super();
@@ -21,25 +19,30 @@ class HistoryManager extends PIXI.Text {
     this.x = this.game.w/2;
     this.y = 150;
   }
-  show(id) {
-    this.currentHistory = history[id];
+  setLangStyle() {
     if(this.game.settings.lang == 'ru') {
       this.style.fontFamily = 'Montserrat';
       this.style.fontWeight = 'bold';
     } else this.style.fontFamily = 'Milton Grotesque';
+  }
+  show(history) {
+    this.emit('showen');
+    if(this.scene.isRestarted) return this.emit('hidden');
+
+    this.lastHistory = history;
+    this.setLangStyle();
     this.alpha = 1;
 
-    const text = this.currentHistory.text[this.game.settings.lang].toUpperCase();
+    const text = this.lastHistory.text[this.game.settings.lang].toUpperCase();
     let data = {i: 0};
     let show = PIXI.tweenManager.createTween(data);
     show.from({i: 0}).to({i: text.length});
-    show.time = this.currentHistory.time/2;
+    show.time = this.lastHistory.time/2;
     show.on('update', () => {
       this.text = text.slice(0, data.i) + '_';
     })
     show.start();
-    setTimeout(() => this._hide(), this.currentHistory.time);
-    this.emit('showen');
+    setTimeout(() => this._hide(), this.lastHistory.time);
   }
   _hide() {
     let hide = PIXI.tweenManager.createTween(this);

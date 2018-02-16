@@ -22,7 +22,7 @@ class Settings extends PIXI.Container {
       x: this.game.w/2,
       y: top+inputPadding,
       list: ['OFF', 'ON'],
-      current: 0,
+      current: this.settings.isFullscreen,
       set: (i) => this.settings.toggleFullscreen(i)
     });
     this.ui.addListInput({
@@ -33,7 +33,7 @@ class Settings extends PIXI.Container {
       y: top+2*inputPadding,
       list: ['OFF', 'ON'],
       current: this.settings.music ? 1 : 0,
-      set: () => this.settings.toggleMusic()
+      set: (i) => this.settings.toggleMusic(i)
     });
     this.ui.addListInput({
       value: 'Sounds: ',
@@ -43,7 +43,7 @@ class Settings extends PIXI.Container {
       y: top+3*inputPadding,
       list: ['OFF', 'ON'],
       current: this.settings.sounds ? 1 : 0,
-      set: () => this.settings.toggleSounds()
+      set: (i) => this.settings.toggleSounds(i)
     });
     this.ui.addListInput({
       value: 'Lang: ',

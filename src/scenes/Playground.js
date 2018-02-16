@@ -14,7 +14,7 @@ class Playground extends PIXI.Container {
 
     Object.assign(this, {
       score: 0,
-      checkpoint: 0,
+      checkpoint: 1,
       activateType: 'white'
     }, this.game.store.getGameplay());
 

@@ -19,7 +19,7 @@ class Block extends Tile {
     this.jolting.pingPong = true;
     this.jolting.repeat = Infinity;
   }
-  show(delay) {
+  show() {
     if(this.renderable) return;
     this.renderable = true;
 
@@ -31,7 +31,7 @@ class Block extends Tile {
     // show.to({width: this.map.tileSize-10, height: this.map.tileSize-10, y: this.y, alpha: 1});
     show.from({alpha: 0});
     show.to({alpha: 1});
-    if(this.showDelay) setTimeout(() => show.start(), delay+Math.random()*this.map.speed);
+    if(this.showDelay) setTimeout(() => show.start(), Math.random()*this.map.speed);
     else show.start();
 
     this.emit('showen');

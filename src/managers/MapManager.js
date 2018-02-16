@@ -87,12 +87,20 @@ class MapManager extends PIXI.projection.Container2d {
     move.start();
   }
 
+  showHiddenBlocks() {
+    for(let i = 0; i < this.children.length; i++) {
+      let block = this.children[i];
+      let y = block.transform.worldTransform.ty/this.game.resolution-this.tileSize/2;
+      if(y >= -this.tileSize*2 && block.showDelay) block.show();
+    }
+  }
+
   checkOutRangeBlocks() {
     for(let i = 0; i < this.children.length; i++) {
       let block = this.children[i];
       let y = block.transform.worldTransform.ty/this.game.resolution-this.tileSize/2;
       if(y >= this.game.h-this.tileSize*2) block.hide();
-      else if(y >= -this.tileSize*2) block.show(this.showDelay);
+      else if(y >= -this.tileSize*2 && !block.showDelay) block.show();
     }
   }
 }

@@ -4,25 +4,27 @@ class Settings {
   constructor(game) {
     this.game = game;
 
-    let s = this.game.store.getSettings();
-    this.sounds = s.sounds != null ? +s.sounds : 1;
-    this.music = s.music != null ? +s.music : 1;
-    this.langIndex = s.langIndex != null ? +s.langIndex : 0;
     this.LANGS = ['en', 'ru'];
+
+    let s = this.game.store.getSettings();
+    this.toggleMusic(s.music != null ? +s.music : 1);
+    this.toggleSounds(s.sounds != null ? +s.sounds : 1);
+    this.setLang(s.langIndex != null ? +s.langIndex : 0);
   }
   get lang() {
     return this.LANGS[this.langIndex];
   }
   toggleFullscreen() {
     screenfull.toggle();
+    this.isFullscreen = screenfull.isFullscreen;
   }
-  toggleSounds() {
-    this.sounds = !this.sounds;
+  toggleSounds(i) {
+    this.sounds = i;
     this.game.audio.toggleSounds(this.sounds);
     this.game.store.saveSettings(this);
   }
-  toggleMusic() {
-    this.music = !this.music;
+  toggleMusic(i) {
+    this.music = i;
     this.game.audio.toggleMusic(this.music);
     this.game.store.saveSettings(this);
   }
