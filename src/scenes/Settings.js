@@ -32,7 +32,7 @@ class Settings extends PIXI.Container {
       x: this.game.w/2,
       y: top+2*inputPadding,
       list: ['OFF', 'ON'],
-      current: +this.settings.music,
+      current: this.settings.music ? 1 : 0,
       set: () => this.settings.toggleMusic()
     });
     this.ui.addListInput({
@@ -42,7 +42,7 @@ class Settings extends PIXI.Container {
       x: this.game.w/2,
       y: top+3*inputPadding,
       list: ['OFF', 'ON'],
-      current: +this.settings.sounds,
+      current: this.settings.sounds ? 1 : 0,
       set: () => this.settings.toggleSounds()
     });
     this.ui.addListInput({

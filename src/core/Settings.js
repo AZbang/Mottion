@@ -4,12 +4,10 @@ class Settings {
   constructor(game) {
     this.game = game;
 
-    Object.assign(this, {
-      sounds: true,
-      music: true,
-      langIndex: 0
-    }, this.game.store.getSettings());
-
+    let s = this.game.store.getSettings();
+    this.sounds = s.sounds != null ? +s.sounds : 1;
+    this.music = s.music != null ? +s.music : 1;
+    this.langIndex = s.langIndex != null ? +s.langIndex : 0;
     this.LANGS = ['en', 'ru'];
   }
   get lang() {

@@ -3578,8 +3578,8 @@ class Music {
   constructor(game) {
     this.game = game;
 
-    this.sounds = ['sound_fire', 'sound_noise', 'sound_run'];
-    this.musics = ['music_mantra', 'music_spirit', 'music_morale'];
+    this.sounds = [];
+    this.musics = ['music_mantra'];
   }
   playSound(id, params) {
     PIXI.sound.play('sound_' + id, params);
@@ -3695,12 +3695,10 @@ class Settings {
   constructor(game) {
     this.game = game;
 
-    Object.assign(this, {
-      sounds: true,
-      music: true,
-      langIndex: 0
-    }, this.game.store.getSettings());
-
+    let s = this.game.store.getSettings();
+    this.sounds = s.sounds != null ? +s.sounds : 1;
+    this.music = s.music != null ? +s.music : 1;
+    this.langIndex = s.langIndex != null ? +s.langIndex : 0;
     this.LANGS = ['en', 'ru'];
   }
   get lang() {
@@ -3769,28 +3767,28 @@ class Store {
     this.game = game;
   }
   saveSettings(settings) {
-    localStorage.setItem('langIndex', settings.langIndex);
-    localStorage.setItem('music', settings.music);
-    localStorage.setItem('sounds', settings.sounds);
-    localStorage.setItem('filters', settings.filters);
+    localStorage.setItem('langIndex', +settings.langIndex);
+    localStorage.setItem('music', +settings.music);
+    localStorage.setItem('sounds', +settings.sounds);
+    localStorage.setItem('filters', +settings.filters);
   }
   saveGameplay(gameplay) {
-    localStorage.setItem('score', gameplay.score);
-    localStorage.setItem('checkpoint', gameplay.checkpoint);
+    localStorage.setItem('score', +gameplay.score);
+    localStorage.setItem('checkpoint', +gameplay.checkpoint);
   }
   getSettings() {
     return {
-      langIndex: localStorage.getItem('langIndex') || 0,
-      music: localStorage.getItem('music') || true,
-      sounds: localStorage.getItem('sounds') || true,
-      filters: localStorage.getItem('filters') || true
+      langIndex: localStorage.getItem('langIndex'),
+      music: localStorage.getItem('music'),
+      sounds: localStorage.getItem('sounds'),
+      filters: localStorage.getItem('filters')
     }
   }
   getGameplay() {
     return {
-      score: localStorage.getItem('score') || 0,
-      checkpoint: localStorage.getItem('checkpoint') || 0,
-      activateType: localStorage.getItem('activateType') || 'white'
+      score: localStorage.getItem('score'),
+      checkpoint: localStorage.getItem('checkpoint'),
+      activateType: localStorage.getItem('activateType')
     }
   }
 }
@@ -4384,7 +4382,7 @@ class Settings extends PIXI.Container {
       x: this.game.w/2,
       y: top+2*inputPadding,
       list: ['OFF', 'ON'],
-      current: +this.settings.music,
+      current: this.settings.music ? 1 : 0,
       set: () => this.settings.toggleMusic()
     });
     this.ui.addListInput({
@@ -4394,7 +4392,7 @@ class Settings extends PIXI.Container {
       x: this.game.w/2,
       y: top+3*inputPadding,
       list: ['OFF', 'ON'],
-      current: +this.settings.sounds,
+      current: this.settings.sounds ? 1 : 0,
       set: () => this.settings.toggleSounds()
     });
     this.ui.addListInput({
@@ -4588,7 +4586,7 @@ class Player extends PIXI.Sprite {
       if(blocks.right && blocks.right.active && this.lastMove !== 'left') return this.right();
       // or die
       this.top();
-    }
+    } else this.dead(0xFFFFFF);
   }
   dead(tint) {
     this.deadSprite.tint = tint;

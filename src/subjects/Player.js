@@ -69,7 +69,7 @@ class Player extends PIXI.Sprite {
       if(blocks.right && blocks.right.active && this.lastMove !== 'left') return this.right();
       // or die
       this.top();
-    }
+    } else this.dead(0xFFFFFF);
   }
   dead(tint) {
     this.deadSprite.tint = tint;

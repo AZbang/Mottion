@@ -4,8 +4,8 @@ class Music {
   constructor(game) {
     this.game = game;
 
-    this.sounds = ['sound_fire', 'sound_noise', 'sound_run'];
-    this.musics = ['music_mantra', 'music_spirit', 'music_morale'];
+    this.sounds = [];
+    this.musics = ['music_mantra'];
   }
   playSound(id, params) {
     PIXI.sound.play('sound_' + id, params);
