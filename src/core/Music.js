@@ -1,46 +1,33 @@
-require('pixi-sound');
+const {Howl, Howler} = require('howler');
 
-class Music {
+class Music extends PIXI.utils.EventEmitter {
   constructor(game) {
-    this.game = game;
+    super();
 
-    this.sounds = [];
-    this.musics = ['music_mantra'];
+    this.game = game;
+    this.player = {};
   }
-  playSound(id, params) {
-    PIXI.sound.play('sound_' + id, params);
+  add(name, src, params) {
+    this.player[name] = new Howl(Object.assign({src: [src], preload: true}, params));
+    return this;
   }
-  stopSound(id) {
-    PIXI.sound.stop('sound_' + id);
+  analyzer() {
+    this.analyser = Howler.ctx.createAnalyser();
+    Howler.masterGain.connect(this.analyser);
+    this.analyser.connect(Howler.ctx.destination);
+
+    this.analyseData = new Uint8Array(this.analyser.frequencyBinCount);
+    setInterval(() => this.analyser.getByteTimeDomainData(this.analyseData), 100);
   }
-  playAllMusicsLoop(i=0) {
-    PIXI.sound.play(this.musics[i], {
-      complete: () => {
-        if(i < this.musics.length-2) this.allMusicsLoop(i+1);
-        else this.allMusicsLoop(0);
-      }
-    })
+  toggleMusic(v) {
+    for(let key in this.player) {
+      if(key.find('_music') !== -1) this.player[key].volue(v);
+    }
   }
-  stopAllMusicsLoop() {
-    this.musics.forEach((id) => {
-      PIXI.sound.stop(id);
-    });
-  }
-  playMusic(id, params) {
-    PIXI.sound.play('music_' + id, params);
-  }
-  stopMusic(id) {
-    PIXI.sound.stop('music_' + id);
-  }
-  toggleMusic(play) {
-    this.musics.forEach((id) => {
-      play ? PIXI.sound.volume(id, 1) : PIXI.sound.volume(id, 0);
-    });
-  }
-  toggleSounds(play) {
-    this.sounds.forEach((id) => {
-      play ? PIXI.sound.volume(id, 1) : PIXI.sound.volume(id, 0);
-    });
+  toggleSounds(v) {
+    for(let key in this.player) {
+      if(key.find('_sound') !== -1) this.player[key].volue(v);
+    }
   }
 }
 

@@ -24,7 +24,6 @@ class Loader {
       .add('bg', 'assets/spritesheets/bg.png')
       .add('vignette', 'assets/spritesheets/vignette.png')
       .add('spritesheet', 'assets/spritesheets/spritesheet.json')
-      .add('music_mantra', 'assets/sounds/mantra.ogg')
       // .add('music_morale', 'assets/sounds/morale.mp3')
       // .add('music_spirit', 'assets/sounds/spirit.mp3')
 

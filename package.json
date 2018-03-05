@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "electron": "^1.7.5",
+    "howler": "^2.0.9",
     "pixi-particles": "^2.1.9",
     "pixi-projection": "^0.1.8",
     "pixi-sound": "^2.0.0",

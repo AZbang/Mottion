@@ -21,6 +21,7 @@ class ParalaxManager extends PIXI.Container {
     this._spawnToLeft = !this._spawnToLeft;
     obj.tint = this.tint;
     obj.y = -obj.height;
+    obj.anchor.set(.5);
     obj.x = this._spawnToLeft ? Math.random()*this.padding+100 : this.game.w-obj.width-Math.random()*this.padding-100;
     obj.rotation = this._spawnToLeft ? -.1 : .1;
     this.addChild(obj);
@@ -35,6 +36,7 @@ class ParalaxManager extends PIXI.Container {
     for(let i = 0; i < this.children.length; i++) {
       let obj = this.children[i];
       obj.y += this.speed;
+      obj.scale.set(this.game.audio.analyseData.reduce((sum, i) => sum+=i)/1024/128);
       if(obj.y > this.game.h) this.removeChild(obj);
     }
   }
