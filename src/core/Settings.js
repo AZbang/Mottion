@@ -17,7 +17,6 @@ class Settings {
   }
   toggleFullscreen() {
     screenfull.toggle();
-    this.isFullscreen = screenfull.isFullscreen;
   }
   toggleSounds(i) {
     this.sounds = i;

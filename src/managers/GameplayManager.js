@@ -34,6 +34,7 @@ class GameplayManager {
 
   // Проверяем коллизию блока на различные триггеры
   checkCollide(block) {
+    this.scene.score += +block.score;
     this.setBlockType(block);
     this.showHistory(block);
     this.saveCheckpoint(block);

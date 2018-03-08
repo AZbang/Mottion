@@ -29,6 +29,14 @@ class Playground extends PIXI.Container {
     this.gameplay = new GameplayManager(this);
 
     this.ui = new InterfaceManager(this);
+    this.scoreText = this.ui.addText({
+      text: '',
+      font: 'normal 82px Milton Grotesque',
+      color: 0xfffd4d,
+      x: 50,
+      anchor: 0,
+      y: 50
+    });
     this.ui.addButton({
       image: 'close.png',
       x: this.game.w-100,
@@ -36,6 +44,10 @@ class Playground extends PIXI.Container {
       click: () => this.game.scenes.toScene('menu', 0xFFFFFF)
     });
     this.game.splash.show(0xFFFFFF, 0, 500);
+    this.game.ticker.add((dt) => this.update(dt));
+  }
+  update() {
+    this.scoreText.text = 'LIVE: ' + this.score;
   }
 }
 

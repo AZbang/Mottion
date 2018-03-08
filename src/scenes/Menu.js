@@ -11,6 +11,8 @@ class Menu extends PIXI.Container {
     this.ui = new InterfaceManager(this);
     this.fx = new FxManager(this);
 
+    this.game.audio.play('menu_music');
+
     this.ui.addText({
       text: 'MOTTION. Do the way',
       font: 'normal 120px Milton Grotesque',
@@ -28,11 +30,19 @@ class Menu extends PIXI.Container {
       click: () => this.game.scenes.toScene('playground', 0xFFFFFF)
     });
     this.ui.addText({
-      text: 'press to start...',
-      font: 'normal 42px Milton Grotesque',
+      text: '> STORY MODE',
+      font: 'normal 52px Milton Grotesque',
       color: 0xfffd4d,
       x: this.game.w/2,
-      y: 700,
+      y: 650,
+      click: () => this.game.scenes.toScene('playground', 0xFFFFFF)
+    });
+    this.ui.addText({
+      text: '> INFINITY MODE',
+      font: 'normal 52px Milton Grotesque',
+      color: 0xfffd4d,
+      x: this.game.w/2,
+      y: 750,
       click: () => this.game.scenes.toScene('playground', 0xFFFFFF)
     });
     this.ui.addButton({

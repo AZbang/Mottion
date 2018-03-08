@@ -10,7 +10,7 @@ class InterfaceManager extends PIXI.Container {
       fill: opt.color,
       align: opt.align || 'center'
     });
-    text.anchor.set(.5);
+    text.anchor.set(opt.anchor == null ? .5 : opt.anchor);
     text.y = opt.y;
     text.x = opt.x;
     text.interactive = true;

@@ -15,15 +15,13 @@ class Settings extends PIXI.Container {
 
     let top = 250;
     let inputPadding = 110;
-    this.ui.addListInput({
-      value: 'Fullscreen: ',
+    this.ui.addText({
+      text: 'Toggle Fullscreen',
       font: 'normal 72px Milton Grotesque',
       color: 0xFFFFFF,
       x: this.game.w/2,
       y: top+inputPadding,
-      list: ['OFF', 'ON'],
-      current: this.settings.isFullscreen,
-      set: (i) => this.settings.toggleFullscreen(i)
+      click: (i) => this.settings.toggleFullscreen(i)
     });
     this.ui.addListInput({
       value: 'Music: ',

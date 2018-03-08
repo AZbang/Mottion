@@ -5477,75 +5477,110 @@ module.exports={ "columns":4,
 module.exports={
   "1": {
     "ru": [
-      "Тлен идет за тобой по пятам. \n Отступись и он тебя поглатит... \n Но не стоит отчаиваться, ведь музыка всегда с тобой."
+      "Привет",
+      "Мир, в котором ты сейчас находишься слишком крошечный для движения, верно?",
+      "Тебе нужно искать смысл, чтобы идти дальше, искать мотивацию,\nжизненные цели, мнения, которые могли бы тебя подтолкнуть",
+      "Может стоит попробовать построить дорогу самостоятельно?"
     ],
     "en": [
-      "Thlen follows you. \n Digress and he will swallow you ... \n But do not despair, because music is always with you.",
-      "More text! More reflection!"
+      ""
     ]
   },
   "2": {
     "ru": [
-      "Тлен идет за тобой по пятам. \n Отступись и он тебя поглатит... \n Но не стоит отчаиваться, ведь музыка всегда с тобой."
+      "Чтож, теперь постарайся не наткнуться на грабли, хотя в прочем\nэто не страшно, ты ведь никуда не спешишь, верно?"
     ],
     "en": [
-      "Thlen follows you. \n Digress and he will swallow you ... \n But do not despair, because music is always with you."
+      ""
     ]
   },
   "3": {
     "ru": [
-      "Тлен идет за тобой по пятам. \n Отступись и он тебя поглатит... \n Но не стоит отчаиваться, ведь музыка всегда с тобой."
+      "Что ты видишь? Пустое полотно бесцельно бегущее как киношная лента вниз\nили вселенную абстракций с бесконечным смыслом?",
+      "Похоже мир расширяется, его структура становится сложнее, а вместе с ним и твой взгляд на него, может стоит посмотреть на это с другой стороны..."
     ],
     "en": [
-      "Thlen follows you. \n Digress and he will swallow you ... \n But do not despair, because music is always with you."
+      ""
     ]
   },
   "4": {
     "ru": [
-      "Тлен идет за тобой по пятам. \n Отступись и он тебя поглатит... \n Но не стоит отчаиваться, ведь музыка всегда с тобой."
+      "Хочешь историю?",
+      "Жил был талантливый злодей по имени Люциус и хотел он захватить мир,\nочень долго шел Люциус к своей цели, много дорог было построено...",
+      "А на другом конце мира жил Магнус, ничего не делал, просто существовал в своей оболочке",
+      "в итоге так получилось, что бездарный Магнус случайным стечением обстоятельств\nспасает вселенную от Люциуса, все счатливы, Магнус герой, а Люциус гниет в тюрьме...",
+      "Мир во всем мире = несправедливость или я что-то путаю?"
     ],
     "en": [
-      "Thlen follows you. \n Digress and he will swallow you ... \n But do not despair, because music is always with you."
+      ""
     ]
   },
   "5": {
     "ru": [
-      "Тлен идет за тобой по пятам. \n Отступись и он тебя поглатит... \n Но не стоит отчаиваться, ведь музыка всегда с тобой."
+      "Она ответила на его вопрос:",
+      "- Да, похоже мы действительно заблудились, но если идти по звездам,\nто скорее всего мы точно куда нибудь придем",
+      "К сожалению звезды довели пару до медвежей берлоги и покинули их...",
+      "Ты сам вправе создавать реальность, главное успевай находить выход из текущей"
     ],
     "en": [
-      "Thlen follows you. \n Digress and he will swallow you ... \n But do not despair, because music is always with you."
+      ""
     ]
   },
   "6": {
     "ru": [
-      "Тлен идет за тобой по пятам. \n Отступись и он тебя поглатит... \n Но не стоит отчаиваться, ведь музыка всегда с тобой."
+      "Похоже тебе становится скучно, может задать ритм?"
     ],
     "en": [
-      "Thlen follows you. \n Digress and he will swallow you ... \n But do not despair, because music is always with you."
+      ""
     ]
   },
   "7": {
     "ru": [
-      "Тлен идет за тобой по пятам. \n Отступись и он тебя поглатит... \n Но не стоит отчаиваться, ведь музыка всегда с тобой."
+      "Погоди, отдышись, приди в себя, впереди головоломка,\n ты ведь любишь головоломки?",
+      "Сколько можно думать, что то, чем ты занимаешься сейчас - бессмысленно?\nЭто определенно важно для меня, просто продолжай двигаться"
     ],
     "en": [
-      "Thlen follows you. \n Digress and he will swallow you ... \n But do not despair, because music is always with you."
+      ""
     ]
   },
   "8": {
     "ru": [
-      "Тлен идет за тобой по пятам. \n Отступись и он тебя поглатит... \n Но не стоит отчаиваться, ведь музыка всегда с тобой."
+      ""
     ],
     "en": [
-      "Thlen follows you. \n Digress and he will swallow you ... \n But do not despair, because music is always with you."
+      ""
     ]
   },
   "9": {
     "ru": [
-      "Тлен идет за тобой по пятам. \n Отступись и он тебя поглатит... \n Но не стоит отчаиваться, ведь музыка всегда с тобой."
+      ""
     ],
     "en": [
-      "Thlen follows you. \n Digress and he will swallow you ... \n But do not despair, because music is always with you."
+      ""
+    ]
+  },
+  "10": {
+    "ru": [
+      ""
+    ],
+    "en": [
+      ""
+    ]
+  },
+  "11": {
+    "ru": [
+      ""
+    ],
+    "en": [
+      ""
+    ]
+  },
+  "12": {
+    "ru": [
+      "Все хорошее когда нибудь заканчивается, я рад, что вселенная бесконечна"
+    ],
+    "en": [
+      ""
     ]
   }
 }
@@ -5983,11 +6018,11 @@ module.exports = {
   },
   2: (game, scene) => {
     scene.history.show(history[2]);
-    scene.map.speed = 400;
+    scene.map.speed = 300;
   },
   3: (game, scene) => {
     scene.history.show(history[3]);
-    scene.map.speed = 400;
+    scene.map.speed = 250;
   },
   4: (game, scene) => {
     scene.history.show(history[4]);
@@ -6532,10 +6567,14 @@ class Music extends PIXI.utils.EventEmitter {
 
     this.game = game;
     this.player = {};
+    this.coefBit = 1;
   }
   add(name, src, params) {
     this.player[name] = new Howl(Object.assign({src: [src], preload: true}, params));
     return this;
+  }
+  play(name) {
+    this.player[name] && this.player[name].play();
   }
   analyzer() {
     this.analyser = Howler.ctx.createAnalyser();
@@ -6543,16 +6582,19 @@ class Music extends PIXI.utils.EventEmitter {
     this.analyser.connect(Howler.ctx.destination);
 
     this.analyseData = new Uint8Array(this.analyser.frequencyBinCount);
-    setInterval(() => this.analyser.getByteTimeDomainData(this.analyseData), 100);
+    setInterval(() => {
+      this.analyser.getByteTimeDomainData(this.analyseData)
+      this.coefBit = this.analyseData.reduce((sum, i) => sum+=i)/1024/128;
+    }, 100);
   }
   toggleMusic(v) {
     for(let key in this.player) {
-      if(key.find('_music') !== -1) this.player[key].volue(v);
+      if(key.search('_music') !== -1) this.player[key].volue(v);
     }
   }
   toggleSounds(v) {
     for(let key in this.player) {
-      if(key.find('_sound') !== -1) this.player[key].volue(v);
+      if(key.search('_sound') !== -1) this.player[key].volue(v);
     }
   }
 }
@@ -6661,7 +6703,6 @@ class Settings {
   }
   toggleFullscreen() {
     screenfull.toggle();
-    this.isFullscreen = screenfull.isFullscreen;
   }
   toggleSounds(i) {
     this.sounds = i;
@@ -6742,8 +6783,8 @@ class Store {
   }
   getGameplay() {
     return {
-      score: localStorage.getItem('score'),
-      checkpoint: localStorage.getItem('checkpoint'),
+      score: +localStorage.getItem('score'),
+      checkpoint: +localStorage.getItem('checkpoint'),
       activateType: localStorage.getItem('activateType')
     }
   }
@@ -6757,7 +6798,9 @@ const Game = require('./Game');
 
 new Loader().loadResources(() => {
   window.game = new Game();
-  game.audio.add('mantra_music', 'assets/sounds/mantra.ogg', {autoplay: true});
+  game.audio.add('menu_music', 'assets/sounds/mantra.ogg');
+  game.audio.add('mantra_music', 'assets/sounds/mantra.ogg');
+  game.audio.add('mantra_music', 'assets/sounds/mantra.ogg');
   game.audio.analyzer();
   game.scenes.toScene('menu', 0xFFFFFF, 0, 1000);
 });
@@ -6779,6 +6822,7 @@ class FxManager {
       fillMode: 3,
       slices: 0,
       offset: 10,
+      vignette: 0,
       red: [-2, 0],
       blue: [-1, 2],
       green: [3, 1]
@@ -6801,15 +6845,16 @@ class FxManager {
   update(dt) {
     this.crtFx.time += dt;
     this.glitchFx.time += dt;
+    this.vignette.alpha = this.game.audio.coefBit/2;
 
     let pos = this.game.mouse.position;
-    this.glitchFx.red[0] = 0.7*pos.x/1920*2;
-    this.glitchFx.red[1] = 0.9*pos.y/1080*2;
-    this.glitchFx.blue[0] = 0.5*pos.x/1920*2;
-    this.glitchFx.blue[1] = -0.9*pos.y/1080*2;
-    this.glitchFx.green[0] = -2*pos.x/1920*2;
-    this.glitchFx.green[1] = -1.2*pos.y/1080*2;
-    this.glitchFx.seed = Math.random();
+    this.glitchFx.red[0] = 0.7*pos.x/1920*2*this.game.audio.coefBit;
+    this.glitchFx.red[1] = 0.9*pos.y/1080*2*this.game.audio.coefBit;
+    this.glitchFx.blue[0] = 0.5*pos.x/1920*2*this.game.audio.coefBit;
+    this.glitchFx.blue[1] = -0.9*pos.y/1080*2*this.game.audio.coefBit;
+    this.glitchFx.green[0] = -2*pos.x/1920*2*this.game.audio.coefBit;
+    this.glitchFx.green[1] = -1.2*pos.y/1080*2*this.game.audio.coefBit;
+    this.glitchFx.seed = Math.random()*this.game.audio.coefBit;
   }
 }
 
@@ -6852,6 +6897,7 @@ class GameplayManager {
 
   // Проверяем коллизию блока на различные триггеры
   checkCollide(block) {
+    this.scene.score += +block.score;
     this.setBlockType(block);
     this.showHistory(block);
     this.saveCheckpoint(block);
@@ -6973,7 +7019,7 @@ class InterfaceManager extends PIXI.Container {
       fill: opt.color,
       align: opt.align || 'center'
     });
-    text.anchor.set(.5);
+    text.anchor.set(opt.anchor == null ? .5 : opt.anchor);
     text.y = opt.y;
     text.x = opt.x;
     text.interactive = true;
@@ -7147,7 +7193,7 @@ class ParalaxManager extends PIXI.Container {
     obj.tint = this.tint;
     obj.y = -obj.height;
     obj.anchor.set(.5);
-    obj.x = this._spawnToLeft ? Math.random()*this.padding+100 : this.game.w-obj.width-Math.random()*this.padding-100;
+    obj.x = this._spawnToLeft ? Math.random()*this.padding+100+obj.width/2 : this.game.w-obj.width-Math.random()*this.padding-100+obj.width/2;
     obj.rotation = this._spawnToLeft ? -.1 : .1;
     this.addChild(obj);
   }
@@ -7161,8 +7207,8 @@ class ParalaxManager extends PIXI.Container {
     for(let i = 0; i < this.children.length; i++) {
       let obj = this.children[i];
       obj.y += this.speed;
-      obj.scale.set(this.game.audio.analyseData.reduce((sum, i) => sum+=i)/1024/128);
-      if(obj.y > this.game.h) this.removeChild(obj);
+      obj.scale.set(this.game.audio.coefBit);
+      if(obj.y-obj.height/2 > this.game.h) this.removeChild(obj);
     }
   }
 }
@@ -7238,6 +7284,8 @@ class Menu extends PIXI.Container {
     this.ui = new InterfaceManager(this);
     this.fx = new FxManager(this);
 
+    this.game.audio.play('menu_music');
+
     this.ui.addText({
       text: 'MOTTION. Do the way',
       font: 'normal 120px Milton Grotesque',
@@ -7255,11 +7303,19 @@ class Menu extends PIXI.Container {
       click: () => this.game.scenes.toScene('playground', 0xFFFFFF)
     });
     this.ui.addText({
-      text: 'press to start...',
-      font: 'normal 42px Milton Grotesque',
+      text: '> STORY MODE',
+      font: 'normal 52px Milton Grotesque',
       color: 0xfffd4d,
       x: this.game.w/2,
-      y: 700,
+      y: 650,
+      click: () => this.game.scenes.toScene('playground', 0xFFFFFF)
+    });
+    this.ui.addText({
+      text: '> INFINITY MODE',
+      font: 'normal 52px Milton Grotesque',
+      color: 0xfffd4d,
+      x: this.game.w/2,
+      y: 750,
       click: () => this.game.scenes.toScene('playground', 0xFFFFFF)
     });
     this.ui.addButton({
@@ -7307,6 +7363,14 @@ class Playground extends PIXI.Container {
     this.gameplay = new GameplayManager(this);
 
     this.ui = new InterfaceManager(this);
+    this.scoreText = this.ui.addText({
+      text: '',
+      font: 'normal 82px Milton Grotesque',
+      color: 0xfffd4d,
+      x: 50,
+      anchor: 0,
+      y: 50
+    });
     this.ui.addButton({
       image: 'close.png',
       x: this.game.w-100,
@@ -7314,6 +7378,10 @@ class Playground extends PIXI.Container {
       click: () => this.game.scenes.toScene('menu', 0xFFFFFF)
     });
     this.game.splash.show(0xFFFFFF, 0, 500);
+    this.game.ticker.add((dt) => this.update(dt));
+  }
+  update() {
+    this.scoreText.text = 'LIVE: ' + this.score;
   }
 }
 
@@ -7337,15 +7405,13 @@ class Settings extends PIXI.Container {
 
     let top = 250;
     let inputPadding = 110;
-    this.ui.addListInput({
-      value: 'Fullscreen: ',
+    this.ui.addText({
+      text: 'Toggle Fullscreen',
       font: 'normal 72px Milton Grotesque',
       color: 0xFFFFFF,
       x: this.game.w/2,
       y: top+inputPadding,
-      list: ['OFF', 'ON'],
-      current: this.settings.isFullscreen,
-      set: (i) => this.settings.toggleFullscreen(i)
+      click: (i) => this.settings.toggleFullscreen(i)
     });
     this.ui.addListInput({
       value: 'Music: ',

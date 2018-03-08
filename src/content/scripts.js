@@ -7,11 +7,11 @@ module.exports = {
   },
   2: (game, scene) => {
     scene.history.show(history[2]);
-    scene.map.speed = 400;
+    scene.map.speed = 300;
   },
   3: (game, scene) => {
     scene.history.show(history[3]);
-    scene.map.speed = 400;
+    scene.map.speed = 250;
   },
   4: (game, scene) => {
     scene.history.show(history[4]);

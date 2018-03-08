@@ -22,8 +22,8 @@ class Store {
   }
   getGameplay() {
     return {
-      score: localStorage.getItem('score'),
-      checkpoint: localStorage.getItem('checkpoint'),
+      score: +localStorage.getItem('score'),
+      checkpoint: +localStorage.getItem('checkpoint'),
       activateType: localStorage.getItem('activateType')
     }
   }
