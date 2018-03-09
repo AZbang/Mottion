@@ -11,9 +11,9 @@
     {
      "0":
         {
-         "activation":10,
+         "activation":5,
          "active":false,
-         "score":10,
+         "score":5,
          "tint":"0xff3939",
          "type":"red"
         },
@@ -35,9 +35,9 @@
         },
      "3":
         {
-         "activation":10,
+         "activation":3,
          "active":false,
-         "score":10,
+         "score":1,
          "tint":"0xFFFFFF",
          "type":"white"
         },
@@ -67,9 +67,9 @@
         },
      "7":
         {
-         "activation":10,
+         "activation":1,
          "active":true,
-         "score":10,
+         "score":1,
          "tint":"0xFFFFFF",
          "type":"white"
         }

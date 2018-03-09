@@ -13,15 +13,17 @@ class Settings extends PIXI.Container {
     this.ui = new InterfaceManager(this);
     this.fx = new FxManager(this);
 
-    let top = 250;
+    let top = 220;
     let inputPadding = 110;
-    this.ui.addText({
-      text: 'Toggle Fullscreen',
+    this.ui.addListInput({
+      value: 'Lang: ',
       font: 'normal 72px Milton Grotesque',
       color: 0xFFFFFF,
       x: this.game.w/2,
       y: top+inputPadding,
-      click: (i) => this.settings.toggleFullscreen(i)
+      list: this.settings.LANGS,
+      current: this.settings.langIndex,
+      set: (i) => this.settings.setLang(i)
     });
     this.ui.addListInput({
       value: 'Music: ',
@@ -43,15 +45,13 @@ class Settings extends PIXI.Container {
       current: this.settings.sounds ? 1 : 0,
       set: (i) => this.settings.toggleSounds(i)
     });
-    this.ui.addListInput({
-      value: 'Lang: ',
+    this.ui.addText({
+      text: 'Toggle Fullscreen',
       font: 'normal 72px Milton Grotesque',
       color: 0xFFFFFF,
       x: this.game.w/2,
       y: top+4*inputPadding,
-      list: this.settings.LANGS,
-      current: this.settings.langIndex,
-      set: (i) => this.settings.setLang(i)
+      click: (i) => this.settings.toggleFullscreen(i)
     });
     this.ui.addButton({
       image: 'close.png',

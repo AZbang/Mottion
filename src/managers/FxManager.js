@@ -9,12 +9,11 @@ class FxManager {
     this.vignette.alpha = .2;
     this.scene.addChild(this.vignette);
 
-    this.crtFx = new PIXI.filters.CRTFilter();
+    this.crtFx = new PIXI.filters.CRTFilter({vignetting: 0});
     this.glitchFx = new PIXI.filters.GlitchFilter({
       fillMode: 3,
       slices: 0,
       offset: 10,
-      vignette: 0,
       red: [-2, 0],
       blue: [-1, 2],
       green: [3, 1]

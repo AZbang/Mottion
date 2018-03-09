@@ -13,7 +13,12 @@ class Music extends PIXI.utils.EventEmitter {
     return this;
   }
   play(name) {
-    this.player[name] && this.player[name].play();
+    if(!this.player[name]) return;
+    this.player[name].play();
+    this.player[name].seek(0);
+  }
+  stop(name) {
+    this.player[name] && this.player[name].stop();
   }
   analyzer() {
     this.analyser = Howler.ctx.createAnalyser();
@@ -28,12 +33,12 @@ class Music extends PIXI.utils.EventEmitter {
   }
   toggleMusic(v) {
     for(let key in this.player) {
-      if(key.search('_music') !== -1) this.player[key].volue(v);
+      if(key.search('_music') !== -1) this.player[key].volume(v);
     }
   }
   toggleSounds(v) {
     for(let key in this.player) {
-      if(key.search('_sound') !== -1) this.player[key].volue(v);
+      if(key.search('_sound') !== -1) this.player[key].volume(v);
     }
   }
 }

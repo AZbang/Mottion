@@ -42,13 +42,16 @@ class HistoryManager extends PIXI.Text {
     let len = text.length;
     let per = 60;
     let show = PIXI.tweenManager.createTween(data);
+    this.game.audio.play('typing_sound');
 
     show.from({i: 0}).to({i: len});
     show.time = len*per/2;
     show.on('update', () => {
       this.text = text.slice(0, data.i) + '_';
-    })
+    });
     show.start();
+    show.on('end', () => this.game.audio.stop('typing_sound'));
+
     setTimeout(() => {
       let hide = PIXI.tweenManager.createTween(this);
       hide.from({alpha: 1}).to({alpha: 0});
