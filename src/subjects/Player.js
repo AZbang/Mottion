@@ -59,16 +59,21 @@ class Player extends PIXI.Sprite {
       if(blocks.center.playerDir === 'right') return this.right();
 
       // check dead
-      if(!blocks.center.active) return this.dead(blocks.center.tint);
+      if(!this.checkBlock(blocks.center)) return this.dead(blocks.center.tint);
       //check top
-      if(blocks.top && blocks.top.active) return this.top();
+      if(blocks.top && this.checkBlock(blocks.top)) return this.top();
       // check left
-      if(blocks.left && blocks.left.active && this.lastMove !== 'right') return this.left();
+      if(blocks.left && this.lastMove !== 'right' && this.checkBlock(blocks.left)) return this.left();
       // check rigth
-      if(blocks.right && blocks.right.active && this.lastMove !== 'left') return this.right();
+      if(blocks.right && this.lastMove !== 'left' && this.checkBlock(blocks.right)) return this.right();
       // or die
       this.top();
     } else this.dead(0xFFFFFF);
+  }
+  checkBlock(block) {
+    if(block.active) return true;
+    else if(block.type === this.scene.immunity[this.scene.immunity.length-1]) return this.scene.immunity.pop();
+    else return false;
   }
   dead(tint) {
     this.deadSprite.tint = tint;

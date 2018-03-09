@@ -23,12 +23,14 @@ class GameplayManager {
   }
 
   // функция активации блока при удержании мышки на блоке
-  activateBlock(pos) {
+  activateTiles(pos) {
     for(let i = 0; i < this.map.children.length; i++) {
-      let block = this.map.children[i];
-      if(block.type !== this.scene.activateType) continue;
-      if(block.containsPoint({x: pos.x*this.game.resolution, y: pos.y*this.game.resolution})) return block.hit();
-      else block.unhit();
+      let tile = this.map.children[i];
+      if(tile.entity !== 'key' && tile.type !== this.scene.activateType) continue;
+      if(tile.containsPoint({x: pos.x*this.game.resolution, y: pos.y*this.game.resolution})) {
+        let isActivated = tile.hit();
+        if(isActivated && tile.entity === 'key') this.game.immunity.push(tile.type);
+      } else tile.unhit();
     }
   }
 
@@ -73,7 +75,7 @@ class GameplayManager {
   }
   // Обновляем проверку на активацию блока
   update() {
-    this.activateBlock(this.game.mouse.position);
+    this.activateTiles(this.game.mouse.position);
   }
 }
 

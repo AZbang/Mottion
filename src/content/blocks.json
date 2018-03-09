@@ -1,11 +1,11 @@
-{ "columns":4,
+{ "columns":5,
  "image":"..\/..\/dist\/assets\/sprites\/blocks.png",
  "imageheight":338,
- "imagewidth":676,
+ "imagewidth":845,
  "margin":0,
  "name":"blocks",
  "spacing":0,
- "tilecount":8,
+ "tilecount":10,
  "tileheight":169,
  "tileproperties":
     {
@@ -41,7 +41,7 @@
          "tint":"0xFFFFFF",
          "type":"white"
         },
-     "4":
+     "5":
         {
          "activation":10,
          "active":true,
@@ -49,7 +49,7 @@
          "tint":"0xff3939",
          "type":"red"
         },
-     "5":
+     "6":
         {
          "activation":10,
          "active":true,
@@ -57,7 +57,7 @@
          "tint":"0x86ff4a",
          "type":"green"
         },
-     "6":
+     "7":
         {
          "activation":10,
          "active":true,
@@ -65,13 +65,20 @@
          "tint":"0x4ab4ff",
          "type":"blue"
         },
-     "7":
+     "8":
         {
          "activation":1,
          "active":true,
          "score":1,
          "tint":"0xFFFFFF",
          "type":"white"
+        },
+     "9":
+        {
+         "activation":10,
+         "entity":"key",
+         "score":20,
+         "type":"blue"
         }
     },
  "tilepropertytypes":
@@ -108,14 +115,6 @@
          "tint":"string",
          "type":"string"
         },
-     "4":
-        {
-         "activation":"int",
-         "active":"bool",
-         "score":"int",
-         "tint":"string",
-         "type":"string"
-        },
      "5":
         {
          "activation":"int",
@@ -138,6 +137,21 @@
          "active":"bool",
          "score":"int",
          "tint":"string",
+         "type":"string"
+        },
+     "8":
+        {
+         "activation":"int",
+         "active":"bool",
+         "score":"int",
+         "tint":"string",
+         "type":"string"
+        },
+     "9":
+        {
+         "activation":"int",
+         "entity":"string",
+         "score":"int",
          "type":"string"
         }
     },

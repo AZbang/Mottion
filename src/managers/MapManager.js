@@ -9,6 +9,7 @@ const map = require('../content/map');
 const blocks = require('../content/blocks');
 const triggers = require('../content/triggers');
 const Block = require('../subjects/Block');
+const Key = require('../subjects/Key');
 const TiledManager = require('./TiledManager');
 
 class MapManager extends PIXI.projection.Container2d {
@@ -38,13 +39,13 @@ class MapManager extends PIXI.projection.Container2d {
   }
   generateMap() {
     this.tiled.data.forEach((tile) => {
-      this.addBlock(tile.x, tile.y, tile.data);
+      this.addTile(tile.x, tile.y, tile.data);
     });
     this.emit('generatedMap');
   }
-  addBlock(x, y, data) {
-    let block = new Block(this.scene, this, x, y, data);
-    this.addChild(block);
+  addTile(x, y, data) {
+    if(data.entity === 'key') this.addChild(new Key(this.scene, this, x, y, data));
+    else this.addChild(new Block(this.scene, this, x, y, data));
   }
   getBlock(pos) {
     for(let i = 0; i < this.children.length; i++) {

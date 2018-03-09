@@ -20,6 +20,7 @@ class Playground extends PIXI.Container {
     }, this.game.store.getGameplay());
 
     this.isRestarted = isRestart;
+    this.immunity = [];
 
     this.fx = new FxManager(this);
 
