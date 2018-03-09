@@ -33,6 +33,9 @@ class FxManager {
     });
     show.start();
   }
+  rotation() {
+
+  }
   update(dt) {
     this.crtFx.time += dt;
     this.glitchFx.time += dt;

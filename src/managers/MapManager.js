@@ -12,10 +12,11 @@ const Block = require('../subjects/Block');
 const TiledManager = require('./TiledManager');
 
 class MapManager extends PIXI.projection.Container2d {
-  constructor(scene, checkpoint=0) {
+  constructor(scene, checkpoint=0, wrap=scene) {
     super();
     this.scene = scene;
     this.game = scene.game;
+    this.wrap = wrap;
 
     this.tiled = new TiledManager(map, blocks, triggers);
     this.tileSize = 120;
@@ -33,7 +34,7 @@ class MapManager extends PIXI.projection.Container2d {
     projection.proj.setAxisY({x: -this.game.w/2+50, y: 4000}, -1);
 
     projection.addChild(this);
-    this.scene.addChild(projection);
+    this.wrap.addChild(projection);
   }
   generateMap() {
     this.tiled.data.forEach((tile) => {

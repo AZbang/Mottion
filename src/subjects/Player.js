@@ -11,9 +11,9 @@
 */
 
 class Player extends PIXI.Sprite {
-  constructor(scene) {
+  constructor(scene, wrap=scene) {
     super(PIXI.Texture.fromImage('player.png'));
-    scene.addChild(this);
+    wrap.addChild(this);
 
     this.game = scene.game;
     this.map = scene.map;
@@ -38,7 +38,7 @@ class Player extends PIXI.Sprite {
     this.deadSprite.anchor.set(.5, 1);
     this.deadSprite.height = 0;
     this.deadSprite.width = this.map.tileSize;
-    this.scene.addChild(this.deadSprite);
+    wrap.addChild(this.deadSprite);
 
     this.lastMove = null;
     this.isDead = false;

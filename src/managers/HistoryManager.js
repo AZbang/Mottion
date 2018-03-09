@@ -17,7 +17,7 @@ class HistoryManager extends PIXI.Text {
     this.anchor.set(.5, 0);
     this.alpha = 0;
     this.x = this.game.w/2;
-    this.y = 150;
+    this.y = 220;
   }
   setLangStyle() {
     if(this.game.settings.lang == 'ru') {

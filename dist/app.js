@@ -6011,6 +6011,11 @@ module.exports = {
   1: (game, scene) => {
     scene.history.show(history[1]);
     scene.map.speed = 400;
+    scene.rotation(-5, 5, {
+      loop: true,
+      time: 10000,
+      pingPong: true
+    });
   },
   2: (game, scene) => {
     scene.history.show(history[2]);
@@ -6670,7 +6675,7 @@ class Scenes extends PIXI.Container {
 
 module.exports = Scenes;
 
-},{"../scenes":34}],18:[function(require,module,exports){
+},{"../scenes":37}],18:[function(require,module,exports){
 const scripts = require('../content/scripts');
 
 class Scripts {
@@ -6794,6 +6799,72 @@ class Store {
 module.exports = Store;
 
 },{}],22:[function(require,module,exports){
+module.exports = function parse(params){
+      var template = "attribute vec2 aVertexPosition; \n" +" \n" +
+"attribute vec2 aTextureCoord; \n" +" \n" +
+"uniform mat3 projectionMatrix; \n" +" \n" +
+"varying vec2 vTextureCoord; \n" +" \n" +
+" \n" +" \n" +
+"void main(void) { \n" +" \n" +
+"    gl_Position = vec4((projectionMatrix * vec3(aVertexPosition, 1.0)).xy, 0.0, 1.0); \n" +" \n" +
+"    vTextureCoord = aTextureCoord; \n" +" \n" +
+"} \n" +" \n" +
+" \n" 
+      params = params || {}
+      for(var key in params) {
+        var matcher = new RegExp("{{"+key+"}}","g")
+        template = template.replace(matcher, params[key])
+      }
+      return template
+    };
+
+},{}],23:[function(require,module,exports){
+const frag = require('./rotation.frag');
+const vert = require('../basic.vert');
+
+class Rotation extends PIXI.Filter {
+  constructor(rotation) {
+    super(vert(), frag());
+    this.rotation = rotation || 0;
+  }
+  set rotation(v) {
+    this.uniforms.rotation = v;
+  }
+  get rotation() {
+    return this.uniforms.rotation;
+  }
+}
+
+module.exports = Rotation;
+
+},{"../basic.vert":22,"./rotation.frag":24}],24:[function(require,module,exports){
+module.exports = function parse(params){
+      var template = "precision mediump float; \n" +" \n" +
+" \n" +" \n" +
+"varying vec2 vTextureCoord; \n" +" \n" +
+"uniform float rotation; \n" +" \n" +
+"uniform sampler2D uSampler; \n" +" \n" +
+" \n" +" \n" +
+"void main() { \n" +" \n" +
+"  vec2 uv = vTextureCoord.xy; \n" +" \n" +
+"  float rot = radians(rotation); \n" +" \n" +
+"  uv-=.5; \n" +" \n" +
+"  mat2 m = mat2(cos(rot), -sin(rot), sin(rot), cos(rot)); \n" +" \n" +
+"  uv  = m * uv; \n" +" \n" +
+"  uv+=.5; \n" +" \n" +
+" \n" +" \n" +
+"  gl_FragColor = texture2D(uSampler, uv); \n" +" \n" +
+"} \n" +" \n" +
+" \n" 
+      params = params || {}
+      for(var key in params) {
+        var matcher = new RegExp("{{"+key+"}}","g")
+        template = template.replace(matcher, params[key])
+      }
+      return template
+    };
+
+},{}],25:[function(require,module,exports){
 const Loader = require('./core/Loader');
 const Game = require('./Game');
 
@@ -6805,7 +6876,7 @@ new Loader().loadResources(() => {
   game.scenes.toScene('menu', 0xFFFFFF, 0, 1000);
 });
 
-},{"./Game":6,"./core/Loader":14}],23:[function(require,module,exports){
+},{"./Game":6,"./core/Loader":14}],26:[function(require,module,exports){
 class FxManager {
   constructor(scene) {
     this.scene = scene;
@@ -6841,6 +6912,9 @@ class FxManager {
     });
     show.start();
   }
+  rotation() {
+
+  }
   update(dt) {
     this.crtFx.time += dt;
     this.glitchFx.time += dt;
@@ -6859,7 +6933,7 @@ class FxManager {
 
 module.exports = FxManager;
 
-},{}],24:[function(require,module,exports){
+},{}],27:[function(require,module,exports){
 const types = require('../content/types');
 
 class GameplayManager {
@@ -6941,7 +7015,7 @@ class GameplayManager {
 
 module.exports = GameplayManager;
 
-},{"../content/types":12}],25:[function(require,module,exports){
+},{"../content/types":12}],28:[function(require,module,exports){
 class HistoryManager extends PIXI.Text {
   constructor(scene) {
     super();
@@ -6961,7 +7035,7 @@ class HistoryManager extends PIXI.Text {
     this.anchor.set(.5, 0);
     this.alpha = 0;
     this.x = this.game.w/2;
-    this.y = 150;
+    this.y = 220;
   }
   setLangStyle() {
     if(this.game.settings.lang == 'ru') {
@@ -7008,7 +7082,7 @@ class HistoryManager extends PIXI.Text {
 
 module.exports = HistoryManager;
 
-},{}],26:[function(require,module,exports){
+},{}],29:[function(require,module,exports){
 class InterfaceManager extends PIXI.Container {
   constructor(scene) {
     super();
@@ -7060,7 +7134,7 @@ class InterfaceManager extends PIXI.Container {
 
 module.exports = InterfaceManager;
 
-},{}],27:[function(require,module,exports){
+},{}],30:[function(require,module,exports){
 /*
   Движок тайловой карты
   События:
@@ -7075,10 +7149,11 @@ const Block = require('../subjects/Block');
 const TiledManager = require('./TiledManager');
 
 class MapManager extends PIXI.projection.Container2d {
-  constructor(scene, checkpoint=0) {
+  constructor(scene, checkpoint=0, wrap=scene) {
     super();
     this.scene = scene;
     this.game = scene.game;
+    this.wrap = wrap;
 
     this.tiled = new TiledManager(map, blocks, triggers);
     this.tileSize = 120;
@@ -7096,7 +7171,7 @@ class MapManager extends PIXI.projection.Container2d {
     projection.proj.setAxisY({x: -this.game.w/2+50, y: 4000}, -1);
 
     projection.addChild(this);
-    this.scene.addChild(projection);
+    this.wrap.addChild(projection);
   }
   generateMap() {
     this.tiled.data.forEach((tile) => {
@@ -7170,15 +7245,15 @@ class MapManager extends PIXI.projection.Container2d {
 
 module.exports = MapManager;
 
-},{"../content/blocks":7,"../content/map":9,"../content/triggers":11,"../subjects/Block":35,"./TiledManager":29}],28:[function(require,module,exports){
+},{"../content/blocks":7,"../content/map":9,"../content/triggers":11,"../subjects/Block":38,"./TiledManager":32}],31:[function(require,module,exports){
 class ParalaxManager extends PIXI.Container {
-  constructor(scene) {
+  constructor(scene, wrap=scene) {
     super();
 
     this.scene = scene;
     this.game = scene.game || game;
     this.game.ticker.add(() => this.update());
-    this.scene.addChild(this);
+    wrap.addChild(this);
 
     this.images = ['object_rect.png', 'object_shape.png', 'object_circle.png'];
     this.padding = 100;
@@ -7217,7 +7292,7 @@ class ParalaxManager extends PIXI.Container {
 
 module.exports = ParalaxManager;
 
-},{}],29:[function(require,module,exports){
+},{}],32:[function(require,module,exports){
 class TiledManager {
   constructor(map, blocks, triggers) {
 
@@ -7262,7 +7337,7 @@ class TiledManager {
 
 module.exports = TiledManager;
 
-},{}],30:[function(require,module,exports){
+},{}],33:[function(require,module,exports){
 class Final extends PIXI.Container {
   constructor(game) {
     super();
@@ -7272,7 +7347,7 @@ class Final extends PIXI.Container {
 
 module.exports = Final;
 
-},{}],31:[function(require,module,exports){
+},{}],34:[function(require,module,exports){
 const ParalaxManager = require('../managers/ParalaxManager');
 const InterfaceManager = require('../managers/InterfaceManager');
 const FxManager = require('../managers/FxManager');
@@ -7333,7 +7408,7 @@ class Menu extends PIXI.Container {
 
 module.exports = Menu;
 
-},{"../managers/FxManager":23,"../managers/InterfaceManager":26,"../managers/ParalaxManager":28}],32:[function(require,module,exports){
+},{"../managers/FxManager":26,"../managers/InterfaceManager":29,"../managers/ParalaxManager":31}],35:[function(require,module,exports){
 // managers
 const MapManager = require('../managers/MapManager');
 const HistoryManager = require('../managers/HistoryManager');
@@ -7342,6 +7417,7 @@ const GameplayManager = require('../managers/GameplayManager');
 const InterfaceManager = require('../managers/InterfaceManager');
 const Player = require('../subjects/Player');
 const FxManager = require('../managers/FxManager');
+const RotationFilter = require('../filters/rotation');
 
 class Playground extends PIXI.Container {
   constructor(game, isRestart=false) {
@@ -7356,12 +7432,20 @@ class Playground extends PIXI.Container {
 
     this.isRestarted = isRestart;
 
-    this.paralax = new ParalaxManager(this);
     this.fx = new FxManager(this);
 
-    this.map = new MapManager(this, this.checkpoint);
+    this.wrap = new PIXI.Container();
+    this.wrap.filterArea = new PIXI.Rectangle(0, 0, this.game.w, this.game.h);
+    this.addChild(this.wrap);
+
+    this.game.mouse.filters = [new RotationFilter()];
+    this.wrap.filters = [new RotationFilter()];
+
+    this.map = new MapManager(this, this.checkpoint, this.wrap);
+    this.paralax = new ParalaxManager(this, this.wrap);
+    this.player = new Player(this, this.wrap);
+
     this.history = new HistoryManager(this);
-    this.player = new Player(this);
     this.gameplay = new GameplayManager(this);
 
     this.ui = new InterfaceManager(this);
@@ -7381,6 +7465,18 @@ class Playground extends PIXI.Container {
     });
     this.game.splash.show(0xFFFFFF, 0, 500);
     this.game.ticker.add((dt) => this.update(dt));
+    this.game.scenes.once('disabledScene', () => this.game.mouse.filters = []);
+  }
+  rotation(start, end, props) {
+    let data = {};
+    let rotate = PIXI.tweenManager.createTween(data);
+    Object.assign(rotate, {time: 1000}, props);
+    rotate.from({rotation: start}).to({rotation: end});
+    rotate.on('update', () => {
+      this.game.mouse.filters[0].rotation = data.rotation;
+      this.wrap.filters[0].rotation = data.rotation;
+    });
+    rotate.start();
   }
   update() {
     this.scoreText.text = 'LIVE: ' + this.score;
@@ -7389,7 +7485,7 @@ class Playground extends PIXI.Container {
 
 module.exports = Playground;
 
-},{"../managers/FxManager":23,"../managers/GameplayManager":24,"../managers/HistoryManager":25,"../managers/InterfaceManager":26,"../managers/MapManager":27,"../managers/ParalaxManager":28,"../subjects/Player":36}],33:[function(require,module,exports){
+},{"../filters/rotation":23,"../managers/FxManager":26,"../managers/GameplayManager":27,"../managers/HistoryManager":28,"../managers/InterfaceManager":29,"../managers/MapManager":30,"../managers/ParalaxManager":31,"../subjects/Player":39}],36:[function(require,module,exports){
 const ParalaxManager = require('../managers/ParalaxManager');
 const InterfaceManager = require('../managers/InterfaceManager');
 const FxManager = require('../managers/FxManager');
@@ -7456,7 +7552,7 @@ class Settings extends PIXI.Container {
 
 module.exports = Settings;
 
-},{"../managers/FxManager":23,"../managers/InterfaceManager":26,"../managers/ParalaxManager":28}],34:[function(require,module,exports){
+},{"../managers/FxManager":26,"../managers/InterfaceManager":29,"../managers/ParalaxManager":31}],37:[function(require,module,exports){
 module.exports = {
   'menu': require('./Menu'),
   'playground': require('./Playground'),
@@ -7464,7 +7560,7 @@ module.exports = {
   'final': require('./Final')
 }
 
-},{"./Final":30,"./Menu":31,"./Playground":32,"./Settings":33}],35:[function(require,module,exports){
+},{"./Final":33,"./Menu":34,"./Playground":35,"./Settings":36}],38:[function(require,module,exports){
 /*
   Класс Блока, используется для тайлового движка
   События:
@@ -7554,7 +7650,7 @@ class Block extends Tile {
 
 module.exports = Block;
 
-},{"./Tile":37}],36:[function(require,module,exports){
+},{"./Tile":40}],39:[function(require,module,exports){
 /*
   Класс Player, взаимодействует с MapManager
   События
@@ -7568,9 +7664,9 @@ module.exports = Block;
 */
 
 class Player extends PIXI.Sprite {
-  constructor(scene) {
+  constructor(scene, wrap=scene) {
     super(PIXI.Texture.fromImage('player.png'));
-    scene.addChild(this);
+    wrap.addChild(this);
 
     this.game = scene.game;
     this.map = scene.map;
@@ -7595,7 +7691,7 @@ class Player extends PIXI.Sprite {
     this.deadSprite.anchor.set(.5, 1);
     this.deadSprite.height = 0;
     this.deadSprite.width = this.map.tileSize;
-    this.scene.addChild(this.deadSprite);
+    wrap.addChild(this.deadSprite);
 
     this.lastMove = null;
     this.isDead = false;
@@ -7685,7 +7781,7 @@ class Player extends PIXI.Sprite {
 
 module.exports = Player;
 
-},{}],37:[function(require,module,exports){
+},{}],40:[function(require,module,exports){
 /*
   Класс Блока, используется для тайлового движка
   События:
@@ -7734,6 +7830,6 @@ class Tile extends PIXI.projection.Sprite2d {
 
 module.exports = Tile;
 
-},{"../content/types":12}]},{},[22])
+},{"../content/types":12}]},{},[25])
 
 //# sourceMappingURL=app.js.map

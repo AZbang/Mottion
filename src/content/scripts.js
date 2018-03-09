@@ -4,6 +4,11 @@ module.exports = {
   1: (game, scene) => {
     scene.history.show(history[1]);
     scene.map.speed = 400;
+    scene.rotation(-5, 5, {
+      loop: true,
+      time: 10000,
+      pingPong: true
+    });
   },
   2: (game, scene) => {
     scene.history.show(history[2]);

@@ -1,11 +1,11 @@
 class ParalaxManager extends PIXI.Container {
-  constructor(scene) {
+  constructor(scene, wrap=scene) {
     super();
 
     this.scene = scene;
     this.game = scene.game || game;
     this.game.ticker.add(() => this.update());
-    this.scene.addChild(this);
+    wrap.addChild(this);
 
     this.images = ['object_rect.png', 'object_shape.png', 'object_circle.png'];
     this.padding = 100;
