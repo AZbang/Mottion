@@ -4,6 +4,7 @@ const HistoryManager = require('../managers/HistoryManager');
 const ParalaxManager = require('../managers/ParalaxManager');
 const GameplayManager = require('../managers/GameplayManager');
 const InterfaceManager = require('../managers/InterfaceManager');
+const ParticlesManager = require('../managers/ParticlesManager');
 const Player = require('../subjects/Player');
 const FxManager = require('../managers/FxManager');
 const RotationFilter = require('../filters/rotation');
@@ -34,6 +35,7 @@ class Playground extends PIXI.Container {
     this.map = new MapManager(this, this.checkpoint, this.wrap);
     this.paralax = new ParalaxManager(this, this.wrap);
     this.player = new Player(this, this.wrap);
+    this.particles = new ParticlesManager(this, this.wrap);
 
     this.history = new HistoryManager(this);
     this.gameplay = new GameplayManager(this);

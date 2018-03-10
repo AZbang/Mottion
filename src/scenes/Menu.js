@@ -42,9 +42,8 @@ class Menu extends PIXI.Container {
       font: 'normal 52px Milton Grotesque',
       color: 0xfffd4d,
       x: this.game.w/2,
-      y: 750,
-      click: () => this.game.scenes.toScene('playground', 0xFFFFFF)
-    });
+      y: 750
+    }).alpha = .3;
     this.ui.addButton({
       image: 'settings.png',
       x: this.game.w-110,
