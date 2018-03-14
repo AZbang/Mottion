@@ -1,6 +1,7 @@
 const ParalaxManager = require('../managers/ParalaxManager');
 const InterfaceManager = require('../managers/InterfaceManager');
 const FxManager = require('../managers/FxManager');
+const ParticlesManager = require('../managers/ParticlesManager');
 
 class Menu extends PIXI.Container {
   constructor(game) {
@@ -8,6 +9,9 @@ class Menu extends PIXI.Container {
     this.game = game;
 
     this.background = new ParalaxManager(this);
+    this.particles = new ParticlesManager(this);
+    this.particles.max = 15;
+
     this.ui = new InterfaceManager(this);
     this.fx = new FxManager(this);
 

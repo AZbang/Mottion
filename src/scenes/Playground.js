@@ -5,6 +5,7 @@ const ParalaxManager = require('../managers/ParalaxManager');
 const GameplayManager = require('../managers/GameplayManager');
 const InterfaceManager = require('../managers/InterfaceManager');
 const ParticlesManager = require('../managers/ParticlesManager');
+const ImmunityManager = require('../managers/ImmunityManager');
 const Player = require('../subjects/Player');
 const FxManager = require('../managers/FxManager');
 const RotationFilter = require('../filters/rotation');
@@ -41,6 +42,7 @@ class Playground extends PIXI.Container {
     this.gameplay = new GameplayManager(this);
 
     this.ui = new InterfaceManager(this);
+    this.immunity = new ImmunityManager(this);
     this.scoreText = this.ui.addText({
       text: '',
       font: 'normal 82px Milton Grotesque',

@@ -26,11 +26,8 @@ class GameplayManager {
   activateTiles(pos) {
     for(let i = 0; i < this.map.children.length; i++) {
       let tile = this.map.children[i];
-      if(tile.entity !== 'key' && tile.type !== this.scene.activateType) continue;
-      if(tile.containsPoint({x: pos.x*this.game.resolution, y: pos.y*this.game.resolution})) {
-        let isActivated = tile.hit();
-        if(isActivated && tile.entity === 'key') this.game.immunity.push(tile.type);
-      } else tile.unhit();
+      if(tile.containsPoint({x: pos.x*this.game.resolution, y: pos.y*this.game.resolution})) tile.hit();
+      else tile.unhit();
     }
   }
 
@@ -43,7 +40,7 @@ class GameplayManager {
   }
   setBlockType(block) {
     if(this.scene.activateType !== block.type) this.scene.fx.blinkVignette();
-    this.scene.activateType = block.type;
+    if(block.isNewActivationType) this.scene.activateType = block.type;
     this.scene.fx.vignette.tint = block.tint;
     this.scene.paralax.tint = block.tint;
   }
@@ -62,6 +59,7 @@ class GameplayManager {
   showHistory(block) {
     if(block.scriptID) {
       this.game.scripts.run(block.scriptID);
+      this.scene.immunity.removeAll();
       this.scene.isRestarted = false;
     }
   }

@@ -72,8 +72,12 @@ class Player extends PIXI.Sprite {
   }
   checkBlock(block) {
     if(block.active) return true;
-    else if(block.type === this.scene.immunity[this.scene.immunity.length-1]) return this.scene.immunity.pop();
-    else return false;
+    else if(this.scene.immunity.last() === block.type) {
+      block.activate(true);
+      this.scene.immunity.removeImmunity();
+      return true;
+    }
+    return false;
   }
   dead(tint) {
     this.deadSprite.tint = tint;

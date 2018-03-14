@@ -7,6 +7,9 @@ class Music extends PIXI.utils.EventEmitter {
     this.game = game;
     this.player = {};
     this.coefBit = 1;
+
+    this.isMusicMute = false;
+    this.isSoundsMute = false;
   }
   add(name, src, params) {
     this.player[name] = new Howl(Object.assign({src: [src], preload: true}, params));
@@ -16,6 +19,7 @@ class Music extends PIXI.utils.EventEmitter {
     if(!this.player[name]) return;
     this.player[name].play();
     this.player[name].seek(0);
+    this.player[name].volume(name.search('_music') !== -1 ? +!this.isMusicMute : +!this.isSoundsMute);
   }
   stop(name) {
     this.player[name] && this.player[name].stop();
@@ -32,11 +36,13 @@ class Music extends PIXI.utils.EventEmitter {
     }, 100);
   }
   toggleMusic(v) {
+    this.isMusicMute = !v;
     for(let key in this.player) {
       if(key.search('_music') !== -1) this.player[key].volume(v);
     }
   }
   toggleSounds(v) {
+    this.isSoundsMute = !v;
     for(let key in this.player) {
       if(key.search('_sound') !== -1) this.player[key].volume(v);
     }

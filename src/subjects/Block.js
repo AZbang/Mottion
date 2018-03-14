@@ -22,8 +22,10 @@ class Block extends Tile {
     this.jolting.time = 200;
     this.jolting.pingPong = true;
     this.jolting.repeat = Infinity;
+
+    this.isNewActivationType = true;
   }
-  activate() {
+  activate(notNewActivationType) {
     if(this.activatedTexture) this.texture = this.activatedTexture;
 
     let activating = PIXI.tweenManager.createTween(this)
@@ -34,6 +36,7 @@ class Block extends Tile {
     activating.start();
 
     this.unhit();
+    this.isNewActivationType = !notNewActivationType;
     this.active = true;
     this.emit('activated');
   }
@@ -48,7 +51,7 @@ class Block extends Tile {
     this.rotation = 0;
   }
   hit() {
-    if(this.activation === null || this.active) return;
+    if(this.activation === null || this.active || this.scene.activateType !== this.type) return;
 
     this.jolting.start();
     if(this.activation) this.activation--;

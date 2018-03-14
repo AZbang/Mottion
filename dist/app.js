@@ -6025,7 +6025,7 @@ module.exports = {
   1: (game, scene) => {
     scene.history.show(history[1]);
     scene.map.speed = 400;
-    scene.rotation(-5, 5, {
+    scene.rotation(-10, 10, {
       loop: true,
       time: 10000,
       pingPong: true
@@ -6583,6 +6583,9 @@ class Music extends PIXI.utils.EventEmitter {
     this.game = game;
     this.player = {};
     this.coefBit = 1;
+
+    this.isMusicMute = false;
+    this.isSoundsMute = false;
   }
   add(name, src, params) {
     this.player[name] = new Howl(Object.assign({src: [src], preload: true}, params));
@@ -6592,6 +6595,7 @@ class Music extends PIXI.utils.EventEmitter {
     if(!this.player[name]) return;
     this.player[name].play();
     this.player[name].seek(0);
+    this.player[name].volume(name.search('_music') !== -1 ? +!this.isMusicMute : +!this.isSoundsMute);
   }
   stop(name) {
     this.player[name] && this.player[name].stop();
@@ -6608,11 +6612,13 @@ class Music extends PIXI.utils.EventEmitter {
     }, 100);
   }
   toggleMusic(v) {
+    this.isMusicMute = !v;
     for(let key in this.player) {
       if(key.search('_music') !== -1) this.player[key].volume(v);
     }
   }
   toggleSounds(v) {
+    this.isSoundsMute = !v;
     for(let key in this.player) {
       if(key.search('_sound') !== -1) this.player[key].volume(v);
     }
@@ -6689,7 +6695,7 @@ class Scenes extends PIXI.Container {
 
 module.exports = Scenes;
 
-},{"../scenes":38}],18:[function(require,module,exports){
+},{"../scenes":39}],18:[function(require,module,exports){
 const scripts = require('../content/scripts');
 
 class Scripts {
@@ -6853,22 +6859,22 @@ module.exports = Rotation;
 
 },{"../basic.vert":22,"./rotation.frag":24}],24:[function(require,module,exports){
 module.exports = function parse(params){
-      var template = "precision mediump float; \n" +" \n" +
-" \n" +" \n" +
-"varying vec2 vTextureCoord; \n" +" \n" +
-"uniform float rotation; \n" +" \n" +
-"uniform sampler2D uSampler; \n" +" \n" +
-" \n" +" \n" +
-"void main() { \n" +" \n" +
-"  vec2 uv = vTextureCoord.xy; \n" +" \n" +
-"  float rot = radians(rotation); \n" +" \n" +
-"  uv-=.5; \n" +" \n" +
-"  mat2 m = mat2(cos(rot), -sin(rot), sin(rot), cos(rot)); \n" +" \n" +
-"  uv  = m * uv; \n" +" \n" +
-"  uv+=.5; \n" +" \n" +
-" \n" +" \n" +
-"  gl_FragColor = texture2D(uSampler, uv); \n" +" \n" +
-"} \n" +" \n" +
+      var template = "precision mediump float; \n" +
+" \n" +
+"varying vec2 vTextureCoord; \n" +
+"uniform float rotation; \n" +
+"uniform sampler2D uSampler; \n" +
+" \n" +
+"void main() { \n" +
+"  vec2 uv = vTextureCoord.xy; \n" +
+"  float rot = radians(rotation); \n" +
+"  uv-=.5; \n" +
+"  mat2 m = mat2(cos(rot), -sin(rot), sin(rot), cos(rot)); \n" +
+"  uv  = m * uv; \n" +
+"  uv+=.5; \n" +
+" \n" +
+"  gl_FragColor = texture2D(uSampler, uv); \n" +
+"} \n" +
 " \n" 
       params = params || {}
       for(var key in params) {
@@ -6976,11 +6982,8 @@ class GameplayManager {
   activateTiles(pos) {
     for(let i = 0; i < this.map.children.length; i++) {
       let tile = this.map.children[i];
-      if(tile.entity !== 'key' && tile.type !== this.scene.activateType) continue;
-      if(tile.containsPoint({x: pos.x*this.game.resolution, y: pos.y*this.game.resolution})) {
-        let isActivated = tile.hit();
-        if(isActivated && tile.entity === 'key') this.game.immunity.push(tile.type);
-      } else tile.unhit();
+      if(tile.containsPoint({x: pos.x*this.game.resolution, y: pos.y*this.game.resolution})) tile.hit();
+      else tile.unhit();
     }
   }
 
@@ -6993,7 +6996,7 @@ class GameplayManager {
   }
   setBlockType(block) {
     if(this.scene.activateType !== block.type) this.scene.fx.blinkVignette();
-    this.scene.activateType = block.type;
+    if(block.isNewActivationType) this.scene.activateType = block.type;
     this.scene.fx.vignette.tint = block.tint;
     this.scene.paralax.tint = block.tint;
   }
@@ -7012,6 +7015,7 @@ class GameplayManager {
   showHistory(block) {
     if(block.scriptID) {
       this.game.scripts.run(block.scriptID);
+      this.scene.immunity.removeAll();
       this.scene.isRestarted = false;
     }
   }
@@ -7099,6 +7103,41 @@ class HistoryManager extends PIXI.Text {
 module.exports = HistoryManager;
 
 },{}],29:[function(require,module,exports){
+const types = require('../content/types');
+
+class ImmunityManager extends PIXI.Container {
+  constructor(scene) {
+    super();
+    scene.addChild(this);
+    this.game = game;
+    this.scene = scene;
+  }
+  last() {
+    return (this.children[this.children.length-1] || {}).type;
+  }
+  addImmunity(type) {
+    let sprite = PIXI.Sprite.fromImage('particle.png');
+    sprite.y = 200;
+    sprite.x = 80+this.children.length*100;
+    sprite.anchor.set(.5);
+    sprite.scale.set(.7);
+    sprite.tint = types[type];
+    sprite.type = type;
+    this.addChild(sprite);
+  }
+  removeImmunity() {
+    this.removeChild(this.children[this.children.length-1]);
+  }
+  removeAll() {
+    for(let i = this.children.length-1; i >= 0; i--) {
+    	this.removeChild(this.children[i]);
+    }
+  }
+}
+
+module.exports = ImmunityManager;
+
+},{"../content/types":12}],30:[function(require,module,exports){
 class InterfaceManager extends PIXI.Container {
   constructor(scene) {
     super();
@@ -7150,7 +7189,7 @@ class InterfaceManager extends PIXI.Container {
 
 module.exports = InterfaceManager;
 
-},{}],30:[function(require,module,exports){
+},{}],31:[function(require,module,exports){
 /*
   Движок тайловой карты
   События:
@@ -7262,7 +7301,7 @@ class MapManager extends PIXI.projection.Container2d {
 
 module.exports = MapManager;
 
-},{"../content/blocks":7,"../content/map":9,"../content/triggers":11,"../subjects/Block":39,"../subjects/Key":40,"./TiledManager":33}],31:[function(require,module,exports){
+},{"../content/blocks":7,"../content/map":9,"../content/triggers":11,"../subjects/Block":40,"../subjects/Key":41,"./TiledManager":34}],32:[function(require,module,exports){
 class ParalaxManager extends PIXI.Container {
   constructor(scene, wrap=scene) {
     super();
@@ -7309,7 +7348,7 @@ class ParalaxManager extends PIXI.Container {
 
 module.exports = ParalaxManager;
 
-},{}],32:[function(require,module,exports){
+},{}],33:[function(require,module,exports){
 const types = require('../content/types');
 
 class ParticlesManager extends PIXI.Container {
@@ -7369,7 +7408,7 @@ class ParticlesManager extends PIXI.Container {
 
 module.exports = ParticlesManager;
 
-},{"../content/types":12}],33:[function(require,module,exports){
+},{"../content/types":12}],34:[function(require,module,exports){
 class TiledManager {
   constructor(map, blocks, triggers) {
 
@@ -7414,7 +7453,7 @@ class TiledManager {
 
 module.exports = TiledManager;
 
-},{}],34:[function(require,module,exports){
+},{}],35:[function(require,module,exports){
 class Final extends PIXI.Container {
   constructor(game) {
     super();
@@ -7424,10 +7463,11 @@ class Final extends PIXI.Container {
 
 module.exports = Final;
 
-},{}],35:[function(require,module,exports){
+},{}],36:[function(require,module,exports){
 const ParalaxManager = require('../managers/ParalaxManager');
 const InterfaceManager = require('../managers/InterfaceManager');
 const FxManager = require('../managers/FxManager');
+const ParticlesManager = require('../managers/ParticlesManager');
 
 class Menu extends PIXI.Container {
   constructor(game) {
@@ -7435,6 +7475,9 @@ class Menu extends PIXI.Container {
     this.game = game;
 
     this.background = new ParalaxManager(this);
+    this.particles = new ParticlesManager(this);
+    this.particles.max = 15;
+
     this.ui = new InterfaceManager(this);
     this.fx = new FxManager(this);
 
@@ -7484,7 +7527,7 @@ class Menu extends PIXI.Container {
 
 module.exports = Menu;
 
-},{"../managers/FxManager":26,"../managers/InterfaceManager":29,"../managers/ParalaxManager":31}],36:[function(require,module,exports){
+},{"../managers/FxManager":26,"../managers/InterfaceManager":30,"../managers/ParalaxManager":32,"../managers/ParticlesManager":33}],37:[function(require,module,exports){
 // managers
 const MapManager = require('../managers/MapManager');
 const HistoryManager = require('../managers/HistoryManager');
@@ -7492,6 +7535,7 @@ const ParalaxManager = require('../managers/ParalaxManager');
 const GameplayManager = require('../managers/GameplayManager');
 const InterfaceManager = require('../managers/InterfaceManager');
 const ParticlesManager = require('../managers/ParticlesManager');
+const ImmunityManager = require('../managers/ImmunityManager');
 const Player = require('../subjects/Player');
 const FxManager = require('../managers/FxManager');
 const RotationFilter = require('../filters/rotation');
@@ -7528,6 +7572,7 @@ class Playground extends PIXI.Container {
     this.gameplay = new GameplayManager(this);
 
     this.ui = new InterfaceManager(this);
+    this.immunity = new ImmunityManager(this);
     this.scoreText = this.ui.addText({
       text: '',
       font: 'normal 82px Milton Grotesque',
@@ -7564,7 +7609,7 @@ class Playground extends PIXI.Container {
 
 module.exports = Playground;
 
-},{"../filters/rotation":23,"../managers/FxManager":26,"../managers/GameplayManager":27,"../managers/HistoryManager":28,"../managers/InterfaceManager":29,"../managers/MapManager":30,"../managers/ParalaxManager":31,"../managers/ParticlesManager":32,"../subjects/Player":41}],37:[function(require,module,exports){
+},{"../filters/rotation":23,"../managers/FxManager":26,"../managers/GameplayManager":27,"../managers/HistoryManager":28,"../managers/ImmunityManager":29,"../managers/InterfaceManager":30,"../managers/MapManager":31,"../managers/ParalaxManager":32,"../managers/ParticlesManager":33,"../subjects/Player":42}],38:[function(require,module,exports){
 const ParalaxManager = require('../managers/ParalaxManager');
 const InterfaceManager = require('../managers/InterfaceManager');
 const FxManager = require('../managers/FxManager');
@@ -7631,7 +7676,7 @@ class Settings extends PIXI.Container {
 
 module.exports = Settings;
 
-},{"../managers/FxManager":26,"../managers/InterfaceManager":29,"../managers/ParalaxManager":31}],38:[function(require,module,exports){
+},{"../managers/FxManager":26,"../managers/InterfaceManager":30,"../managers/ParalaxManager":32}],39:[function(require,module,exports){
 module.exports = {
   'menu': require('./Menu'),
   'playground': require('./Playground'),
@@ -7639,7 +7684,7 @@ module.exports = {
   'final': require('./Final')
 }
 
-},{"./Final":34,"./Menu":35,"./Playground":36,"./Settings":37}],39:[function(require,module,exports){
+},{"./Final":35,"./Menu":36,"./Playground":37,"./Settings":38}],40:[function(require,module,exports){
 /*
   Класс Блока, используется для тайлового движка
   События:
@@ -7664,8 +7709,10 @@ class Block extends Tile {
     this.jolting.time = 200;
     this.jolting.pingPong = true;
     this.jolting.repeat = Infinity;
+
+    this.isNewActivationType = true;
   }
-  activate() {
+  activate(notNewActivationType) {
     if(this.activatedTexture) this.texture = this.activatedTexture;
 
     let activating = PIXI.tweenManager.createTween(this)
@@ -7676,6 +7723,7 @@ class Block extends Tile {
     activating.start();
 
     this.unhit();
+    this.isNewActivationType = !notNewActivationType;
     this.active = true;
     this.emit('activated');
   }
@@ -7690,7 +7738,7 @@ class Block extends Tile {
     this.rotation = 0;
   }
   hit() {
-    if(this.activation === null || this.active) return;
+    if(this.activation === null || this.active || this.scene.activateType !== this.type) return;
 
     this.jolting.start();
     if(this.activation) this.activation--;
@@ -7702,7 +7750,7 @@ class Block extends Tile {
 
 module.exports = Block;
 
-},{"./Tile":42}],40:[function(require,module,exports){
+},{"./Tile":43}],41:[function(require,module,exports){
 /*
   Класс Блока, используется для тайлового движка
   События:
@@ -7724,6 +7772,8 @@ class Key extends Tile {
     this.jolting.repeat = Infinity;
   }
   activate() {
+    this.scene.immunity.addImmunity(this.type);
+
     let activating = PIXI.tweenManager.createTween(this);
     activating.from({alpha: 1}).to({alpha: 0});
     activating.time = 500;
@@ -7749,7 +7799,7 @@ class Key extends Tile {
 
 module.exports = Key;
 
-},{"./Tile":42}],41:[function(require,module,exports){
+},{"./Tile":43}],42:[function(require,module,exports){
 /*
   Класс Player, взаимодействует с MapManager
   События
@@ -7824,8 +7874,12 @@ class Player extends PIXI.Sprite {
   }
   checkBlock(block) {
     if(block.active) return true;
-    else if(block.type === this.scene.immunity[this.scene.immunity.length-1]) return this.scene.immunity.pop();
-    else return false;
+    else if(this.scene.immunity.last() === block.type) {
+      block.activate(true);
+      this.scene.immunity.removeImmunity();
+      return true;
+    }
+    return false;
   }
   dead(tint) {
     this.deadSprite.tint = tint;
@@ -7885,7 +7939,7 @@ class Player extends PIXI.Sprite {
 
 module.exports = Player;
 
-},{}],42:[function(require,module,exports){
+},{}],43:[function(require,module,exports){
 /*
   Класс Блока, используется для тайлового движка
   События:

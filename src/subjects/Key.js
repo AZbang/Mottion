@@ -19,6 +19,8 @@ class Key extends Tile {
     this.jolting.repeat = Infinity;
   }
   activate() {
+    this.scene.immunity.addImmunity(this.type);
+
     let activating = PIXI.tweenManager.createTween(this);
     activating.from({alpha: 1}).to({alpha: 0});
     activating.time = 500;
