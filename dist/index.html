@@ -20,7 +20,12 @@
 </head>
 <body>
   <script src="vendors/pixi.min.js"></script>
+  <script>
+    window.PIXI = PIXI;
+    window.PIXI[ "default" ] = PIXI;
+  </script>
   <script src="vendors/pixi-filters.js"></script>
+  <script src="vendors/pixi-timer.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

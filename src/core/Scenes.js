@@ -36,10 +36,20 @@ class Scenes extends PIXI.Container {
 
   // Controls
   disableScene() {
-    let scene = this.removeChild(this.activeScene);
-    scene.destroy();
+    // Fucking hack: clear memory
+    this.activeScene.tweenManager.tweens = [];
+    this.activeScene.timerManager.timers = [];
+    if(this.activeScene.map) {
+      for(let i = this.activeScene.map.children.length-1; i >= 0; i--) {
+        this.activeScene.map.children[i].proj.clear();
+        this.activeScene.map.children[i].destroy();
+      }
+    }
+
+    this.removeChild(this.activeScene);
+    delete this.activeScene;
     this.activeScene = null;
-    this.emit('disabledScene', scene);
+    this.emit('disabledScene');
   }
   enableScene(id, restart) {
     this.activeScene && this.disableScene();

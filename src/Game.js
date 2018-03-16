@@ -1,5 +1,6 @@
-require('pixi-tween');
+const tween = require('pixi-tween');
 require('pixi-projection');
+console.log(tween);
 
 const Settings = require('./core/Settings');
 const Music = require('./core/Music');
@@ -37,8 +38,9 @@ class Game extends PIXI.Container {
     this.splash = new Splash(this);
 
     this.ticker.add((dt) => {
-      PIXI.tweenManager.update();
       this.renderer.render(this);
+      PIXI.tweenManager.update();
+      PIXI.timerManager.update();
     });
     this.ticker.start();
     this.resize();

@@ -4,6 +4,7 @@
  "image":"..\/..\/dist\/assets\/sprites\/triggers.png",
  "imageheight":1500,
  "imagewidth":1500,
+ "type":"tileset",
  "margin":0,
  "name":"triggers",
  "spacing":0,
@@ -37,8 +38,9 @@
         },
      "4":
         {
-         "time":2000,
-         "toTexture":""
+         "anim": true,
+         "animTypes": "white, blue, green, red",
+         "animTime": 1000
         },
      "5":
         {
@@ -219,8 +221,9 @@
         },
      "4":
         {
-         "time":"int",
-         "toTexture":"string"
+         "\u0430\u043d\u0438\u043c":"bool",
+         "\u0430\u043d\u0438\u043c\u0442\u0430\u0439\u043f\u0435\u0441":"string",
+         "\u0442\u0430\u0439\u043c":"int"
         },
      "5":
         {

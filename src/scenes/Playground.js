@@ -1,4 +1,5 @@
 // managers
+const SceneManager = require('../managers/SceneManager');
 const MapManager = require('../managers/MapManager');
 const HistoryManager = require('../managers/HistoryManager');
 const ParalaxManager = require('../managers/ParalaxManager');
@@ -6,14 +7,12 @@ const GameplayManager = require('../managers/GameplayManager');
 const InterfaceManager = require('../managers/InterfaceManager');
 const ParticlesManager = require('../managers/ParticlesManager');
 const ImmunityManager = require('../managers/ImmunityManager');
-const Player = require('../subjects/Player');
 const FxManager = require('../managers/FxManager');
-const RotationFilter = require('../filters/rotation');
+const Player = require('../subjects/Player');
 
-class Playground extends PIXI.Container {
+class Playground extends SceneManager {
   constructor(game, isRestart=false) {
-    super();
-    this.game = game;
+    super(game);
 
     Object.assign(this, {
       score: 0,
@@ -24,19 +23,16 @@ class Playground extends PIXI.Container {
     this.isRestarted = isRestart;
     this.immunity = [];
 
-    this.fx = new FxManager(this);
+    this._init();
+    this.game.splash.show(0xFFFFFF, 0, 500);
+  }
+  _init() {
+    this.fx = new FxManager(this, {rotation: true});
 
-    this.wrap = new PIXI.Container();
-    this.wrap.filterArea = new PIXI.Rectangle(0, 0, this.game.w, this.game.h);
-    this.addChild(this.wrap);
-
-    this.game.mouse.filters = [new RotationFilter()];
-    this.wrap.filters = [new RotationFilter()];
-
-    this.map = new MapManager(this, this.checkpoint, this.wrap);
-    this.paralax = new ParalaxManager(this, this.wrap);
-    this.player = new Player(this, this.wrap);
-    this.particles = new ParticlesManager(this, this.wrap);
+    this.map = new MapManager(this, this.checkpoint, this.rotationContainer);
+    this.paralax = new ParalaxManager(this, this.rotationContainer);
+    this.player = new Player(this, this.rotationContainer);
+    this.particles = new ParticlesManager(this, this.rotationContainer);
 
     this.history = new HistoryManager(this);
     this.gameplay = new GameplayManager(this);
@@ -57,20 +53,6 @@ class Playground extends PIXI.Container {
       y: 100,
       click: () => this.game.scenes.toScene('menu', 0xFFFFFF)
     });
-    this.game.splash.show(0xFFFFFF, 0, 500);
-    this.game.ticker.add((dt) => this.update(dt));
-    this.game.scenes.once('disabledScene', () => this.game.mouse.filters = []);
-  }
-  rotation(start, end, props) {
-    let data = {};
-    let rotate = PIXI.tweenManager.createTween(data);
-    Object.assign(rotate, {time: 1000}, props);
-    rotate.from({rotation: start}).to({rotation: end});
-    rotate.on('update', () => {
-      this.game.mouse.filters[0].rotation = data.rotation;
-      this.wrap.filters[0].rotation = data.rotation;
-    });
-    rotate.start();
   }
   update() {
     this.scoreText.text = 'LIVE: ' + this.score;

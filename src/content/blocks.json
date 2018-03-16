@@ -1,4 +1,5 @@
-{ "columns":5,
+{
+ "columns":5,
  "image":"..\/..\/dist\/assets\/sprites\/blocks.png",
  "imageheight":338,
  "imagewidth":845,

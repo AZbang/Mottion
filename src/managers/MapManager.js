@@ -31,11 +31,11 @@ class MapManager extends PIXI.projection.Container2d {
     this._createProjection();
   }
   _createProjection() {
-    let projection = new PIXI.projection.Container2d();
-    projection.proj.setAxisY({x: -this.game.w/2+50, y: 4000}, -1);
+    this.projection = new PIXI.projection.Container2d();
+    this.projection.proj.setAxisY({x: -this.game.w/2+50, y: 4000}, -1);
 
-    projection.addChild(this);
-    this.wrap.addChild(projection);
+    this.projection.addChild(this);
+    this.wrap.addChild(this.projection);
   }
   generateMap() {
     this.tiled.data.forEach((tile) => {
@@ -76,7 +76,7 @@ class MapManager extends PIXI.projection.Container2d {
     this.scrollTo(this.y-blocks*this.tileSize, this.speed*blocks, cb);
   }
   scrollTo(y, time, cb) {
-    let move = PIXI.tweenManager.createTween(this);
+    let move = this.scene.tweenManager.createTween(this);
     move.from({y: this.y}).to({y: y});
     move.time = time;
 

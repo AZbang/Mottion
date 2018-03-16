@@ -1,5 +1,7 @@
+const RotationFilter = require('../filters/rotation');
+
 class FxManager {
-  constructor(scene) {
+  constructor(scene, params={}) {
     this.scene = scene;
     this.game = scene.game || scene;
 
@@ -18,23 +20,43 @@ class FxManager {
       blue: [-1, 2],
       green: [3, 1]
     });
+    params.rotation && this._addRotation();
+
     this.scene.filters = [this.crtFx, this.glitchFx];
     this.game.ticker.add((dt) => this.update(dt));
   }
+  _addRotation() {
+    this.scene.rotationContainer = new PIXI.Container();
+    this.scene.addChild(this.scene.rotationContainer);
+
+    this.scene.rotationContainer.filterArea = new PIXI.Rectangle(0, 0, this.game.w, this.game.h);
+    this.scene.rotationContainer.filter = [new RotationFilter()];
+
+    this.game.scenes.once('disabledScene', () => this.game.mouse.filters = []);
+    this.game.mouse.filters = [new RotationFilter()];
+  }
   blinkVignette(time=2000) {
-    let show = PIXI.tweenManager.createTween(this.vignette);
+    let show = this.scene.tweenManager.createTween(this.vignette);
     show.from({alpha: .2}).to({alpha: 1});
     show.time = time*1/4;
     show.on('end', () => {
-      let end = PIXI.tweenManager.createTween(this.vignette);
+      let end = this.scene.tweenManager.createTween(this.vignette);
       end.from({alpha: 1}).to({alpha: .2});
       end.time = time*3/4;
       end.start();
     });
     show.start();
   }
-  rotation() {
-
+  rotation(start, end, props) {
+    let data = {};
+    let rotate = this.scene.tweenManager.createTween(data);
+    Object.assign(rotate, {time: 1000}, props);
+    rotate.from({rotation: start}).to({rotation: end});
+    rotate.on('update', () => {
+      this.game.mouse.filters[0].rotation = data.rotation;
+      this.wrap.filters[0].rotation = data.rotation;
+    });
+    rotate.start();
   }
   update(dt) {
     this.crtFx.time += dt;

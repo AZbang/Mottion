@@ -1,14 +1,13 @@
+const SceneManager = require('../managers/SceneManager');
 const ParalaxManager = require('../managers/ParalaxManager');
 const InterfaceManager = require('../managers/InterfaceManager');
 const FxManager = require('../managers/FxManager');
 
-class Settings extends PIXI.Container {
+class Settings extends SceneManager {
   constructor(game) {
-    super();
+    super(game);
 
-    this.game = game;
     this.settings = game.settings;
-
     this.background = new ParalaxManager(this);
     this.ui = new InterfaceManager(this);
     this.fx = new FxManager(this);

@@ -12,7 +12,7 @@ class Key extends Tile {
 
     this.texture = PIXI.Texture.fromFrame('lock.png');
 
-    this.jolting = PIXI.tweenManager.createTween(this);
+    this.jolting = this.scene.tweenManager.createTween(this);
     this.jolting.from({rotation: -.1}).to({rotation: .1});
     this.jolting.time = 200;
     this.jolting.pingPong = true;
@@ -21,7 +21,7 @@ class Key extends Tile {
   activate() {
     this.scene.immunity.addImmunity(this.type);
 
-    let activating = PIXI.tweenManager.createTween(this);
+    let activating = this.scene.tweenManager.createTween(this);
     activating.from({alpha: 1}).to({alpha: 0});
     activating.time = 500;
     activating.start();

@@ -17,7 +17,7 @@ class Block extends Tile {
     this.deactivatedTexture = PIXI.Texture.fromFrame('block.png');
     this.texture = data.active ? this.activatedTexture : this.deactivatedTexture;
 
-    this.jolting = PIXI.tweenManager.createTween(this);
+    this.jolting = this.scene.tweenManager.createTween(this);
     this.jolting.from({rotation: -.1}).to({rotation: .1});
     this.jolting.time = 200;
     this.jolting.pingPong = true;
@@ -28,7 +28,7 @@ class Block extends Tile {
   activate(notNewActivationType) {
     if(this.activatedTexture) this.texture = this.activatedTexture;
 
-    let activating = PIXI.tweenManager.createTween(this)
+    let activating = this.scene.tweenManager.createTween(this)
       .from({width: this.width*3/4, height: this.height*3/4})
       .to({width: this.width, height: this.height, rotation: 0});
     activating.time = 500;

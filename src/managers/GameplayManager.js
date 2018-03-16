@@ -65,7 +65,7 @@ class GameplayManager {
   }
   hideHistory() {
     this.map.showHiddenBlocks();
-    setTimeout(() => this.player.startMove(), 500);
+    this.scene.setTimeout(() => this.player.startMove(), 500);
   }
   // При проигрыше отправлять карту к последнему чекпоинту
   restart() {

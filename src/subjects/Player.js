@@ -28,7 +28,7 @@ class Player extends PIXI.Sprite {
     this.y = this.game.h-this.map.tileSize*2;
     this.collisionPoint = new PIXI.Point(this.game.w/2, this.game.h-this.map.tileSize*2);
 
-    this.walking = PIXI.tweenManager.createTween(this);
+    this.walking = this.scene.tweenManager.createTween(this);
     this.walking.from({y: this.y}).to({y: this.y-15});
     this.walking.time = 800;
     this.walking.loop = true;
@@ -83,13 +83,13 @@ class Player extends PIXI.Sprite {
     this.deadSprite.tint = tint;
     this.deadSprite.x = this.collisionPoint.x+5;
     this.deadSprite.y = this.collisionPoint.y+this.map.tileSize;
-    let dead = PIXI.tweenManager.createTween(this.deadSprite);
+    let dead = this.scene.tweenManager.createTween(this.deadSprite);
     dead.from({alpha: 0, height: 0}).to({alpha: 1, height: this.game.h});
     dead.time = this.map.speed/2;
     dead.start();
     dead.on('end', () => {
       this.isDead = true;
-      setTimeout(() => this.emit('deaded'), 500);
+      this.scene.setTimeout(() => this.emit('deaded'), 500);
     });
     this.stopMove();
   }
@@ -109,7 +109,7 @@ class Player extends PIXI.Sprite {
   }
   left() {
     this.lastMove = 'left';
-    let move = PIXI.tweenManager.createTween(this);
+    let move = this.scene.tweenManager.createTween(this);
     move.from({x: this.x}).to({x: this.x-this.map.tileSize-this.OFFSET_X});
     move.time = this.map.speed/2;
     move.start();
@@ -122,7 +122,7 @@ class Player extends PIXI.Sprite {
   }
   right() {
     this.lastMove = 'right';
-    let move = PIXI.tweenManager.createTween(this);
+    let move = this.scene.tweenManager.createTween(this);
     move.from({x: this.x}).to({x: this.x+this.map.tileSize+this.OFFSET_X});
     move.time = this.map.speed/2;
     move.start();
