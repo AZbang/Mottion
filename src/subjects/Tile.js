@@ -46,9 +46,11 @@ class Tile extends PIXI.projection.Sprite2d {
     let timer = this.scene.timerManager.createTimer(this.animTime);
     let i = 0;
     timer.loop = true;
-    timer.on('end', () => {
-      if(i >= this.animType.length) i = 0;
-      this.type = this.animType[i];
+    timer.on('repeat', () => {
+      if(this.active) return timer.stop();
+
+      if(i >= this.animTypes.length) i = 0;
+      this.type = this.animTypes[i];
       this.tint = types[this.type]
       i++;
     });
@@ -60,10 +62,7 @@ class Tile extends PIXI.projection.Sprite2d {
 
     this.alpha = 0;
     let show = this.scene.tweenManager.createTween(this);
-
     show.time = this.map.speed;
-    // show.from({width: 0, height: 0, y: this.y+this.height, alpha: 0});
-    // show.to({width: this.map.tileSize-10, height: this.map.tileSize-10, y: this.y, alpha: 1});
     show.from({alpha: 0});
     show.to({alpha: 1});
     if(this.showDelay) this.scene.setTimeout(() => show.start(), Math.random()*this.map.speed);

@@ -27,7 +27,7 @@ class Key extends Tile {
     activating.start();
 
     this.unhit();
-    this.lock = true;
+    this.active = true;
     this.emit('activated');
   }
   unhit() {
@@ -35,7 +35,7 @@ class Key extends Tile {
     this.rotation = 0;
   }
   hit() {
-    if(this.activation === null || this.lock) return;
+    if(this.activation === null || this.active) return;
     this.jolting.start();
     this.emit('hited');
 

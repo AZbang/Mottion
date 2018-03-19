@@ -9,6 +9,7 @@ const ParticlesManager = require('../managers/ParticlesManager');
 const ImmunityManager = require('../managers/ImmunityManager');
 const FxManager = require('../managers/FxManager');
 const Player = require('../subjects/Player');
+const Death = require('../subjects/Death');
 
 class Playground extends SceneManager {
   constructor(game, isRestart=false) {
@@ -32,6 +33,7 @@ class Playground extends SceneManager {
     this.map = new MapManager(this, this.checkpoint, this.rotationContainer);
     this.paralax = new ParalaxManager(this, this.rotationContainer);
     this.player = new Player(this, this.rotationContainer);
+    this.death = new Death(this);
     this.particles = new ParticlesManager(this, this.rotationContainer);
 
     this.history = new HistoryManager(this);
@@ -39,14 +41,14 @@ class Playground extends SceneManager {
 
     this.ui = new InterfaceManager(this);
     this.immunity = new ImmunityManager(this);
-    this.scoreText = this.ui.addText({
-      text: '',
-      font: 'normal 82px Milton Grotesque',
-      color: 0xfffd4d,
-      x: 50,
-      anchor: 0,
-      y: 50
-    });
+    // this.scoreText = this.ui.addText({
+    //   text: '',
+    //   font: 'normal 82px Milton Grotesque',
+    //   color: 0xfffd4d,
+    //   x: 50,
+    //   anchor: 0,
+    //   y: 50
+    // });
     this.ui.addButton({
       image: 'close.png',
       x: this.game.w-100,
@@ -55,7 +57,7 @@ class Playground extends SceneManager {
     });
   }
   update() {
-    this.scoreText.text = 'LIVE: ' + this.score;
+    // this.scoreText.text = 'LIVE: ' + this.score;
   }
 }
 

@@ -1,6 +1,6 @@
-const tween = require('pixi-tween');
 require('pixi-projection');
-console.log(tween);
+require('pixi-tween');
+require('pixi-timer');
 
 const Settings = require('./core/Settings');
 const Music = require('./core/Music');

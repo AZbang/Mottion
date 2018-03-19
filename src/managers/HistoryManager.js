@@ -14,10 +14,13 @@ class HistoryManager extends PIXI.Text {
       padding: 10,
       align: 'center'
     };
-    this.anchor.set(.5, 0);
+    this.anchor.set(.5);
     this.alpha = 0;
     this.x = this.game.w/2;
-    this.y = 220;
+    this.y = 320;
+
+    this.filters = [new PIXI.filters.AdvancedBloomFilter({quality: 10})];
+    this.filterArea = new PIXI.Rectangle(0, 0, this.game.w, this.game.h);
   }
   setLangStyle() {
     if(this.game.settings.lang == 'ru') {
@@ -38,27 +41,29 @@ class HistoryManager extends PIXI.Text {
     });
   }
   _show(text, cb) {
-    let data = {i: 0};
-    let len = text.length;
-    let per = 60;
-    let show = this.scene.tweenManager.createTween(data);
-    this.game.audio.play('typing_sound');
+    this.alpha = 1;
+    this.text = text;
+    let activating = this.scene.tweenManager.createTween(this.scale)
+      .from({x: .7, y: .7})
+      .to({x: 1, y: 1});
+    activating.time = 500;
+    activating.easing = PIXI.tween.Easing.outBounce();
 
-    show.from({i: 0}).to({i: len});
-    show.time = len*per/2;
-    show.on('update', () => {
-      this.text = text.slice(0, data.i) + '_';
-    });
-    show.start();
-    show.on('end', () => this.game.audio.stop('typing_sound'));
+    let glow = this.scene.tweenManager.createTween(this.filters[0])
+      .from({blur: 8})
+      .to({blur: 0.0001});
+    glow.time = 800;
 
-    setTimeout(() => {
+    glow.start();
+    activating.start();
+
+    this.scene.setTimeout(() => {
       let hide = this.scene.tweenManager.createTween(this);
       hide.from({alpha: 1}).to({alpha: 0});
       hide.time = 1000;
       hide.start();
       hide.on('end', cb);
-    }, len*per);
+    }, text.length*60);
   }
 }
 

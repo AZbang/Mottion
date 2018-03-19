@@ -2,7 +2,11 @@ const history = require('./history');
 
 module.exports = {
   1: (game, scene) => {
-    scene.history.show(history[1]);
+    scene.death.show();
+    scene.setTimeout(() => {
+      scene.death.hide();
+      scene.history.show(history[1]);
+    }, 5000);
     scene.map.speed = 400;
   },
   2: (game, scene) => {
