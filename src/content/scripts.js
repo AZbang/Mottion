@@ -1,12 +1,8 @@
-const history = require('./history');
+const history = require("./history");
 
 module.exports = {
   1: (game, scene) => {
-    scene.death.show();
-    scene.setTimeout(() => {
-      scene.death.hide();
-      scene.history.show(history[1]);
-    }, 5000);
+    scene.history.show(history[1]);
     scene.map.speed = 400;
   },
   2: (game, scene) => {
@@ -45,4 +41,4 @@ module.exports = {
     scene.history.show(history[10]);
     scene.map.speed = 400;
   }
-}
+};

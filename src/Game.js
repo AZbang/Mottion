@@ -1,21 +1,21 @@
-require('pixi-projection');
-require('pixi-tween');
-require('pixi-timer');
+require("pixi-projection");
+require("pixi-tween");
+require("./Timer");
 
-const Settings = require('./core/Settings');
-const Music = require('./core/Music');
-const Store = require('./core/Store');
-const Scenes = require('./core/Scenes');
-const Splash = require('./core/Splash');
-const Mouse = require('./core/Mouse');
-const Debugger = require('./core/Debugger');
-const Scripts = require('./core/Scripts');
+const Settings = require("./core/Settings");
+const Music = require("./core/Music");
+const Store = require("./core/Store");
+const Scenes = require("./core/Scenes");
+const Splash = require("./core/Splash");
+const Mouse = require("./core/Mouse");
+const Debugger = require("./core/Debugger");
+const Scripts = require("./core/Scripts");
 
 class Game extends PIXI.Container {
   constructor() {
     super();
 
-    this.renderer = PIXI.autoDetectRenderer({background: 0xFFFFFF});
+    this.renderer = PIXI.autoDetectRenderer({ background: 0xffffff });
     this.ticker = new PIXI.ticker.Ticker();
     this.view = this.renderer.view;
     document.body.appendChild(this.view);
@@ -24,7 +24,7 @@ class Game extends PIXI.Container {
     this.h = 980;
     this.resolution = null;
 
-    this.bg = new PIXI.Sprite.fromImage('bg');
+    this.bg = new PIXI.Sprite.fromImage("bg");
     this.addChild(this.bg);
 
     this.scripts = new Scripts(this);
@@ -37,7 +37,7 @@ class Game extends PIXI.Container {
     this.mouse = new Mouse(this);
     this.splash = new Splash(this);
 
-    this.ticker.add((dt) => {
+    this.ticker.add(dt => {
       this.renderer.render(this);
       PIXI.tweenManager.update();
       PIXI.timerManager.update();
@@ -47,12 +47,13 @@ class Game extends PIXI.Container {
     this._bindEvents();
   }
   _bindEvents() {
-    window.addEventListener('resize', () => this.resize(this));
+    window.addEventListener("resize", () => this.resize(this));
   }
   resize() {
-    this.resolution = window.innerWidth/this.w;
-    this.renderer.resize(window.innerWidth, this.h*this.resolution);
-    this.view.style.marginTop = window.innerHeight/2-this.h*this.resolution/2 + 'px';
+    this.resolution = window.innerWidth / this.w;
+    this.renderer.resize(window.innerWidth, this.h * this.resolution);
+    this.view.style.marginTop =
+      window.innerHeight / 2 - (this.h * this.resolution) / 2 + "px";
     this.scale.set(this.resolution);
   }
 }
